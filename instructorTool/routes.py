@@ -1,14 +1,11 @@
-from flask import Flask, render_template, url_for, flash, redirect
-from forms import LoginForm
-app = Flask(__name__)
-
-app.config['SECRET_KEY'] = 'fe36a4a2322786622f1ef490c59b8b2f'
+from flask import render_template, url_for, flash, redirect
+from instructorTool import app
+from instructorTool.forms import LoginForm
 
 @app.route("/")
 @app.route("/home")
 def home():
     return render_template('home.html')
-
 
 @app.route("/about")
 def about():
@@ -24,6 +21,3 @@ def login():
         else:
             flash(format('Login Unsuccessful. Please check username and password!'), 'danger')
     return render_template('login.html', title='Login', form=form)
-
-if __name__ == '__main__':
-    app.run(debug=True)
