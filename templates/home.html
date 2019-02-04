@@ -1,4 +1,19 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h1>Home page</h1> 
+    <h2>Courses</h2>
+    
+            {%for course in courses%}
+            <div class="card-deck">
+                    <a href="#" class="card border-dark mb-3">
+                      <div class="card-body">
+                        <h5 class="card-title">{{course.name}}</h5>
+                        <p class="card-text">Instructor: {{course.Instructor}}</p>
+                      </div>
+                    </a>
+                
+
+                
+            {%endfor%}
+    
+        
 {% endblock content %}
