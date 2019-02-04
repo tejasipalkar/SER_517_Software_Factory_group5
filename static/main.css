@@ -5,9 +5,13 @@ body {
   }
   
   h1, h2, h3, h4, h5, h6 {
-    color: #444444;
+    color: #412334;
   }
   
+  p {
+    color: #423442;
+    font-weight: 800;
+  }
   .bg-steel {
     background-color: #5f788a;
   }
@@ -77,4 +81,13 @@ body {
   
   .account-heading {
     font-size: 2.5rem;
+  }
+  
+  .mt-2{
+   margin: .5rem;
+  }
+  
+  .card{
+    max-width: 12rem;
+    margin: 1.5rem;
   }
