@@ -1,21 +1,8 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for,json
 app = Flask(__name__)
 
-courses =[{
-    'name':'SER 517',
-    'Instructor' :'Heinrich Reimer'
-    },
-    {
-        'name' : 'SER 515',
-        'Instructor' :'Alexandra Mehlhase'
-    
-    },
-    {
-        'name' : 'SER 422',
-        'Instructor' :'Kevin Gary'
-    
-    }
-]
+with open('courseslist.json') as f:
+    courses = json.load(f)
 
 @app.route("/")
 @app.route("/home")
