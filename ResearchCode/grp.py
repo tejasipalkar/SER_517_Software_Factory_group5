@@ -1,7 +1,7 @@
 import pandas as pd
 import csv
 import numpy
-
+import pandas as pd
 
 def main():
 
@@ -100,7 +100,76 @@ def main():
 	team_list = team_list[:len(team_map)]
 	print(team_list)
 	print(remaining_stu)
+	#print()
+	#print(stu_available)
+
+	#Assigning left off students 
+	for tm in team_list:
+		i = 0
+		work_with = True
+		while len(tm) < no_of_stu and i < len(remaining_stu):
+			idx_r = stu_list.index(remaining_stu[i])
+			for t in tm:
+				if stu_dist[idx_r][stu_list.index(t)] > 0:
+					work_with = False
+
+			if work_with:
+				tm.append(remaining_stu[i])
+				remaining_stu.pop(i)
+			else:
+				i += 1
+
+	print(team_list)
+	print(remaining_stu)
+
+	i = 0
+	for k in team_map:
+		team_map[k] = team_list[i]
+		i += 1
+
+	print(team_map)
+
+	#Write the files to csv
+	data = pd.DataFrame(team_map)
+	print(data)
+	transpose_dat = data.T
+	print(transpose_dat)
+	transpose_dat.to_csv("TeamList.csv")
+
+
+
+
+			
+			
+
+
+
+
+
+				
 	
+
+
+
+
+		#print("set", stu_available)
+		
+		#print("map2", stu_avoid)
+
+	
+	#print(team_map)
+	#print(random.sample(stu_available, 1))
+
+
+
+	#for t in team_map:
+	#	#Randomly pick one student
+	#	stu_pick = random.sample(stu_available, 1)
+
+
+
+	#for s in stu_available:
+
 
 
 
