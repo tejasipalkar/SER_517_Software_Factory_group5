@@ -1,7 +1,7 @@
 from flask import render_template, url_for, flash, redirect, request
 from instructorTool import app
 from instructorTool.forms import LoginForm
-from instructorTool.models import User
+from instructorTool.models import User, Configuration
 from instructorTool import db, login_manager
 
 from flask_login import login_user, current_user, logout_user, login_required
@@ -31,17 +31,22 @@ def about():
 def course():
     return render_template('course.html')
 
+
 @app.route("/document")
 def fetch_document():
     doc_id = request.args.get('doc_id')
     access_token = session['access_token']
     r=requests.get("https://www.googleapis.com/drive/v3/files/"+doc_id+"/export?mimeType=text/csv", headers={"Authorization":access_token})
     return r.text
+
+
 @app.route("/oauthcallback")
 def callback():
     code = request.args.get('code')
-    PARAMS = {'code':code, 'client_id':'507022531399-tunuumi9oc5rvh66iqbaja8e5nqkjcrd.apps.googleusercontent.com', 
-    'client_secret':'iSfKeanaTiPFEi4ZYa5DRl9u', 'redirect_uri': 'http://127.0.0.1:5000/oauthcallback',
+    client_id = Configuration.query.filter_by(key="oauth_client_id").first().value
+    client_secret = Configuration.query.filter_by(key="oauth_client_secret").first().value
+    PARAMS = {'code':code, 'client_id': client_id, 
+    'client_secret': client_secret, 'redirect_uri': 'http://127.0.0.1:5000/oauthcallback',
     'grant_type': 'authorization_code'} 
     URL = "https://oauth2.googleapis.com/token"
     # sending get request and saving the response as response object 
