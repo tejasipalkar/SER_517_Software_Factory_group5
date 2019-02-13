@@ -10,7 +10,7 @@ Setup AlchemySQL DB
 3. run: from instructorTool.models import User
 4. run: db.create_all()
 5. The db and Users table is successfully created.
-6. Now you can add some dummy data, using the following command
-    user_1 = User(username='Karan',email='kbhangal@asu.edu',password='1234')
-    db.session.add(user_1)
-    db.session.commit()
+6. Now you can add some dummy data, using the following commands:
+    a. user_1 = User(username='Karan',email='kbhangal@asu.edu',password='1234')
+    b. db.session.add(user_1)
+    c. db.session.commit()
