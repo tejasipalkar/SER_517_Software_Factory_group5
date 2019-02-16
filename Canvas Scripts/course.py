@@ -3,20 +3,23 @@ API_URL = "https://asu.instructure.com"
 API_KEY = "7236~o5XXfM7GrZZogzsg8xdQoODn3DdBqdwlq2DOM9qo4uD7q3e1Y79Ssi9vmObH9q42"
 canvas = Canvas(API_URL, API_KEY)
 
-courses = canvas.get_courses()
-counter = 0
-for vals in courses:
-    if counter == 3:
-        term = vals.get_enrollments()
+def getcourse():
+    courses = canvas.get_courses()
+    course_dict = dict()
+    for vals in courses:
+        course_name = vals.name
+        enrollments = vals.get_enrollments()
+        for items in enrollments:
+            if items.type == "TeacherEnrollment":
+                user_id = items.user_id
         users = vals.get_users()
-    counter = counter + 1
+        for items in users:
+            if items.id == user_id:
+                instructor_name = items.name
 
-for vals in term:
-    if vals.type == "TeacherEnrollment":
-        user_id = vals.user_id
+        if course_name not in course_dict:
+            course_dict[course_name] = instructor_name
 
-for vals in users:
-   if vals.id == user_id:
-        instructor_name = vals.name
+    return course_dict
 
-print(instructor_name)
+
