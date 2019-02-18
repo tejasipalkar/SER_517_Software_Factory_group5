@@ -18,6 +18,10 @@ def home():
 def about():
     return render_template('about.html')
 
+@app.route("/cal")
+def cal():
+    return render_template('calendar.html')
+
 @app.route('/send', methods=['GET','POST'])
 def send():
     if request.method== 'POST':

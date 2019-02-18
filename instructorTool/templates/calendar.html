@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block content %}
+<head>
+  <meta charset='utf-8' />
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/fullcalendar.min.css') }}">
+  <link rel="stylesheet" type="text/css" media='print' href="{{ url_for('static', filename='css/fullcalendar.print.min.css') }}">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
+  <script src='../static/javascript/calendar/fullcalendar.min.js'></script>
+  <script src="../static/javascript/calendar/calendar.js"></script>
+
+  <style>
+    body {
+      /* margin: 40px 10px; */
+      /* padding: 0; */
+      font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+      font-size: 14px;
+    }
+    #calendar {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+
+<body>
+  <div id='calendar'></div>
+
+  <input id="toolbar-button" type="button" class="btn" value="Fetch events" onclick="fetchEvents()"/>
+
+</body>
+{% endblock content %}
