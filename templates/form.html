@@ -1,0 +1,13 @@
+{% from "_formhelpers.html" import render_field %}
+{% extends "layout.html" %}
+{% block content %}
+    <h2>Enter the token id</h2> 
+    <form method="POST" action="/">
+    	<dl>
+    	{{form.csrf_token }}
+    	{{render_field(form.tokenid)}}
+    	<input type="Submit" name="Submit">
+    	</dl>
+  
+    </form>
+{% endblock content %}
