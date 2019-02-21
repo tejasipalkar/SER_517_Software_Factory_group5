@@ -6,6 +6,9 @@
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/fullcalendar.min.css') }}">
   <link rel="stylesheet" type="text/css" media='print' href="{{ url_for('static', filename='css/fullcalendar.print.min.css') }}">
   
+  <!-- <script>
+    var myGeocode = '{{calPass}}';
+  </script> -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
   <script src='../static/javascript/calendar/fullcalendar.min.js'></script>
   <script src="../static/javascript/calendar/calendar.js"></script>
@@ -34,7 +37,7 @@
           <input id="toolbar-button" type="button" class="btn" value="Fetch events" onclick="fetchEvents()"/>
       </div>
       <div class="row">
-          <input id="toolbar-button" type="button" class="btn" value="Add Event" onclick="openModel()"/>
+          <input id="toolbar-button" type="button" class="btn" value="Add Event" onclick="openModelForNewEvent()"/>
       </div>
     </div>
   </div>
@@ -60,7 +63,7 @@
           <p class="form_error" id="start_date_error"></p>
       
           <label style="margin-top:10px; margin-bottom:5px" class="checkbox-inline">
-            <input id="same_day_checkbox" type="checkbox" checked="checked" data-toggle="collapse"  data-target="#end_date_div">
+            <input id="same_day_checkbox" type="checkbox" checked="checked" onclick="$('#end_date_div').toggle()">
             <p style="display:inline">Same Day</p>
             <p style="display:inline" class="text-muted">(uncheck to set end date)</p>
           </label>
@@ -75,12 +78,12 @@
           </div>
 
           <label style="margin-top:10px; margin-bottom:5px" class="checkbox-inline">
-            <input id="all_day_checkbox" type="checkbox" checked="checked" data-toggle="collapse"  data-target="#all_date_div">
+            <input id="all_day_checkbox" type="checkbox" checked="checked" onclick="$('#all_date_div').toggle()">
             <p style="display:inline">All day</p>
             <p style="display:inline" class="text-muted">(uncheck to set start and end time)</p>
           </label>
 
-          <div id="all_date_div" class="pushed-down collapse">
+          <div id="all_date_div" class="pushed-down">
               <label style="margin-top:10px; margin-bottom:5px">Start Time</label>
               <input id="start_time" placeholder="HH:MM" class="form-control"></input>
               <p class="form_error" id="start_time_error"></p>
@@ -92,6 +95,7 @@
           
         </div>
         <div class="modal-footer">
+          <button id="delete_button" type="button" class="btn btn-danger mr-auto" onclick="deleteEvents()">Delete</button>
           <button type="button" class="btn btn-primary" onclick="createEvents()">Save changes</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>

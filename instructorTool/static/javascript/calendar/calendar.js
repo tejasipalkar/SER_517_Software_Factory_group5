@@ -1,7 +1,7 @@
 const DATE_REGEX = /^\d{4}-(0[1-9]|1[12])-(0[1-9]|[12][0-9]|3[01])$/;
 const TIME_REGEX = /^(?:2[0-3]|[01]?[0-9]):[0-5][0-9]$/;
 
-var selected_event ;
+var selectedEvent ;
 
 $(document).ready(function() {
 
@@ -16,18 +16,58 @@ $(document).ready(function() {
     eventLimit: true, // allow "more" link when too many events
     selectable: true,
     selectHelper: true,
-
+    timezone: "local",
     select: function(start, end) {
       console.log("Select date",end)
-      openModel(end._d);
+      openModelForNewEvent(end._d);
     },
     events: [],
 
     eventClick: function(event, element) {
-      console.log("in eventclick ",event)
+      console.log("eventclicked ",event,event.start.format())
+      selectedEvent = event;
+      openModelForUpdateEvent(event);
     }
   });
 });
+
+function openModelForNewEvent(Date){
+  clearModel()
+  if(Date){
+    $('#start_date').val(formatDate(Date));
+  }
+  $('#event_details_model').modal('show');
+}
+
+function openModelForUpdateEvent(event){
+  var title = "";
+  var startDate = "";
+  var endDate = "";
+  var startTime = "";
+  var endTime = "";
+
+  if(event){
+    if(event.title){
+      title = event.title;
+    }if(event.start && event.start){
+        startDate = event.start.format().substring(0,10)
+        startTime = event.start.format().substring(11,16)
+    }if(event.end && event.end){
+        endDate = event.end.format().substring(0,10)
+        endTime = event.end.format().substring(11,16)
+    }if(startTime == "00:00"){
+      startTime = "";
+    }if(endTime == "00:00"){
+      endTime = "";
+    }
+  }
+  clearModel();
+  setModelValue(title, startDate, endDate, startTime, endTime);
+  $('#delete_button').show()
+  $('#event_details_model').modal('show');
+  console.log("start", startDate, "end", endDate,
+  "start", startTime, "end", endTime)
+}
 
   //get all event and put them on the calendar
   function fetchEvents() {
@@ -102,16 +142,39 @@ $(document).ready(function() {
       }
       console.log(title,startDate,endDate)
       var eventData;
-      if (title) {
+      if(selectedEvent){
+        //update event
+        eventData = selectedEvent;
+        eventData.title = title;
+        eventData.start = startDate;
+        eventData.end = endDate;
+        $('#calendar').fullCalendar('removeEvents',eventData._id);
+      }else{
         eventData = {
           title: title,
           start: startDate,
           end: endDate
         };
-        $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
       }
+      $('#calendar').fullCalendar('renderEvent', eventData, true);
       $('#calendar').fullCalendar('unselect');
       $('#event_details_model').modal('hide');
+    }
+  }
+
+  function setModelValue(title, startDate, endDate, startTime, endTime){
+    $('#event_title').val(title);
+    $('#start_date').val(startDate);
+    $('#end_date').val(endDate);
+    $('#start_time').val(startTime);
+    $('#end_time').val(endTime);
+    if(endDate != ""){
+      $('#same_day_checkbox').prop('checked', false);
+      $('#end_date_div').show()
+    }
+    if(startTime != ""){
+      $('#all_day_checkbox').prop('checked', false);
+      $('#all_date_div').show()
     }
   }
 
@@ -129,12 +192,12 @@ $(document).ready(function() {
     $('#end_time').val("");
     $('#same_day_checkbox').prop('checked', true);
     $('#all_day_checkbox').prop('checked', true);
-    $('#end_date_div').collapse('hide')
-    $('#all_date_div').collapse('hide')
+    $('#end_date_div').hide()
+    $('#all_date_div').hide()
+    $('#delete_button').hide()
   }
 
-  function setModelValues(Date){
-    console.log("in setModelValues")
+  function formatDate(Date){
     var month = String((Date.getMonth()+1))
     var date = String(Date.getDate())
     if(month.length < 2){
@@ -144,16 +207,20 @@ $(document).ready(function() {
       date = "0"+date;
     }
     var date = Date.getFullYear() + "-" + month + "-" + date;
-    $('#start_date').val(date);
+    return date;
   }
 
-  function openModel(Date){
-    console.log("in openModel")
-    clearModel()
-    if(Date){
-      setModelValues(Date);
+  function formatTime(Date){
+    var hours = String((Date.getHours()))
+    var mins = String(Date.getMinutes())
+    if(hours.length < 2){
+      hours = "0"+hours;
     }
-    $('#event_details_model').modal('show');
+    if(mins.length < 2){
+      mins = "0"+mins;
+    }
+    var time = hours + ":" + mins;
+    return time;
   }
 
   function compareDates(date1,date2){
@@ -179,11 +246,11 @@ $(document).ready(function() {
         }
     }
     return false;
-
   }
 
   //TODO: update event - delete
-  //theme
   //drag and drop events
   //clear error on type
   //event color
+  //date time compare issue
+  //if date differnt then time comparess issue
