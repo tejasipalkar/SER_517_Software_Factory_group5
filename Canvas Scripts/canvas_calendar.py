@@ -23,7 +23,7 @@ def getallevents():
     for assignment in course_assignments:
         resultant_json_format["assignments"].append(assignment.__dict__['assignment'])
 
-    with open('calendar.json', 'a') as fp:
+    with open('calendar.json', 'w') as fp:
             json.dump(resultant_json_format, fp, indent = 4)
 
 def create_event(jsonfile):
@@ -31,5 +31,16 @@ def create_event(jsonfile):
         event_dict = json.load(fp)
     canvas.create_calendar_event(calendar_event = event_dict)
 
-create_event("events.json")
+def delete_event(id):
+    event = canvas.get_calendar_event(id)
+    event.delete()
+
+def edit_event(id, jsonfile):
+    event = canvas.get_calendar_event(id)
+    with open(jsonfile,'r') as fp:
+        event_dict = json.load(fp)
+    event.edit(calendar_event = event_dict)
+
+#create_event("events.json")
+# edit_event("42480", "edit_event.json")
 
