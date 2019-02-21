@@ -26,3 +26,10 @@ def getallevents():
     with open('calendar.json', 'a') as fp:
             json.dump(resultant_json_format, fp, indent = 4)
 
+def create_event(jsonfile):
+    with open(jsonfile,'r') as fp:
+        event_dict = json.load(fp)
+    canvas.create_calendar_event(calendar_event = event_dict)
+
+create_event("events.json")
+
