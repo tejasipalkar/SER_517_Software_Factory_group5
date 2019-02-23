@@ -2,10 +2,9 @@ from canvasapi import Canvas
 import json
 
 class Course:
-    def __init__(self):
+    def __init__(self, api_key):
         self.API_URL = "https://asu.instructure.com"
-        self.API_KEY = "7236~o5XXfM7GrZZogzsg8xdQoODn3DdBqdwlq2DOM9qo4uD7q3e1Y79Ssi9vmObH9q42"
-        self.canvas = Canvas(self.API_URL, self.API_KEY)
+        self.canvas = Canvas(self.API_URL, api_key)
 
     def getcourse(self):
         courses = self.canvas.get_courses()
@@ -33,5 +32,5 @@ class Course:
         with open('course.json', 'w') as fp:
             json.dump(course_json_format, fp, indent = 4)
 
-
+course = Course("7236~o5XXfM7GrZZogzsg8xdQoODn3DdBqdwlq2DOM9qo4uD7q3e1Y79Ssi9vmObH9q42")
 
