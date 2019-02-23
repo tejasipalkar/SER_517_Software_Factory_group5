@@ -39,6 +39,9 @@
       <div class="row">
           <input id="toolbar-button" type="button" class="btn" value="Add Event" onclick="openModelForNewEvent()"/>
       </div>
+      <div class="row">
+          <input id="toolbar-button" type="button" class="btn" value="Push Event" onclick="getAllEvents()"/>
+      </div>
     </div>
   </div>
 
@@ -95,7 +98,7 @@
           
         </div>
         <div class="modal-footer">
-          <button id="delete_button" type="button" class="btn btn-danger mr-auto" onclick="deleteEvents()">Delete</button>
+          <button id="delete_button" class="btn btn-danger mr-auto" data-toggle="modal" data-target="#delete_confirm_model">Delete</button>
           <button type="button" class="btn btn-primary" onclick="createEvents()">Save changes</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
@@ -103,6 +106,27 @@
       </div>
     </div>
   </div>
+
+  <div class="modal fade" tabindex="-1" role="dialog" id="delete_confirm_model" >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Warning</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              You are about to delete an event
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" onclick="deleteEvent()">Confirm</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
 </body>
 {% endblock content %}

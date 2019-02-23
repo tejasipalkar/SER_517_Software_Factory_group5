@@ -1,7 +1,7 @@
 const DATE_REGEX = /^\d{4}-(0[1-9]|1[12])-(0[1-9]|[12][0-9]|3[01])$/;
 const TIME_REGEX = /^(?:2[0-3]|[01]?[0-9]):[0-5][0-9]$/;
 
-var selectedEvent ;
+var selectedEvent = null;
 
 $(document).ready(function() {
 
@@ -161,6 +161,21 @@ function openModelForUpdateEvent(event){
       $('#event_details_model').modal('hide');
     }
   }
+
+  function deleteEvent(){
+    if(selectedEvent){
+      $('#calendar').fullCalendar( 'removeEvents', selectedEvent._id)
+      $('#delete_confirm_model').modal('hide');
+      $('#event_details_model').modal('hide');
+    }else{
+      console.log('event deletion failed')
+    }
+  }
+
+  function getAllEvents() {
+      var events = $('#calendar').fullCalendar('clientEvents');
+      console.log("events",events);
+    }
 
   function setModelValue(title, startDate, endDate, startTime, endTime){
     $('#event_title').val(title);
