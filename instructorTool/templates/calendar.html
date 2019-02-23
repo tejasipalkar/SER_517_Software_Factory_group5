@@ -1,0 +1,132 @@
+{% extends "layout.html" %}
+{% block content %}
+<head>
+  <meta charset='utf-8' />
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/calendar.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/fullcalendar.min.css') }}">
+  <link rel="stylesheet" type="text/css" media='print' href="{{ url_for('static', filename='css/fullcalendar.print.min.css') }}">
+  
+  <!-- <script>
+    var myGeocode = '{{calPass}}';
+  </script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
+  <script src='../static/javascript/calendar/fullcalendar.min.js'></script>
+  <script src="../static/javascript/calendar/calendar.js"></script>
+
+  <style>
+    body {
+      /* margin: 40px 10px; */
+      /* padding: 0; */
+      font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+      font-size: 14px;
+    }
+    #calendar {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="row">
+    <div class="col col-sm-10">
+        <div id='calendar'></div>
+    </div>
+    <div class="col col-sm-2" style="margin-top: 50px">
+      <div class="row">
+          <input id="toolbar-button" type="button" class="btn" value="Fetch events" onclick="fetchEvents()"/>
+      </div>
+      <div class="row">
+          <input id="toolbar-button" type="button" class="btn" value="Add Event" onclick="openModelForNewEvent()"/>
+      </div>
+      <div class="row">
+          <input id="toolbar-button" type="button" class="btn" value="Push Event" onclick="getAllEvents()"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" tabindex="-1" role="dialog" id="event_details_model" >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Event Details</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <input id="type_checkbox" style="display:none" type="checkbox" class="form-control"></input>
+          <label style="margin-top:10px; margin-bottom:5px">Title</label>
+          <input id="event_title"placeholder="" class="form-control" onchange='$("#title_error").text("")'></input>
+          <p class="form_error" id="title_error"></p>
+  
+          <label style="margin-top:10px; margin-bottom:5px">Start Date</label>
+          <input id="start_date" placeholder="YYYY-MM-DD" class="form-control"></input>
+          <p class="form_error" id="start_date_error"></p>
+      
+          <label style="margin-top:10px; margin-bottom:5px" class="checkbox-inline">
+            <input id="same_day_checkbox" type="checkbox" checked="checked" onclick="$('#end_date_div').toggle()">
+            <p style="display:inline">Same Day</p>
+            <p style="display:inline" class="text-muted">(uncheck to set end date)</p>
+          </label>
+
+          <br>
+          <div id="end_date_div" class="pushed-down collapse">
+            <label style="margin-top:10px; margin-bottom:5px">End Date</label>
+            <div class="col-xs-6 col-sm-offset-3">
+              <input id="end_date" placeholder="YYYY-MM-DD" class="form-control"></input>
+            </div>
+            <p class="form_error" id="end_date_error"></p>
+          </div>
+
+          <label style="margin-top:10px; margin-bottom:5px" class="checkbox-inline">
+            <input id="all_day_checkbox" type="checkbox" checked="checked" onclick="$('#all_date_div').toggle()">
+            <p style="display:inline">All day</p>
+            <p style="display:inline" class="text-muted">(uncheck to set start and end time)</p>
+          </label>
+
+          <div id="all_date_div" class="pushed-down">
+              <label style="margin-top:10px; margin-bottom:5px">Start Time</label>
+              <input id="start_time" placeholder="HH:MM" class="form-control"></input>
+              <p class="form_error" id="start_time_error"></p>
+
+              <label style="margin-top:10px; margin-bottom:5px">End Time</label>
+              <input id="end_time" placeholder="HH:MM" class="form-control"></input>
+              <p class="form_error" id="end_time_error"></p>
+          </div>
+          
+        </div>
+        <div class="modal-footer">
+          <button id="delete_button" class="btn btn-danger mr-auto" data-toggle="modal" data-target="#delete_confirm_model">Delete</button>
+          <button type="button" class="btn btn-primary" onclick="createEvents()">Save changes</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" tabindex="-1" role="dialog" id="delete_confirm_model" >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Warning</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              You are about to delete an event
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" onclick="deleteEvent()">Confirm</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+</body>
+{% endblock content %}
