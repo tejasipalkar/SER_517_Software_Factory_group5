@@ -1,5 +1,5 @@
 const DATE_REGEX = /^\d{4}-(0[1-9]|1[12])-(0[1-9]|[12][0-9]|3[01])$/;
-const TIME_REGEX = /^(?:2[0-3]|[01]?[0-9]):[0-5][0-9]$/;
+const TIME_REGEX = /^(?:2[0-3]|[01][0-9]):[0-5][0-9]$/;
 
 var selectedEvent = null;
 
@@ -125,7 +125,7 @@ function openModelForUpdateEvent(event){
     }if(!isAllDay && (endTime == null || !TIME_REGEX.test(endTime))){
       $('#end_time_error').text("Invalid Time");
       errorMessage += "EndTime "
-    }else if(!isAllDay && (endTime == null || startTime == null || !compareTime(startTime, endTime))){
+    }else if(!isAllDay && (endTime == null || startTime == null || !compareTime(startTime, endTime, startDate, endDate))){
       $('#end_time_error').text("End Time should be after start time");
       errorMessage += "EndTime < StartTime"
     }
@@ -184,8 +184,13 @@ function openModelForUpdateEvent(event){
     $('#start_time').val(startTime);
     $('#end_time').val(endTime);
     if(endDate != ""){
-      $('#same_day_checkbox').prop('checked', false);
-      $('#end_date_div').show()
+      if(endDate == startDate){
+        endDate = ""
+        $('#end_date').val(endDate);
+      }else{
+        $('#same_day_checkbox').prop('checked', false);
+        $('#end_date_div').show()
+      }
     }
     if(startTime != ""){
       $('#all_day_checkbox').prop('checked', false);
@@ -238,34 +243,44 @@ function openModelForUpdateEvent(event){
     return time;
   }
 
+  //true if date1 is less than date2
   function compareDates(date1,date2){
     var date1complete = date1.split('-');
     var date2complete = date2.split('-');
-
     if(date1complete.length == 3 && date2complete.length == 3){
-      if(date1complete[0] <=  date2complete[0] && date1complete[1] <= date2complete[1]
-        && date1complete[2] <= date2complete[2]){
-          return true;
-        }
+      if(date1complete[0] <=  date2complete[0]){  //year
+        if(date1complete[1] <= date2complete[1] ||
+          (date1complete[1] > date2complete[1] && date1complete[0] <  date2complete[0])){ //month
+          if(date1complete[2] < date2complete[2] ||
+            (date1complete[2] > date2complete[2] && date1complete[1] < date2complete[1])){ //date
+              return true;
+          }
+        }    
+      }
     }
     return false;
   }
 
-  function compareTime(time1,time2){
+  function compareTime(time1,time2, startDate, endDate){
     var time1complete = time1.split(':');
     var time2complete = time2.split(':');
 
     if(time1complete.length == 2 && time2complete.length == 2){
-      if(time1complete[0] <=  time2complete[0] && time1complete[1] <= time2complete[1]){
-          return true;
+      if(time1complete[0] <=  time2complete[0]){  //hours
+        if(time1complete[1] <= time2complete[1] || 
+          (time1complete[1] > time2complete[1] && time1complete[0] < time2complete[0])){  //mins
+            return true;
         }
+      }
+      if(endDate != null && startDate != null && endDate != "" && startDate != "" && 
+        compareDates(startDate,endDate)){ //different days
+          return true;
+      }
     }
     return false;
   }
 
-  //TODO: update event - delete
+  //TODO:
   //drag and drop events
-  //clear error on type
+  //clean error message
   //event color
-  //date time compare issue
-  //if date differnt then time comparess issue
