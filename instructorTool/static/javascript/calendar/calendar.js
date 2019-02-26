@@ -32,6 +32,7 @@ $(document).ready(function() {
 });
 
 function openModelForNewEvent(Date){
+  selectedEvent = null;
   clearModel()
   if(Date){
     $('#start_date').val(formatDate(Date));
