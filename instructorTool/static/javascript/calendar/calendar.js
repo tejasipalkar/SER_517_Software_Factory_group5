@@ -52,17 +52,14 @@ function openModelForUpdateEvent(event){
   if(event){
     if(event.title){
       title = event.title;
-    }if(event.start && event.start){
+    }if(event.start){
         startDate = event.start.format().substring(0,10)
         startTime = event.start.format().substring(11,16)
-    }if(event.end && event.end){
+    }if(event.end){
         endDate = event.end.format().substring(0,10)
         endTime = event.end.format().substring(11,16)
-    }if(startTime == "00:00"){
-      startTime = "";
-    }if(endTime == "00:00"){
-      endTime = "";
-    }if(event.color){
+    }
+    if(event.color){
       color = event.color;
     }
   }
@@ -84,8 +81,8 @@ function openModelForUpdateEvent(event){
       },
       {
         title: 'Long Event',
-        start: '2019-01-07',
-        end: '2019-02-10'
+        start: '2019-01-07T00:00',
+        end: '2019-02-10T23:59'
       },
       {
         id: 999,
@@ -145,6 +142,9 @@ function openModelForUpdateEvent(event){
       if(!isAllDay){
         endDate = endDate + 'T' + endTime;
         startDate = startDate + 'T' + startTime;
+      }else{
+        endDate = endDate + 'T' + '23:59';
+        startDate = startDate + 'T' + '00:00';
       }
       console.log(title,startDate,endDate)
       var eventData;
@@ -201,7 +201,9 @@ function openModelForUpdateEvent(event){
         $('#end_date_div').show()
       }
     }
-    if(startTime != ""){
+    if(startTime == "00:00" && endTime == "23:59"){
+      //isAllDay event
+    }else{
       $('#all_day_checkbox').prop('checked', false);
       $('#all_date_div').show()
     }
