@@ -57,45 +57,61 @@
         <div class="modal-body">
 
           <input id="type_checkbox" style="display:none" type="checkbox" class="form-control"></input>
-          <label style="margin-top:10px; margin-bottom:5px">Title</label>
+          <label><b>Title</b></label>
           <input id="event_title"placeholder="" class="form-control" onchange='$("#title_error").text("")'></input>
           <p class="form_error" id="title_error"></p>
   
-          <label style="margin-top:10px; margin-bottom:5px">Start Date</label>
+          <label id="model_label"><b>Start Date</b></label>
           <input id="start_date" placeholder="YYYY-MM-DD" class="form-control"></input>
           <p class="form_error" id="start_date_error"></p>
       
-          <label style="margin-top:10px; margin-bottom:5px" class="checkbox-inline">
+          <label id="model_label" class="checkbox-inline">
             <input id="same_day_checkbox" type="checkbox" checked="checked" onclick="$('#end_date_div').toggle()">
-            <p style="display:inline">Same Day</p>
+            <p style="display:inline"><b>Same Day</b></p>
             <p style="display:inline" class="text-muted">(uncheck to set end date)</p>
           </label>
 
           <br>
-          <div id="end_date_div" class="pushed-down collapse">
-            <label style="margin-top:10px; margin-bottom:5px">End Date</label>
+          <div id="end_date_div" class="pushed-down collapse" style="padding: 15px;background-color: #f2f2f2">
+            <label>End Date</label>
             <div class="col-xs-6 col-sm-offset-3">
               <input id="end_date" placeholder="YYYY-MM-DD" class="form-control"></input>
             </div>
             <p class="form_error" id="end_date_error"></p>
           </div>
 
-          <label style="margin-top:10px; margin-bottom:5px" class="checkbox-inline">
+          <label id="model_label" class="checkbox-inline">
             <input id="all_day_checkbox" type="checkbox" checked="checked" onclick="$('#all_date_div').toggle()">
-            <p style="display:inline">All day</p>
+            <p style="display:inline"><b>All day</b></p>
             <p style="display:inline" class="text-muted">(uncheck to set start and end time)</p>
           </label>
 
-          <div id="all_date_div" class="pushed-down">
-              <label style="margin-top:10px; margin-bottom:5px">Start Time</label>
+          <div id="all_date_div" class="pushed-down" style="padding: 15px;background-color: #f2f2f2">
+              <label>Start Time</label>
               <input id="start_time" placeholder="HH:MM" class="form-control"></input>
               <p class="form_error" id="start_time_error"></p>
 
-              <label style="margin-top:10px; margin-bottom:5px">End Time</label>
+              <label id="model_label">End Time</label>
               <input id="end_time" placeholder="HH:MM" class="form-control"></input>
               <p class="form_error" id="end_time_error"></p>
           </div>
-          
+
+          <div id="color_div">
+            <label id="model_label"><b>Color</b></label>
+            <div class="input-group">
+              <input id="color_input" type="text" class="form-control" placeholder="Event color" value="Blue">
+              <div class="input-group-append">
+                <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" onclick="setColorField('Blue')">Blue</a>
+                  <a class="dropdown-item" onclick="setColorField('Red')">Red</a>
+                  <a class="dropdown-item" onclick="setColorField('Yellow')">Yellow</a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="modal-footer">
           <button id="delete_button" class="btn btn-danger mr-auto" data-toggle="modal" data-target="#delete_confirm_model">Delete</button>

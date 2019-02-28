@@ -3,3 +3,8 @@
     font-size: smaller; 
     margin: 0px
 }
+
+#model_label{
+    margin-top:10px; 
+    margin-bottom:5px
+}
