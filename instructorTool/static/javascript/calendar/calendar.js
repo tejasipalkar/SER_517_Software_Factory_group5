@@ -2,6 +2,7 @@ const DATE_REGEX = /^\d{4}-(0[1-9]|1[12])-(0[1-9]|[12][0-9]|3[01])$/;
 const TIME_REGEX = /^(?:2[0-3]|[01][0-9]):[0-5][0-9]$/;
 
 var selectedEvent = null;
+const DEFAULT_EVENT_COLOR = "Blue"
 
 $(document).ready(function() {
 
@@ -46,6 +47,7 @@ function openModelForUpdateEvent(event){
   var endDate = "";
   var startTime = "";
   var endTime = "";
+  var color = DEFAULT_EVENT_COLOR;
 
   if(event){
     if(event.title){
@@ -60,11 +62,13 @@ function openModelForUpdateEvent(event){
       startTime = "";
     }if(endTime == "00:00"){
       endTime = "";
+    }if(event.color){
+      color = event.color;
     }
   }
   clearModel();
-  setModelValue(title, startDate, endDate, startTime, endTime);
-  $('#delete_button').show()
+  setModelValue(title, startDate, endDate, startTime, endTime, color);
+  $('#delete_button').show();
   $('#event_details_model').modal('show');
   console.log("start", startDate, "end", endDate,
   "start", startTime, "end", endTime)
@@ -104,6 +108,7 @@ function openModelForUpdateEvent(event){
     var endDate = $('#end_date').val();
     var startTime = $('#start_time').val();
     var endTime = $('#end_time').val();
+    var color = $('#color_input').val();
     var isSameDay = $('#same_day_checkbox').is(":checked")
     var isAllDay = $('#all_day_checkbox').is(":checked")
 
@@ -130,7 +135,7 @@ function openModelForUpdateEvent(event){
       $('#end_time_error').text("End Time should be after start time");
       errorMessage += "EndTime < StartTime"
     }
-    
+
     if(errorMessage != "Invalid parameter(s): "){
       console.log(errorMessage,)
     }else{
@@ -149,12 +154,14 @@ function openModelForUpdateEvent(event){
         eventData.title = title;
         eventData.start = startDate;
         eventData.end = endDate;
+        eventData.color = color;
         $('#calendar').fullCalendar('removeEvents',eventData._id);
       }else{
         eventData = {
           title: title,
           start: startDate,
-          end: endDate
+          end: endDate,
+          color: color
         };
       }
       $('#calendar').fullCalendar('renderEvent', eventData, true);
@@ -178,12 +185,13 @@ function openModelForUpdateEvent(event){
       console.log("events",events);
     }
 
-  function setModelValue(title, startDate, endDate, startTime, endTime){
+  function setModelValue(title, startDate, endDate, startTime, endTime, color){
     $('#event_title').val(title);
     $('#start_date').val(startDate);
     $('#end_date').val(endDate);
     $('#start_time').val(startTime);
     $('#end_time').val(endTime);
+    $('#color_input').val(color);
     if(endDate != ""){
       if(endDate == startDate){
         endDate = ""
@@ -205,6 +213,7 @@ function openModelForUpdateEvent(event){
     $('#end_date_error').text("");
     $('#start_time_error').text("");
     $('#end_time_error').text("");
+    $('#color_input').val(DEFAULT_EVENT_COLOR);
 
     $('#event_title').val("");
     $('#start_date').val("");
@@ -216,6 +225,10 @@ function openModelForUpdateEvent(event){
     $('#end_date_div').hide()
     $('#all_date_div').hide()
     $('#delete_button').hide()
+  }
+
+  function setColorField(color){
+    $('#color_input').val(color);
   }
 
   function formatDate(Date){
@@ -285,3 +298,4 @@ function openModelForUpdateEvent(event){
   //drag and drop events
   //clean error message
   //event color
+  //2 day event
