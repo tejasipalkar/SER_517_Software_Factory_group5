@@ -2,7 +2,7 @@ const DATE_REGEX = /^\d{4}-(0[1-9]|1[12])-(0[1-9]|[12][0-9]|3[01])$/;
 const TIME_REGEX = /^(?:2[0-3]|[01][0-9]):[0-5][0-9]$/;
 
 var selectedEvent = null;
-const DEFAULT_EVENT_COLOR = "Blue"
+const DEFAULT_EVENT_COLOR = ""
 
 $(document).ready(function() {
 
@@ -155,13 +155,15 @@ function openModelForUpdateEvent(event){
         eventData.start = startDate;
         eventData.end = endDate;
         eventData.color = color;
+        eventData.allDay = false;
         $('#calendar').fullCalendar('removeEvents',eventData._id);
       }else{
         eventData = {
           title: title,
           start: startDate,
           end: endDate,
-          color: color
+          color: color,
+          allDay: false
         };
       }
       $('#calendar').fullCalendar('renderEvent', eventData, true);
@@ -201,7 +203,7 @@ function openModelForUpdateEvent(event){
         $('#end_date_div').show()
       }
     }
-    if(startTime == "00:00" && endTime == "23:59"){
+    if((startTime == "00:00" && endTime == "23:59")|| (startTime == "" && endTime == "")){
       //isAllDay event
     }else{
       $('#all_day_checkbox').prop('checked', false);
