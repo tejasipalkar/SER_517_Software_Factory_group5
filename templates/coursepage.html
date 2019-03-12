@@ -1,12 +1,37 @@
 {% extends "layout.html" %}
 {% block content %}
-<ul class="sidebar">
-        <li class="sidebar-brand"></li>
-        <li><a href="#">Create group</a></li>
-        <li><a href="#">View Group</a></li>
-        <li><a href="#">View Calender</a></li>
-        </ul>
-<div class="main">
+<!-- <div class="left">
+	<ul class="sidebar">
+	        <li><a href="#">Create group</a></li>
+	        <li><a href="#">View Group</a></li>
+	        <li><a href="#">View Calender</a></li>
+	</ul>
+</div> -->
+	<div class="wrapper"> 
+		<!--Sidebar-->
+		<nav id="sidebar">
+			<ul class="sidebar_items">
+				<p>Course Actions</p>
+				<ul class="first_item">
+					<a href="#">Create Group</a>
+				</ul>
+				<ul >
+					<a href="#">View Group</a>
+				</ul>
+				<ul>
+					<a href="#">View Calender</a>
+				</ul>
+			</ul>
+			
+		</nav>
+
+		<!--Page Content-->
+		<div id = "content">
+			<h1>Course Name</h1>
+		</div>
+
+	</div>
+<!-- <div class="main">
     <h1>Course Name</h1>
 </div>
-{% endblock content %}
+ -->{% endblock content %}
