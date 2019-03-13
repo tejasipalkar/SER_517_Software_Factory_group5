@@ -1,63 +1,12 @@
+[{
+    "context_code": "course_15760",
+    "title": "test",
+    "start_at": "2019-02-22T15:00:00",
+    "end_at": "2019-02-22T16:00:00"
+},
 {
-"data": [{
-    "id": 9,
-    "title": "Event 1",
-    "color": "#af2e0e",
-    "start": "2017-09-18",
-    "end": "2017-09-20"
-}, {
-    "id": 10,
-    "title": "Event 2",
-    "color": "#0b7c0d",
-    "start": "2017-09-04",
-    "end": "0000-00-00"
-}, {
-    "id": 11,
-    "title": "Event 3",
-    "color": "#378006",
-    "start": "2017-09-10",
-    "end": "2017-09-12"
-}, {
-    "id": 13,
-    "title": "Publication",
-    "color": "#378006",
-    "start": "2017-09-15",
-    "end": "2017-09-16"
-}, {
-    "id": 14,
-    "title": "other",
-    "color": "#378006",
-    "start": "2017-09-05",
-    "end": "2017-09-06"
-}, {
-    "id": 18,
-    "title": "other",
-    "color": "#378006",
-    "start": "2017-09-18",
-    "end": "2017-09-19"
-}, {
-    "id": 19,
-    "title": "Apple",
-    "color": "#378006",
-    "start": "2017-09-08",
-    "end": "2017-09-09"
-}, {
-    "id": 20,
-    "title": "Developer",
-    "color": "#378006",
-    "start": "0000-00-00",
-    "end": "0000-00-00"
-}, {
-    "id": 21,
-    "title": "New event",
-    "color": "#af2e0e",
-    "start": "2017-09-28",
-    "end": "2017-09-30"
-}, {
-    "id": 22,
-    "title": "asdasd",
-    "color": "#0b7c0d",
-    "start": "2017-08-28",
-    "end": "2017-08-31"
+    "context_code": "course_15760",
+    "title": "test",
+    "start_at": "2019-02-22T15:00:00",
+    "end_at": "2019-02-22T16:00:00"
 }]
-}
