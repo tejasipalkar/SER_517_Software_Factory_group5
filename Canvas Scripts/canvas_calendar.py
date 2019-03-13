@@ -44,3 +44,4 @@ class Canvas_Calendar:
         event.edit(calendar_event = event_dict)
 
 cal = Canvas_Calendar("7236~o5XXfM7GrZZogzsg8xdQoODn3DdBqdwlq2DOM9qo4uD7q3e1Y79Ssi9vmObH9q42")
+cal.getallevents()
