@@ -14,7 +14,7 @@ body {
     font-weight:500;
   }
   .bg-steel {
-    background-color: #FF6347;
+    background-color: #4732ED;
   }
   
   .site-header .navbar-nav .nav-link {
@@ -201,6 +201,11 @@ body {
     float: left;
   }
 */
+  
+  /*#sidebar ul, #sidebar li {
+    margin:1  ; padding:1;
+  }
+
   .wrapper {
     display: flex;
     width: 100%;
@@ -208,8 +213,8 @@ body {
 }
 
 #sidebar {
-    min-width: 250px;
-    max-width: 250px;
+    min-width: 200px;
+    max-width: 200  px;
     min-height: 100vh;
     background: #ffffcc;
 }
@@ -226,9 +231,48 @@ body {
         margin-left: 0;
     }
 }
-  
+  */
 
-  #container {
+.sidenav{
+  height:auto;
+  width: 20%;
+  margin-left: -200px;
+  }
+
+.sidenav li{
+  list-style-type: none;
+  margin: 10px 0;
+}
+.sidenav ul li a{
+  padding: 5px;
+  font-size: 1.1em;
+  display: block;
+}
+
+.sidenav ul li a:hover{
+  background: #42f4e2;
+
+}
+.sidenav a{
+  text-decoration: none;
+  color: #412334;
+  font-size: 16px;
+  font-weight: bold;
+}
+.sidebar.active{
+  margin-left: -250px;
+}
+.wrapper{
+  display: flex;
+  width: 100%;
+  align-items: stretch;
+}
+
+
+
+
+
+#container {
   width:220px;
   margin:30px auto;
 }
@@ -239,4 +283,7 @@ body {
 .buttonLogin{
   size: 36px;
   
+}
+.content{
+  margin-left:1.5em;
 }
