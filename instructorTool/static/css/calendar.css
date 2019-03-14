@@ -19,6 +19,13 @@ margin: 0 auto;
     margin-bottom:5px
 }
 
+#hyperlink-button{
+  padding: 10px; 
+  background-color: white; 
+  color: black;
+  text-decoration: none;
+}
+
 #wrap {
     width: 1100px;
     margin: 0 auto;

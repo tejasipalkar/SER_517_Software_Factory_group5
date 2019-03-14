@@ -46,6 +46,7 @@ $(document).ready(function() {
       openModelForUpdateEvent(event);
     }
   });
+  fetchEvents();
 });
 
 function openModelForNewEvent(Date){
@@ -384,7 +385,7 @@ function openModelForUpdateEvent(event){
   }
 
   function canvasToFullCalendarEvents(){
-    var events = JSON.parse('[{             "id": 59221,             "title": "sfjkdansbj",             "start_at": "2019-03-19T23:59:00-06:00",             "unlock_at": null,             "end_at": "2019-03-20T23:59:00-06:00",             "points_possible": 0.0,             "grading_type": "pass_fail",             "assignment_group_id": 17727,             "grading_standard_id": null,             "created_at": "2018-08-15T03:05:55Z",             "updated_at": "2018-12-20T04:52:04Z",             "peer_reviews": false,             "automatic_peer_reviews": false,             "position": 1,             "grade_group_students_individually": false,             "anonymous_peer_reviews": false,             "group_category_id": null,             "post_to_sis": false,             "moderated_grading": false,             "omit_from_final_grade": false,             "intra_group_peer_reviews": false,             "anonymous_instructor_annotations": false,             "anonymous_grading": false,             "graders_anonymous_to_graders": false,             "grader_count": null,             "grader_comments_visible_to_graders": true,             "final_grader_id": null,             "grader_names_visible_to_final_grader": true,             "allowed_attempts": -1,             "lock_info": {                 "lock_at": "2018-08-21T06:59:00Z",                 "can_view": true,                 "asset_string": "assignment_59221"             },             "secure_params": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsdGlfYXNzaWdubWVudF9pZCI6IjEzOTc3YzgwLWZlYTMtNDU2ZS1hMDBmLTFkNDEzMjYyZDczNSJ9.R_UF0CZtaJp9vRi4MgfkCinPxpFm1ybxQIQfe2KhpcY",             "course_id": 3682,             "name": "Week 1 Response Doc",             "submission_types": [                 "online_upload"             ],             "has_submitted_submissions": true,             "due_date_required": false,             "max_name_length": 255,             "in_closed_grading_period": false,             "user_submitted": true,             "is_quiz_assignment": false,             "can_duplicate": true,             "original_course_id": null,             "original_assignment_id": null,             "original_assignment_name": null,             "workflow_state": "published",             "muted": false,             "html_url": "https://asu.instructure.com/courses/3682/assignments/59221",             "allowed_extensions": [                 "pdf",                 "pdf"             ],             "published": true,             "only_visible_to_overrides": false,             "locked_for_user": true,             "lock_explanation": "This assignment was locked Aug 20, 2018 at 11:59pm.",             "submissions_download_url": "https://asu.instructure.com/courses/3682/assignments/59221/submissions?zip=1",             "anonymize_students": false         }]')
+    var events = JSON.parse(eventsJSON);
     events[0].start = events[0].start_at;
     events[0].end = events[0].end_at;
 

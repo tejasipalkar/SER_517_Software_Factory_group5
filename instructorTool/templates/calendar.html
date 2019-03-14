@@ -6,9 +6,9 @@
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/fullcalendar.min.css') }}">
   <link rel="stylesheet" type="text/css" media='print' href="{{ url_for('static', filename='css/fullcalendar.print.min.css') }}">
   
-  <!-- <script>
-    var myGeocode = '{{calPass}}';
-  </script> -->
+  <script>
+    var eventsJSON = '{{events | safe}}';
+  </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
   <script src='../static/javascript/calendar/fullcalendar.min.js'></script>
@@ -34,7 +34,7 @@
       </div>
       
       <div class="row" style="margin: 20px">
-          <input id="toolbar-button" type="button" class="btn" value="Fetch events" onclick="fetchEvents()"/>
+        <a id="hyperlink-button" href="{{url_for('cal')}}">Refresh&nbsp;&nbsp; <i class="fa fa-sync"></i></a>
       </div>
       <div class="row" style="margin: 20px">
           <input id="toolbar-button" type="button" class="btn" value="Add Event" onclick="openModelForNewEvent()"/>
