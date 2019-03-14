@@ -7,9 +7,9 @@
 	        <li><a href="#">View Calender</a></li>
 	</ul>
 </div> -->
-	<div class="wrapper"> 
+<!-- 	<div class="wrapper"> 
 		<!--Sidebar-->
-		<nav id="sidebar">
+<!-- 		<nav id="sidebar">
 			<ul class="sidebar_items">
 				<p>Course Actions</p>
 				<ul class="first_item">
@@ -23,15 +23,21 @@
 				</ul>
 			</ul>
 			
-		</nav>
+		</nav>-->
+<div class="wrapper">
+	<nav class="sidenav" id="sidebar">
+	<ul>
+		<li class="active">
+			<li><a href="#" onclick="showContent(event)">Home</a></li>
+		</li>
+		<li><a href="#">Create Group</a></li>
+		<li><a href="#">View Calender</a></li>
+	</ul> 
+	</nav>
 
-		<!--Page Content-->
-		<div id = "content">
-			<h1>Course Name</h1>
-		</div>
-
+	<div class="content">
+	  <h2>Course Page</h2>
 	</div>
-<!-- <div class="main">
-    <h1>Course Name</h1>
 </div>
- -->{% endblock content %}
+
+ {% endblock content %}
