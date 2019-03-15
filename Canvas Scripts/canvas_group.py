@@ -22,13 +22,12 @@ class Canvas_Group:
                 user_dict[user.email] = user.id
 
         with open(csv_loc, mode='r') as infile:
-            reader = csv.reader(infile)
+            reader = csv.DictReader(infile)
             for rows in reader:
-                array = rows[1].split(',')
-                for val in range(0, len(array)):
-                    array[val] = array[val].strip(' ')
-                    array[val] = array[val].strip('\'')
-                result[rows[0]] = array
+                if rows['Group Name'] not in result:
+                    result[rows['Group Name']] = [rows['EmailID']]
+                else:
+                    result[rows['Group Name']].append(rows['EmailID'])
 
         group_category = course.create_group_category("Project Group")
 
@@ -42,7 +41,7 @@ class Canvas_Group:
             group = group.edit(members = members)
 
 # group = Canvas_Group(API Key)
-group = Canvas_Group("7236~o5XXfM7GrZZogzsg8xdQoODn3DdBqdwlq2DOM9qo4uD7q3e1Y79Ssi9vmObH9q42")
+#group = Canvas_Group("7236~o5XXfM7GrZZogzsg8xdQoODn3DdBqdwlq2DOM9qo4uD7q3e1Y79Ssi9vmObH9q42")
 
 # group.create_groups(CSV Location, Name Of The Course)
-group.create_groups("groups.csv","SER515-Group5-TestShell")
+#group.create_groups("groups.csv","SER515-Group5-TestShell")
