@@ -83,11 +83,12 @@ def main():
 
 
 	# --------------Hardcoding End --------------
-
+	max_factor = max(len(stu_time_zone[d]) for d in stu_time_zone)
 	n = len(stu_available)
 	team_map = {x:[] for x in range(1, (n // no_of_stu) + 1)}
 	stu_dist = numpy.zeros(shape=(n,n))
 
+	print("Max factor is: ", max_factor)
 	#-------Create Distance Matrix-------
 	for i in range(n):
 		
@@ -118,7 +119,7 @@ def main():
 					idx = stu_list.index(temp2[b])
 					stu_dist[i][idx] += n
 					if stu_list[i] in stu_avoid[stu_list[idx]]:
-						stu_dist[i][idx] += n
+						stu_dist[i][idx] += 2*n
 					
 				except:
 					print(temp2[b], " Not in the list")
@@ -128,11 +129,17 @@ def main():
 			lst1 = stu_time_zone[stu_list[i]]
 			lst2 = stu_time_zone[stu_list[j]]
 			val = common_member(set(lst1),set(lst2))
-			stu_dist[i][j] -= (n//3)*val
-			stu_dist[j][i] -= (n//3)*val
+			if val != 0:
+				factor = int((float(val)/max_factor)*n)
+				#print(factor)
+
+				stu_dist[i][j] -= factor
+				stu_dist[j][i] -= factor
 
 
-	print(stu_dist)
+	#print(stu_dist)
+	for s in stu_dist:
+		print(s)
 
 	#----------formulating team---------
 	team_list = []
@@ -192,16 +199,16 @@ def main():
 		team_map[k] = team_list[i]
 		i += 1
 
-	#print(team_map)
+	print(team_map)
 
 	#-----------Allot Team numbers for excel----------
 	group_assign = [0]*len(stu_list)
-	#print(stu_list)
+	print(stu_list)
 	for t in team_map:
 		for val in team_map[t]:
 			idx = stu_list.index(val)
 			group_assign[idx] = t
-	#print(group_assign)
+	print(group_assign)
 	
 	read_pd = pd.read_csv('Output.csv')
 	read_pd['Group Name'] = group_assign
