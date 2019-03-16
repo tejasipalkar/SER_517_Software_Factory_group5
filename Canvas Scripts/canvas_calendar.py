@@ -1,5 +1,6 @@
 from canvasapi import Canvas
 import json
+import time
 
 class Canvas_Calendar:
     def __init__(self, api_key):
@@ -7,6 +8,7 @@ class Canvas_Calendar:
         self.canvas = Canvas(self.API_URL, api_key)
 
     def getallevents(self):
+        start = time.time()
         courses = self.canvas.get_courses()
         user = self.canvas.get_user('self')
         courses_array = []
@@ -27,6 +29,9 @@ class Canvas_Calendar:
 
         with open('calendar.json', 'w') as fp:
             json.dump(resultant_json_format, fp, indent = 4)
+
+        end = time.time()
+        print(end - start)
 
     def create_event(self,jsonfile):
         with open(jsonfile,'r') as fp:
