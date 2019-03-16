@@ -1,0 +1,150 @@
+{% extends "layout.html" %}
+{% block content %}
+<head>
+  <meta charset='utf-8' />
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/calendar.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/fullcalendar.min.css') }}">
+  <link rel="stylesheet" type="text/css" media='print' href="{{ url_for('static', filename='css/fullcalendar.print.min.css') }}">
+  
+  <script>
+    var eventsJSON = '{{events | safe}}';
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <script src='../static/javascript/calendar/fullcalendar.min.js'></script>
+  <script src="../static/javascript/calendar/calendar.js"></script>
+</head>
+
+<body>
+  <div class="row">
+    <div class="col col-sm-10">
+        <div id='calendar'></div>
+    </div>
+    <div class="col col-sm-2" style="margin-top: 50px">
+
+      <div class="row" id='wrap'>
+        <div id='external-events'>
+          <h4>Example Events</h4>
+          <div class='fc-event'>Due Date</div>
+          <div class='fc-event'>Deadline</div>
+          <div class='fc-event'>Sprint</div>
+          <div class='fc-event'>Quiz</div>
+          <div class='fc-event'>Assignment</div>
+        </div>
+      </div>
+      
+      <div class="row" style="margin: 20px">
+        <a id="hyperlink-button" href="{{url_for('cal')}}">Refresh&nbsp;&nbsp; <i class="fa fa-sync"></i></a>
+      </div>
+      <div class="row" style="margin: 20px">
+          <input id="toolbar-button" type="button" class="btn" value="Add Event" onclick="openModelForNewEvent()"/>
+      </div>
+      <div class="row" style="margin: 20px">
+          <input id="toolbar-button" type="button" class="btn" value="Push Event" onclick="getAllEvents()"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" tabindex="-1" role="dialog" id="event_details_model" >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Event Details</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <input id="type_checkbox" style="display:none" type="checkbox" class="form-control"></input>
+          <label><b>Title</b></label>
+          <input id="event_title"placeholder="" class="form-control" onchange='$("#title_error").text("")'></input>
+          <p class="form_error" id="title_error"></p>
+  
+          <label id="model_label"><b>Start Date</b></label>
+          <input id="start_date" placeholder="YYYY-MM-DD" class="form-control"></input>
+          <p class="form_error" id="start_date_error"></p>
+      
+          <label id="model_label" class="checkbox-inline">
+            <input id="same_day_checkbox" type="checkbox" checked="checked" onclick="$('#end_date_div').toggle()">
+            <p style="display:inline"><b>Same Day</b></p>
+            <p style="display:inline" class="text-muted">(uncheck to set end date)</p>
+          </label>
+
+          <br>
+          <div id="end_date_div" class="pushed-down collapse" style="padding: 15px;background-color: #f2f2f2">
+            <label>End Date</label>
+            <div class="col-xs-6 col-sm-offset-3">
+              <input id="end_date" placeholder="YYYY-MM-DD" class="form-control"></input>
+            </div>
+            <p class="form_error" id="end_date_error"></p>
+          </div>
+
+          <label id="model_label" class="checkbox-inline">
+            <input id="all_day_checkbox" type="checkbox" checked="checked" onclick="$('#all_date_div').toggle()">
+            <p style="display:inline"><b>All day</b></p>
+            <p style="display:inline" class="text-muted">(uncheck to set start and end time)</p>
+          </label>
+
+          <div id="all_date_div" class="pushed-down" style="padding: 15px;background-color: #f2f2f2">
+              <label>Start Time</label>
+              <input id="start_time" placeholder="HH:MM" class="form-control"></input>
+              <p class="form_error" id="start_time_error"></p>
+
+              <label id="model_label">End Time</label>
+              <input id="end_time" placeholder="HH:MM" class="form-control"></input>
+              <p class="form_error" id="end_time_error"></p>
+          </div>
+
+          <div id="color_div">
+            <label id="model_label"><b>Color</b></label>
+            <div class="input-group">
+              <input id="color_input" type="text" class="form-control" placeholder="Event color" value="Blue">
+              <div class="input-group-append">
+                <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" onclick="setColorField('#4c85a8')">Blue</a>
+                  <a class="dropdown-item" onclick="setColorField('#bd403a')">Red</a>
+                  <a class="dropdown-item" onclick="setColorField('#bd85a8')">Pink</a>
+                  <a class="dropdown-item" onclick="setColorField('#53403a')">Brown</a>
+                  <a class="dropdown-item" onclick="setColorField('#5e223a')">Purple</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="delete_button" class="btn btn-danger mr-auto" data-toggle="modal" data-target="#delete_confirm_model">Delete</button>
+          <button type="button" class="btn btn-primary" onclick="createEvents()">Save changes</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" tabindex="-1" role="dialog" id="delete_confirm_model" >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Warning</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              You are about to delete an event
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" onclick="deleteEvent()">Confirm</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+</body>
+{% endblock content %}
