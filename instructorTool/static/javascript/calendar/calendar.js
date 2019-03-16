@@ -3,6 +3,7 @@ const TIME_REGEX = /^(?:2[0-3]|[01][0-9]):[0-5][0-9]$/;
 
 var selectedEvent = null;
 const DEFAULT_EVENT_COLOR = ""
+var newEvents = [];
 
 $(document).ready(function() {
 
@@ -270,7 +271,21 @@ function openModelForUpdateEvent(event){
 
   function getAllEvents() {
       var events = $('#calendar').fullCalendar('clientEvents');
+      delete events[0].__proto__
       console.log("events",events);
+      var ab = [{name:"karna",phn:1213},{name:"kafsarna",phn:1212423}]
+      $.ajax({
+        url: '/pushNewEvents',
+        data: JSON.stringify(ab),
+        type: 'POST',
+        contentType: 'application/json',
+        success: function(response) {
+            console.log(response);
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
     }
 
   function setModelValue(title, startDate, endDate, startTime, endTime, color){
