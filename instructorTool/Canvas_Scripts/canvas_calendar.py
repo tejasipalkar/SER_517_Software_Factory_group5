@@ -5,14 +5,12 @@ class Canvas_Calendar:
         self.API_URL = "https://asu.instructure.com"
         self.canvas = Canvas(self.API_URL, api_key)
 
-    def getallevents(self):
-        courses = self.canvas.get_courses()
+    def getallevents(self, id):
+        # courses = self.canvas.get_courses()
         # user = self.canvas.get_user('self')
-        courses_array = []
+        courses_array = [id]
         # user_array = []
         resultant_json_format = {"events":[]}
-        for course in courses:
-            courses_array.append('course_' + str(course.id))
         # user_array.append('user_' + str(user.id))
         course_events = self.canvas.get_calendar_events(all_events = 1, type = 'event', context_codes=courses_array)
         # user_events = self.canvas.get_calendar_events(all_events = 1, type = 'event', context_codes=user_array)
