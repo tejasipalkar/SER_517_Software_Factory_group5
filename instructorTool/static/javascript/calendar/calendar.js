@@ -4,22 +4,10 @@ const TIME_REGEX = /^(?:2[0-3]|[01][0-9]):[0-5][0-9]$/;
 var selectedEvent = null;
 const DEFAULT_EVENT_COLOR = ""
 var newEvents = [];
+var editEvents = [];
+var deleteEvents = [];
 
 $(document).ready(function() {
-
-  $('#external-events .fc-event').each(function() {
-    // store data so the calendar knows to render an event upon drop
-    $(this).data('event', {
-      title: $.trim($(this).text()), // use the element's text as the event title
-      stick: true // maintain when user navigates (see docs on the renderEvent method)
-    });
-    // make the event draggable using jQuery UI
-    $(this).draggable({
-      zIndex: 999,
-      revert: true,      // will cause the event to go back to its
-      revertDuration: 0  //  original position after the drag
-    });
-  });
 
   $('#calendar').fullCalendar({
     header: {
@@ -45,6 +33,12 @@ $(document).ready(function() {
       console.log("eventclicked ",event,event.start.format())
       selectedEvent = event;
       openModelForUpdateEvent(event);
+    },
+    eventDrop: function(event, delta, revertFunc) {
+      if (!confirm("Are you sure about this change?")) {
+        revertFunc();
+      }
+      editEvents.push(event._id);
     }
   });
   fetchEvents();
@@ -243,9 +237,13 @@ function openModelForUpdateEvent(event){
         eventData.end = endDate;
         eventData.color = color;
         eventData.allDay = false;
+        editEvents.push(eventData._id)
         $('#calendar').fullCalendar('removeEvents',eventData._id);
       }else{
+        var id = Math.random();
+        newEvents.push(id);
         eventData = {
+          _id: id,
           title: title,
           start: startDate,
           end: endDate,
@@ -264,16 +262,35 @@ function openModelForUpdateEvent(event){
       $('#calendar').fullCalendar( 'removeEvents', selectedEvent._id)
       $('#delete_confirm_model').modal('hide');
       $('#event_details_model').modal('hide');
+      deleteEvents.push(selectedEvent._id)
     }else{
       console.log('event deletion failed')
     }
   }
 
-  function getAllEvents() {
-      var events = $('#calendar').fullCalendar('clientEvents');
-      delete events[0].__proto__
-      console.log("events",events);
-      var ab = [{name:"karna",phn:1213},{name:"kafsarna",phn:1212423}]
+  function pushEvents() {
+    var events = []
+    for(var i = 0; i < newEvents.length; i++){
+      if(!deleteEvents.includes(newEvents[i])){
+        var completeEvent = $('#calendar').fullCalendar('clientEvents', newEvents[i])[0];
+        console.log("each event",completeEvent)
+        var event = {
+          context_code: null,
+          title: null,
+          start_at: null,
+          end_at: null
+        };
+        event.context_code = course;
+        event.title = completeEvent.title;
+        event.start_at = FullCalendarToCanvasDate(completeEvent.start.format().substring(0,10),completeEvent.start.format().substring(11,16));
+        event.end_at = FullCalendarToCanvasDate(completeEvent.end.format().substring(0,10),completeEvent.start.format().substring(11,16));
+        events.push(event);
+      }
+    }
+    
+    if(events.length>0){
+      console.log("new events to push",events);
+      var ab = events//[{name:"karna",phn:1213},{name:"kafsarna",phn:1212423}]
       $.ajax({
         url: '/pushNewEvents',
         data: JSON.stringify(ab),
@@ -287,6 +304,7 @@ function openModelForUpdateEvent(event){
         }
     });
     }
+  }
 
   function setModelValue(title, startDate, endDate, startTime, endTime, color){
     $('#event_title').val(title);
@@ -418,6 +436,13 @@ function openModelForUpdateEvent(event){
     var fullTime = fullDate[1];
     var time = fullTime.split('-')[1];
     return date + 'T' + time;
+  }
+
+  //2019-03-19T23:59:00-06:00
+  //2019-02-10T23:59
+  function FullCalendarToCanvasDate(localDate, localTime){
+    var fullTime = '23:59:00' + '-' + localTime
+    return localDate + 'T' +fullTime
   }
 
   //TODO:
