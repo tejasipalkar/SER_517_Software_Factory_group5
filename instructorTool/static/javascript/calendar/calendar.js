@@ -419,23 +419,31 @@ function openModelForUpdateEvent(event){
 
   function canvasToFullCalendarEvents(){
     var events = JSON.parse(eventsJSON);
-    events[0].start = events[0].start_at;
-    events[0].end = events[0].end_at;
-
-    delete events[0].start_at;
-    delete events[0].end_at;
-    events[0].start = canvasToFullCalendarDate(events[0].start)
-    events[0].end = canvasToFullCalendarDate(events[0].end)
-    console.log(events, events[0].start, events[0].end);
+    for(var i=0 ;i <events.length ;i++ ){
+      events[i].start = events[i].start_at;
+      events[i].end = events[i].end_at;
+  
+      delete events[i].start_at;
+      delete events[i].end_at;
+      events[i].start = canvasToFullCalendarDate(events[i].start)
+      events[i].end = canvasToFullCalendarDate(events[i].end)
+    }
+    console.log(events);
     return events;
   }
 
+  //2019-03-20T05:59:00Z  TO
+  //2019-02-10T23:59
   function canvasToFullCalendarDate(canvasTime){
     var fullDate = canvasTime.split('T');
     var date = fullDate[0];
     var fullTime = fullDate[1];
-    var time = fullTime.split('-')[1];
-    return date + 'T' + time;
+    if(fullTime[fullTime.length -1] == 'Z'){
+      return date + 'T' + fullTime.slice(0, -1);
+    }else{
+      var time = fullTime.split('-')[1];
+      return date + 'T' + time;
+    }
   }
 
   //2019-03-19T23:59:00-06:00
