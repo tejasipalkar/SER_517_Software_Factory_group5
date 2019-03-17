@@ -8,7 +8,6 @@ var editEvents = [];
 var deleteEvents = [];
 
 $(document).ready(function() {
-
   $('#calendar').fullCalendar({
     header: {
       left: 'prev,next today',
@@ -28,9 +27,13 @@ $(document).ready(function() {
       openModelForNewEvent(end._d);
     },
     events: [],
-
+    
     eventClick: function(event, element) {
-      console.log("eventclicked ",event,event.start.format())
+      console.log("eventclicked ",event)
+      //if end and start are same, end is set to null by default
+      if(event.end == null){
+        event.end = event.start;
+      }
       selectedEvent = event;
       openModelForUpdateEvent(event);
     },
@@ -241,7 +244,7 @@ function openModelForUpdateEvent(event){
         $('#calendar').fullCalendar('removeEvents',eventData._id);
       }else{
         var id = Math.random();
-        newEvents.push(id);
+        newEvents.push(id.toString());
         eventData = {
           _id: id,
           title: title,
@@ -259,20 +262,41 @@ function openModelForUpdateEvent(event){
 
   function deleteEvent(){
     if(selectedEvent){
+      if(!newEvents.includes(selectedEvent._id)){
+        deleteEvents.push(selectedEvent.id)
+      }
       $('#calendar').fullCalendar( 'removeEvents', selectedEvent._id)
       $('#delete_confirm_model').modal('hide');
       $('#event_details_model').modal('hide');
-      deleteEvents.push(selectedEvent._id)
     }else{
       console.log('event deletion failed')
     }
   }
 
-  function pushEvents() {
+  function pushDeleteEvents(){
+    if(deleteEvents.length>0){
+      console.log("events to be deleted",deleteEvents);
+      $.ajax({
+        url: '/deleteevent',
+        data: JSON.stringify(deleteEvents),
+        type: 'POST',
+        contentType: 'application/json',
+        success: function(response) {
+            console.log(response);
+        },
+        error: function(error) {
+            console.log(error);
+        }
+      });
+    }
+  }
+
+  function pushNewEvents() {
     var events = []
+    console.log("newEvents",newEvents)
     for(var i = 0; i < newEvents.length; i++){
-      if(!deleteEvents.includes(newEvents[i])){
-        var completeEvent = $('#calendar').fullCalendar('clientEvents', newEvents[i])[0];
+      var completeEvent = $('#calendar').fullCalendar('clientEvents', newEvents[i])[0];
+      if(completeEvent != null){
         console.log("each event",completeEvent)
         var event = {
           context_code: null,
@@ -292,7 +316,7 @@ function openModelForUpdateEvent(event){
       console.log("new events to push",events);
       var ab = events//[{name:"karna",phn:1213},{name:"kafsarna",phn:1212423}]
       $.ajax({
-        url: '/pushNewEvents',
+        url: '/newevent',
         data: JSON.stringify(ab),
         type: 'POST',
         contentType: 'application/json',
@@ -302,7 +326,50 @@ function openModelForUpdateEvent(event){
         error: function(error) {
             console.log(error);
         }
-    });
+      });
+    }
+  }
+
+  //events created and then edited will not have id, only _id
+  //events olready created will have id and _id. _id to track and id to pass to canvas
+  function pushEditEvents(){
+    console.log("editEvents",editEvents)
+    var events = []
+    for(var i = 0; i < editEvents.length; i++){
+      var completeEvent = $('#calendar').fullCalendar('clientEvents', editEvents[i])[0];
+        if(completeEvent != null && completeEvent.id != null){
+        console.log("each event",completeEvent)
+        var event = {
+          id: null,
+          title: null,
+          start_at: null,
+          end_at: null
+        };
+        event.id = completeEvent.id;
+        event.title = completeEvent.title;
+        event.start_at = FullCalendarToCanvasDate(completeEvent.start.format().substring(0,10),completeEvent.start.format().substring(11,16));
+        if(completeEvent.end == null){
+          event.end_at = event.start_at;
+        }else{
+          event.end_at = FullCalendarToCanvasDate(completeEvent.end.format().substring(0,10),completeEvent.start.format().substring(11,16));
+        }
+        events.push(event);
+      }
+    }
+    if(events.length>0){
+      console.log("new events to push",events);
+      $.ajax({
+        url: '/editevent',
+        data: JSON.stringify(events),
+        type: 'POST',
+        contentType: 'application/json',
+        success: function(response) {
+          console.log(response);
+        },
+        error: function(error) {
+          console.log(error);
+        }
+      });
     }
   }
 
@@ -425,6 +492,7 @@ function openModelForUpdateEvent(event){
   
       delete events[i].start_at;
       delete events[i].end_at;
+      delete events[i].url;
       events[i].start = canvasToFullCalendarDate(events[i].start)
       events[i].end = canvasToFullCalendarDate(events[i].end)
     }
