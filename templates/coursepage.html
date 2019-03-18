@@ -1,8 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
-<head>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-</head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 <div class="wrapper">
 	<nav class="sidenav" id="sidebar">
 	<ul>
@@ -19,27 +18,26 @@
 	</div>
 	<div id= "content2" class="contentSection" style="display: none;">
 		<h2>Group Details</h2>
-
-		<button class="accordian">Create Group</button>
-		<div class="create_group_panel">
-			<form id="form1">
-				
-			</form>
+		<button class="accordion">Create Group</button>
+		<div class="panel">
+  			<div id ="form_panel">
+  				<form id ="surveyform">
+  				<p>Upload the survey details sheet:<br></p>	
+  				   <input type="file" id="file">
+  				   <button id="remove-file" disabled>Remove</button>
+  				   <br>
+  				   <input type = "submit" name = "create-group" class="btn-form" id="trigger-grouping" value ="Create Group" disabled/>
+  				   <input type = "submit" name = "cancel" class= "btn-form" id="cancel-grouping" value ="Cancel" disabled/>
+  				</form>	
+  			</div>
 		</div>
 
-		<div class="view_group_panel">
-			<form id="form1">
-				
-			</form>
+		<button class="accordion">Edit Group Information</button>
+		<div class="panel">
+		  <p>TEST</p>
 		</div>
-
 
 	</div>
-	
-	  
-	  
-	
-	 
 
 </div>
 
