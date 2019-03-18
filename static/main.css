@@ -135,103 +135,6 @@ body {
     #page-content-wrapper {
     padding: 20px;
     }
-    
-    
-  /*.sidebar {
-    margin: 0;
-    padding: 0;
-    width: 200px;
-    background-color: #F5DEB3;
-    position: fixed;
-    height: 100%;
-    overflow: auto;
-    }
-    
-    .sidebar a {
-      display: block;
-      color: black;
-      padding: 16px;
-      text-decoration: none;
-    }
-    
-    .sidebar a.active {
-      background-color: #4CAF50;
-      color: white;
-    }
-
-
-    .sidebar a:hover:not(.active) {
-      background-color: #555;
-      color: white;
-    }
-
-    . ul {
-       position: absolute;
-       top: 4em;
-       left: 0;
-       margin: 0;
-       padding: 0;
-       width: 15em;
-    }
-    
-    div.main {
-    margin-left: 200px;
-    padding: 1px 16px;
-    height: 1000px;
-    }
-
-@media screen and (max-width: 700px) {
-  .sidebar {
-    width: 100%;
-    height: auto;
-    position: relative;
-  }
-  .sidebar a {float: left;}
-  div.content {margin-left: 0;}
-}
-
-@media screen and (max-width: 400px) {
-  .sidebar a {
-    text-align: center;
-    float: none;
-  }
-
-  .left {
-    width: 10%;
-    float: left;
-  }
-*/
-  
-  /*#sidebar ul, #sidebar li {
-    margin:1  ; padding:1;
-  }
-
-  .wrapper {
-    display: flex;
-    width: 100%;
-    align-items: stretch;
-}
-
-#sidebar {
-    min-width: 200px;
-    max-width: 200  px;
-    min-height: 100vh;
-    background: #ffffcc;
-}
-
-#sidebar.first_item {
-    margin-left: -250px;
-}
-
-@media (max-width: 768px) {
-    #sidebar {
-        margin-left: -250px;
-    }
-    #sidebar.active {
-        margin-left: 0;
-    }
-}
-  */
 
 .sidenav{
   height:auto;
@@ -267,10 +170,25 @@ body {
   width: 100%;
   align-items: stretch;
 }
-
-
-
-
+@media (max-width: 768px) {
+    .sidebar {
+        margin-left: -250px;
+    }
+    .sidebar.active {
+        margin-left: 0;
+    }
+}
+.btns{
+  border:2px solid black;
+  border-color: #2196F3;
+  color: blue
+  width: 350px;
+  height: 50px;
+  margin-top:10px;
+  margin-bottom: 10px;
+  margin-right: 20px;
+  display: inline-block;
+}
 
 #container {
   width:220px;
@@ -284,6 +202,12 @@ body {
   size: 36px;
   
 }
-.content{
+.contentSection{
   margin-left:1.5em;
+}
+input[type=text]{
+  width: 50%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
 }
