@@ -19,6 +19,7 @@ def main():
 	stu_time_zone = {}
 	stu_pref = {}
 	stu_avoid = {}
+	stu_utc = {}
 
 	with open("Output.csv") as fp:
 		reader = csv.reader(fp)
@@ -29,6 +30,7 @@ def main():
 				stu_list.append(line[2])
 				stu_pref[line[2]] = [x.replace("'",'') for x in line[5][1:-1].split(', ')]
 				stu_avoid[line[2]] = [x.replace("'",'') for x in line[6][1:-1].split(', ')]
+				stu_utc[line[2]] = line[7]
 				stu_time_zone[line[2]] = line[8][1:-1].split(', ')
 			count += 1
 	# n = len(stu_available)
@@ -89,6 +91,7 @@ def main():
 	stu_dist = numpy.zeros(shape=(n,n))
 
 	print("Max factor is: ", max_factor)
+	print('Student-UTS', stu_utc)
 	#-------Create Distance Matrix-------
 	for i in range(n):
 		
@@ -124,6 +127,11 @@ def main():
 				except:
 					print(temp2[b], " Not in the list")
 				b += 1
+		for j in range(i+1, n):
+			if i != j:
+				if stu_utc[stu_list[i]] == stu_utc[stu_list[j]]:
+					stu_dist[i][j] -= n
+					stu_dist[j][i] -= n
 
 		for j in range(i+1,n):
 			lst1 = stu_time_zone[stu_list[i]]
@@ -149,14 +157,15 @@ def main():
 			#count_member = 1
 			temp_team.append(stu_list[i])
 			stu_available.remove(stu_list[i])
-
-			while no_of_stu > len(temp_team) and min(s) < 0:
+			c = 1
+			while no_of_stu > len(temp_team) and c < no_of_stu:
 				idx_min = numpy.argmin(s)
 				if stu_list[idx_min] in stu_available:
 					temp_team.append(stu_list[idx_min])
 					stu_available.remove(stu_list[idx_min])
 					
 				s[idx_min] = 0
+				c += 1
 
 				#count_member += 1
 
@@ -212,7 +221,7 @@ def main():
 	
 	read_pd = pd.read_csv('Output.csv')
 	read_pd['Group Name'] = group_assign
-	read_pd.to_csv('Output.csv')
+	read_pd.to_csv('FinalOutput.csv')
 
 
 
