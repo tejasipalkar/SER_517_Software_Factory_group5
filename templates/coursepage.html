@@ -1,43 +1,46 @@
 {% extends "layout.html" %}
 {% block content %}
-<!-- <div class="left">
-	<ul class="sidebar">
-	        <li><a href="#">Create group</a></li>
-	        <li><a href="#">View Group</a></li>
-	        <li><a href="#">View Calender</a></li>
-	</ul>
-</div> -->
-<!-- 	<div class="wrapper"> 
-		<!--Sidebar-->
-<!-- 		<nav id="sidebar">
-			<ul class="sidebar_items">
-				<p>Course Actions</p>
-				<ul class="first_item">
-					<a href="#">Create Group</a>
-				</ul>
-				<ul >
-					<a href="#">View Group</a>
-				</ul>
-				<ul>
-					<a href="#">View Calender</a>
-				</ul>
-			</ul>
-			
-		</nav>-->
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
 <div class="wrapper">
 	<nav class="sidenav" id="sidebar">
 	<ul>
 		<li class="active">
-			<li><a href="#" onclick="showContent(event)">Home</a></li>
+		<li id="home"><a href="#">Home</a></li>
 		</li>
-		<li><a href="#">Create Group</a></li>
-		<li><a href="#">View Calender</a></li>
+		<li id="grp"><a href="#">Create Group</a></li>
+		<li id="calender"><a href="#">View Calender</a></li>
 	</ul> 
 	</nav>
 
-	<div class="content">
-	  <h2>Course Page</h2>
+	<div id= "content1" class="contentSection">
+		<h2>Course</h2>
 	</div>
+	<div id= "content2" class="contentSection" style="display: none;">
+		<h2>Group Details</h2>
+
+		<button class="accordian">Create Group</button>
+		<div class="create_group_panel">
+			<form id="form1">
+				
+			</form>
+		</div>
+
+		<div class="view_group_panel">
+			<form id="form1">
+				
+			</form>
+		</div>
+
+
+	</div>
+	
+	  
+	  
+	
+	 
+
 </div>
 
  {% endblock content %}
