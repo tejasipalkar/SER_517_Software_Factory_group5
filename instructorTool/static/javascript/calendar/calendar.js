@@ -3,23 +3,11 @@ const TIME_REGEX = /^(?:2[0-3]|[01][0-9]):[0-5][0-9]$/;
 
 var selectedEvent = null;
 const DEFAULT_EVENT_COLOR = ""
+var newEvents = [];
+var editEvents = [];
+var deleteEvents = [];
 
 $(document).ready(function() {
-
-  $('#external-events .fc-event').each(function() {
-    // store data so the calendar knows to render an event upon drop
-    $(this).data('event', {
-      title: $.trim($(this).text()), // use the element's text as the event title
-      stick: true // maintain when user navigates (see docs on the renderEvent method)
-    });
-    // make the event draggable using jQuery UI
-    $(this).draggable({
-      zIndex: 999,
-      revert: true,      // will cause the event to go back to its
-      revertDuration: 0  //  original position after the drag
-    });
-  });
-
   $('#calendar').fullCalendar({
     header: {
       left: 'prev,next today',
@@ -39,11 +27,21 @@ $(document).ready(function() {
       openModelForNewEvent(end._d);
     },
     events: [],
-
+    
     eventClick: function(event, element) {
-      console.log("eventclicked ",event,event.start.format())
+      console.log("eventclicked ",event)
+      //if end and start are same, end is set to null by default
+      if(event.end == null){
+        event.end = event.start;
+      }
       selectedEvent = event;
       openModelForUpdateEvent(event);
+    },
+    eventDrop: function(event, delta, revertFunc) {
+      if (!confirm("Are you sure about this change?")) {
+        revertFunc();
+      }
+      editEvents.push(event._id);
     }
   });
   fetchEvents();
@@ -242,9 +240,13 @@ function openModelForUpdateEvent(event){
         eventData.end = endDate;
         eventData.color = color;
         eventData.allDay = false;
+        editEvents.push(eventData._id)
         $('#calendar').fullCalendar('removeEvents',eventData._id);
       }else{
+        var id = Math.random();
+        newEvents.push(id.toString());
         eventData = {
+          _id: id,
           title: title,
           start: startDate,
           end: endDate,
@@ -260,6 +262,9 @@ function openModelForUpdateEvent(event){
 
   function deleteEvent(){
     if(selectedEvent){
+      if(!newEvents.includes(selectedEvent._id)){
+        deleteEvents.push(selectedEvent.id)
+      }
       $('#calendar').fullCalendar( 'removeEvents', selectedEvent._id)
       $('#delete_confirm_model').modal('hide');
       $('#event_details_model').modal('hide');
@@ -268,10 +273,105 @@ function openModelForUpdateEvent(event){
     }
   }
 
-  function getAllEvents() {
-      var events = $('#calendar').fullCalendar('clientEvents');
-      console.log("events",events);
+  function pushDeleteEvents(){
+    if(deleteEvents.length>0){
+      console.log("events to be deleted",deleteEvents);
+      $.ajax({
+        url: '/deleteevent',
+        data: JSON.stringify(deleteEvents),
+        type: 'POST',
+        contentType: 'application/json',
+        success: function(response) {
+            console.log(response);
+        },
+        error: function(error) {
+            console.log(error);
+        }
+      });
     }
+  }
+
+  function pushNewEvents() {
+    var events = []
+    console.log("newEvents",newEvents)
+    for(var i = 0; i < newEvents.length; i++){
+      var completeEvent = $('#calendar').fullCalendar('clientEvents', newEvents[i])[0];
+      if(completeEvent != null){
+        console.log("each event",completeEvent)
+        var event = {
+          context_code: null,
+          title: null,
+          start_at: null,
+          end_at: null
+        };
+        event.context_code = course;
+        event.title = completeEvent.title;
+        event.start_at = FullCalendarToCanvasDate(completeEvent.start.format().substring(0,10),completeEvent.start.format().substring(11,16));
+        event.end_at = FullCalendarToCanvasDate(completeEvent.end.format().substring(0,10),completeEvent.start.format().substring(11,16));
+        events.push(event);
+      }
+    }
+    
+    if(events.length>0){
+      console.log("new events to push",events);
+      var ab = events//[{name:"karna",phn:1213},{name:"kafsarna",phn:1212423}]
+      $.ajax({
+        url: '/newevent',
+        data: JSON.stringify(ab),
+        type: 'POST',
+        contentType: 'application/json',
+        success: function(response) {
+            console.log(response);
+        },
+        error: function(error) {
+            console.log(error);
+        }
+      });
+    }
+  }
+
+  //events created and then edited will not have id, only _id
+  //events olready created will have id and _id. _id to track and id to pass to canvas
+  function pushEditEvents(){
+    console.log("editEvents",editEvents)
+    var events = []
+    for(var i = 0; i < editEvents.length; i++){
+      var completeEvent = $('#calendar').fullCalendar('clientEvents', editEvents[i])[0];
+        if(completeEvent != null && completeEvent.id != null){
+        console.log("each event",completeEvent)
+        var event = {
+          id: null,
+          title: null,
+          start_at: null,
+          end_at: null
+        };
+        event.id = completeEvent.id;
+        event.title = completeEvent.title;
+        event.start_at = FullCalendarToCanvasDate(completeEvent.start.format().substring(0,10),completeEvent.start.format().substring(11,16));
+        if(completeEvent.end == null){
+          event.end_at = event.start_at;
+        }else{
+          event.end_at = FullCalendarToCanvasDate(completeEvent.end.format().substring(0,10),completeEvent.start.format().substring(11,16));
+        }
+        events.push(event);
+      }
+    }
+    if(events.length>0){
+      console.log("new events to push",events);
+      $.ajax({
+        url: '/editevent',
+        data: JSON.stringify(events),
+        type: 'POST',
+        contentType: 'application/json',
+        success: function(response) {
+          console.log(response);
+        },
+        error: function(error) {
+          console.log(error);
+        }
+      });
+    }
+  }
 
   function setModelValue(title, startDate, endDate, startTime, endTime, color){
     $('#event_title').val(title);
@@ -386,23 +486,39 @@ function openModelForUpdateEvent(event){
 
   function canvasToFullCalendarEvents(){
     var events = JSON.parse(eventsJSON);
-    events[0].start = events[0].start_at;
-    events[0].end = events[0].end_at;
-
-    delete events[0].start_at;
-    delete events[0].end_at;
-    events[0].start = canvasToFullCalendarDate(events[0].start)
-    events[0].end = canvasToFullCalendarDate(events[0].end)
-    console.log(events, events[0].start, events[0].end);
+    for(var i=0 ;i <events.length ;i++ ){
+      events[i].start = events[i].start_at;
+      events[i].end = events[i].end_at;
+  
+      delete events[i].start_at;
+      delete events[i].end_at;
+      delete events[i].url;
+      events[i].start = canvasToFullCalendarDate(events[i].start)
+      events[i].end = canvasToFullCalendarDate(events[i].end)
+    }
+    console.log(events);
     return events;
   }
 
+  //2019-03-20T05:59:00Z  TO
+  //2019-02-10T23:59
   function canvasToFullCalendarDate(canvasTime){
     var fullDate = canvasTime.split('T');
     var date = fullDate[0];
     var fullTime = fullDate[1];
-    var time = fullTime.split('-')[1];
-    return date + 'T' + time;
+    if(fullTime[fullTime.length -1] == 'Z'){
+      return date + 'T' + fullTime.slice(0, -1);
+    }else{
+      var time = fullTime.split('-')[1];
+      return date + 'T' + time;
+    }
+  }
+
+  //2019-03-19T23:59:00-06:00
+  //2019-02-10T23:59
+  function FullCalendarToCanvasDate(localDate, localTime){
+    var fullTime = '23:59:00' + '-' + localTime
+    return localDate + 'T' +fullTime
   }
 
   //TODO:

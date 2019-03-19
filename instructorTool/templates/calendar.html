@@ -8,6 +8,7 @@
   
   <script>
     var eventsJSON = '{{events | safe}}';
+    var course = '{{course | safe}}';
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
@@ -21,18 +22,6 @@
         <div id='calendar'></div>
     </div>
     <div class="col col-sm-2" style="margin-top: 50px">
-
-      <div class="row" id='wrap'>
-        <div id='external-events'>
-          <h4>Example Events</h4>
-          <div class='fc-event'>Due Date</div>
-          <div class='fc-event'>Deadline</div>
-          <div class='fc-event'>Sprint</div>
-          <div class='fc-event'>Quiz</div>
-          <div class='fc-event'>Assignment</div>
-        </div>
-      </div>
-      
       <div class="row" style="margin: 20px">
         <a id="hyperlink-button" href="{{url_for('cal')}}">Refresh&nbsp;&nbsp; <i class="fa fa-sync"></i></a>
       </div>
@@ -40,7 +29,7 @@
           <input id="toolbar-button" type="button" class="btn" value="Add Event" onclick="openModelForNewEvent()"/>
       </div>
       <div class="row" style="margin: 20px">
-          <input id="toolbar-button" type="button" class="btn" value="Push Event" onclick="getAllEvents()"/>
+          <input id="toolbar-button" type="button" class="btn" value="Push Event" onclick="pushNewEvents(); pushDeleteEvents(); pushEditEvents()"/>
       </div>
     </div>
   </div>
