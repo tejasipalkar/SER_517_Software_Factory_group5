@@ -6,26 +6,16 @@ class Canvas_Calendar:
         self.canvas = Canvas(self.API_URL, api_key)
 
     def getallevents(self, id):
-        # courses = self.canvas.get_courses()
-        # user = self.canvas.get_user('self')
-        courses_array = [id]
-        # user_array = []
-        resultant_json_format = {"events":[]}
-        # user_array.append('user_' + str(user.id))
+        courses_array = ['course_'+ str(id)]
+        resultant_json_format = {"events":[], "assignments":[]}
         course_events = self.canvas.get_calendar_events(all_events = 1, type = 'event', context_codes=courses_array)
-        # user_events = self.canvas.get_calendar_events(all_events = 1, type = 'event', context_codes=user_array)
-        # course_assignments = self.canvas.get_calendar_events(all_events = 1, type = 'assignment', context_codes=courses_array)
+        course_assignments = self.canvas.get_calendar_events(all_events = 1, type = 'assignment', context_codes=courses_array)
         for event in course_events:
             resultant_json_format["events"].append(event.__dict__['attributes'])
-        # for event in user_events:
-        #     resultant_json_format["events"].append(event.__dict__['attributes'])
-        # for assignment in course_assignments:
-        #     resultant_json_format["assignments"].append(assignment.__dict__['assignment'])
+        for assignment in course_assignments:
+            resultant_json_format["assignments"].append(assignment.__dict__['assignment'])
 
         return resultant_json_format
-
-        # with open('calendar.json', 'w') as fp:
-        #     json.dump(resultant_json_format, fp, indent = 4)
 
     def create_event(self, array_of_objects):
         counter = 0
@@ -63,5 +53,3 @@ class Canvas_Calendar:
             return "success"
         else:
             return "failure"
-
-cal = Canvas_Calendar("7236~o5XXfM7GrZZogzsg8xdQoODn3DdBqdwlq2DOM9qo4uD7q3e1Y79Ssi9vmObH9q42")

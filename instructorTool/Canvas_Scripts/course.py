@@ -32,5 +32,4 @@ class Course:
         with open('course.json', 'w') as fp:
             json.dump(course_json_format, fp, indent = 4)
 
-course = Course("7236~o5XXfM7GrZZogzsg8xdQoODn3DdBqdwlq2DOM9qo4uD7q3e1Y79Ssi9vmObH9q42")
 
