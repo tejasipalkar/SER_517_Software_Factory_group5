@@ -17,19 +17,24 @@
 </head>
 
 <body>
+  <div id="success-alert" class="alert alert-success text-center" role="alert" style="display:none">Calendar Successfully Updated!</div>
+  <div id="failure-alert" class="alert alert-danger text-center" role="alert" style="display:none">Failed to Update Calendar!</div>
   <div class="row">
     <div class="col col-sm-10">
         <div id='calendar'></div>
     </div>
     <div class="col col-sm-2" style="margin-top: 50px">
       <div class="row" style="margin: 20px">
-        <a id="hyperlink-button" href="{{url_for('cal')}}">Refresh&nbsp;&nbsp; <i class="fa fa-sync"></i></a>
+        <a id="hyperlink-button" href="{{url_for('cal')}}" style="background-color: #5DADE2; color: white">REFRESH&nbsp;&nbsp; <i class="fa fa-sync"></i></a>
       </div>
       <div class="row" style="margin: 20px">
-          <input id="toolbar-button" type="button" class="btn" value="Add Event" onclick="openModelForNewEvent()"/>
+          <input id="toolbar-button" type="button" class="btn btn-block" style="background-color: #D35400; color: white" value="ADD" onclick="openModelForNewEvent()"/>
       </div>
       <div class="row" style="margin: 20px">
-          <input id="toolbar-button" type="button" class="btn" value="Push Event" onclick="pushNewEvents(); pushDeleteEvents(); pushEditEvents()"/>
+          <button id="toolbar-button" type="button" class="btn btn-block" style="background-color: #1E8449; color: white" onclick="pushNewEvents()">PUSH<i id="push-spinner" style="margin-left: 5px; display:none" ng-show="searching" class="fa fa-spinner fa-pulse" aria-hidden="true"></i></button>
+      </div>
+      <div class="row" style="margin: 20px">
+          <button id="toolbar-button" type="button" class="btn btn-block" style="background-color: #1E8449; color: white" onclick="pushNewEvents()">DOWNLOAD<i id="push-spinner" style="margin-left: 5px; display:none" ng-show="searching" class="fa fa-spinner fa-pulse" aria-hidden="true"></i></button>
       </div>
     </div>
   </div>
