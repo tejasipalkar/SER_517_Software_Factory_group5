@@ -24,10 +24,12 @@ def home():
     return render_template('home.html',title ="Home",courses= courses)
 
 @app.route("/about")
+@login_required
 def about():
     return render_template('about.html')
 
 @app.route("/cal")
+@login_required
 def cal():
     canvas = Canvas_Calendar(canvas_token)
     result = canvas.getallevents(course)
@@ -37,6 +39,7 @@ def cal():
     return render_template('calendar.html', events = myevents, course= course)
 
 @app.route("/newevent", methods=['POST'])
+@login_required
 def newEvents():
     response = request.data
     responseObj = json.loads(response)
@@ -45,6 +48,7 @@ def newEvents():
     return result
 
 @app.route("/editevent", methods=['POST'])
+@login_required
 def editEvents():
     response = request.data
     responseObj = json.loads(response)
@@ -53,6 +57,7 @@ def editEvents():
     return result
 
 @app.route("/deleteevent", methods=['POST'])
+@login_required
 def deleteEvents():
     response = request.data
     responseObj = json.loads(response)
@@ -61,6 +66,7 @@ def deleteEvents():
     return result
 
 @app.route('/send', methods=['GET','POST'])
+@login_required
 def send():
     if request.method== 'POST':
         return render_template('coursepage.html',title = "Course Page")
@@ -80,11 +86,12 @@ def logout():
     return redirect(url_for('home'))
 
 @app.route("/account")
-#@login_required
+@login_required
 def account():
     return render_template('account.html')
 
 @app.route("/document")
+@login_required
 def fetch_document():
     doc_id = request.args.get('doc_id')
     access_token = session['access_token']
@@ -97,7 +104,7 @@ def callback():
     client_id = Configuration.query.filter_by(key="oauth_client_id").first().value
     client_secret = Configuration.query.filter_by(key="oauth_client_secret").first().value
     PARAMS = {'code':code, 'client_id': client_id, 
-    'client_secret': client_secret, 'redirect_uri': 'http://127.0.0.1:5000/oauthcallback',
+    'client_secret': client_secret, 'redirect_uri': 'http://instructortool.us-east-2.elasticbeanstalk.com/oauthcallback',
     'grant_type': 'authorization_code'} 
     URL = "https://oauth2.googleapis.com/token"
     # sending get request and saving the response as response object 
@@ -116,6 +123,9 @@ def callback():
     response = str(response, 'utf-8')
     res = json.loads(response)
     email = res['email']
+    domain = email.split('@')[1]
+    if domain != "asu.edu":
+        return "Please login via asu.edu account"
     name = res['name']
     user = User.query.filter_by(email=email).first()
     if user:
@@ -135,14 +145,16 @@ def sendrequest():
     client_id = Configuration.query.filter_by(key="oauth_client_id").first().value
     url = "https://accounts.google.com/o/oauth2/auth?response_type=code&client_id="\
     + str(client_id)\
-    +"&scope=https://www.googleapis.com/auth/spreadsheets+https://www.googleapis.com/auth/drive.file+https://www.googleapis.com/auth/drive+email+profile&redirect_uri=http://127.0.0.1:5000/oauthcallback"
+    +"&scope=https://www.googleapis.com/auth/spreadsheets+https://www.googleapis.com/auth/drive.file+https://www.googleapis.com/auth/drive+email+profile&redirect_uri=http://instructortool.us-east-2.elasticbeanstalk.com/oauthcallback"
     return redirect(url)
 
 @app.route("/initconfig")
+@login_required
 def initdatabase():
     return render_template('initconfig.html')
 
 @app.route("/addconfig")
+@login_required
 def addconfig():
     name = request.args.get('name')
     value = request.args.get('value')
