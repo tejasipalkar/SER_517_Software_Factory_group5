@@ -67,3 +67,16 @@ class Canvas_Calendar:
             return "success"
         else:
             return "failure"
+
+    def delete_assignment(self, array_ids, course_id):
+        counter = 0
+        course = self.canvas.get_course(course_id)
+        for ids in array_ids:
+            assignment = course.get_assignment(ids)
+            if assignment.delete():
+                counter += 1
+
+        if counter == len(array_ids):
+            return "success"
+        else:
+            return "failure"
