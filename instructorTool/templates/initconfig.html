@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1>Initialize your App Configurations here.</h1> 
+    <form action="/addconfig">
+	  Config name:<br>
+	  <input type="text" name="name" value="">
+	  <br>
+	  Config value:<br>
+	  <input type="text" name="value" value="">
+	  <br><br>
+	  <input type="submit" value="Submit">
+	</form>
+{% endblock content %}
