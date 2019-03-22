@@ -1,7 +1,7 @@
 from canvasapi import Canvas
 import json
 
-class Course:
+class CourseConnect:
     def __init__(self, api_key):
         self.API_URL = "https://asu.instructure.com"
         self.canvas = Canvas(self.API_URL, api_key)
@@ -25,11 +25,7 @@ class Course:
 
         return course_dict
 
-    def getcoursejson(self):
-        course_dict = self.getcourse()
-        course_json_format = {"type":"course",
-                        "children":[{"name'":key,"instructor":value} for key, value in course_dict.items()]}
-        with open('course.json', 'w') as fp:
-            json.dump(course_json_format, fp, indent = 4)
-
-
+course = CourseConnect("Input_token_key")
+available_course = course.getcourse()
+for c in available_course:
+    print(c)
