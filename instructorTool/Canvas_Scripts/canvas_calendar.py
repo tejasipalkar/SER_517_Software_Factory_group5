@@ -53,3 +53,17 @@ class Canvas_Calendar:
             return "success"
         else:
             return "failure"
+
+    def edit_assignment(self,array_of_objects, course_id):
+        counter = 0
+        course = self.canvas.get_course(course_id)
+        for objects in array_of_objects:
+            assignment = course.get_assignment(objects['id'])
+            assignment_dict = objects
+            if assignment.edit(assignment = assignment_dict):
+                counter += 1
+
+        if counter == len(array_of_objects):
+            return "success"
+        else:
+            return "failure"
