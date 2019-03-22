@@ -14,6 +14,8 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
   <script src='../static/javascript/calendar/fullcalendar.min.js'></script>
   <script src="../static/javascript/calendar/calendar.js"></script>
+  <script src="../static/javascript/imageExport/html2canvas.min.js"></script>
+  <script src="../static/javascript/imageExport/html2canvas.js"></script>
 </head>
 
 <body>
@@ -34,7 +36,15 @@
           <button id="toolbar-button" type="button" class="btn btn-block" style="background-color: #1E8449; color: white" onclick="pushNewEvents()">PUSH<i id="push-spinner" style="margin-left: 5px; display:none" ng-show="searching" class="fa fa-spinner fa-pulse" aria-hidden="true"></i></button>
       </div>
       <div class="row" style="margin: 20px">
-          <button id="toolbar-button" type="button" class="btn btn-block" style="background-color: #1E8449; color: white" onclick="pushNewEvents()">DOWNLOAD<i id="push-spinner" style="margin-left: 5px; display:none" ng-show="searching" class="fa fa-spinner fa-pulse" aria-hidden="true"></i></button>
+        <div class="dropdown">
+          <button class="btn btn-block btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            DOWNLOAD
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">LaTeX</a>
+            <a class="dropdown-item" onclick="imageDownload()">Image</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>

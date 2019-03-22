@@ -530,5 +530,14 @@ function openModelForUpdateEvent(event){
     return localDate + 'T' + localTime + 'Z'
   }
 
+  function imageDownload(){
+    html2canvas(document.querySelector("#calendar")).then(canvas => {
+      image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+      var link = document.createElement('a');
+      link.download = "calendar.png";
+      link.href = image;
+      link.click();
+  });
+  }
   //TODO:
   //clean error message
