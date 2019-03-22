@@ -317,8 +317,12 @@ function openModelForUpdateEvent(event){
           end_at: null,
           time_zone_edited: "UTC"//America/Phoenix
         };
+        var title = completeEvent.title;
+        if(completeEvent.tag.trim().length != 0){
+          title = completeEvent.tag.trim() + ":" + title
+        }
         event.context_code = course;
-        event.title = completeEvent.title;
+        event.title = title;
         event.start_at = FullCalendarToCanvasDate(completeEvent.start.format().substring(0,10),completeEvent.start.format().substring(11,16));
         event.end_at = FullCalendarToCanvasDate(completeEvent.end.format().substring(0,10),completeEvent.end.format().substring(11,16));
         events.push(event);
@@ -357,8 +361,12 @@ function openModelForUpdateEvent(event){
           start_at: null,
           end_at: null
         };
+        var title = completeEvent.title;
+        if(completeEvent.tag.trim().length != 0){
+          title = completeEvent.tag.trim() + ":" + title
+        }
         event.id = completeEvent.id;
-        event.title = completeEvent.title;
+        event.title = title;
         event.start_at = FullCalendarToCanvasDate(completeEvent.start.format().substring(0,10),completeEvent.start.format().substring(11,16));
         if(completeEvent.end == null){
           event.end_at = event.start_at;
@@ -507,7 +515,13 @@ function openModelForUpdateEvent(event){
     for(var i=0 ;i <events.length ;i++ ){
       events[i].start = events[i].start_at;
       events[i].end = events[i].end_at;
-  
+      events[i].tag = "";
+      var fullTitle = events[i].title.split(':');
+      if(fullTitle.length == 2){
+        events[i].tag = fullTitle[0];
+        events[i].title = fullTitle[1];
+        events[i].color = colorTagMap[fullTitle[0]];
+      }
       delete events[i].start_at;
       delete events[i].end_at;
       delete events[i].url;
