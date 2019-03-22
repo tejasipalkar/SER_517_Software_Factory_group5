@@ -61,7 +61,21 @@
         <div class="modal-body">
 
           <input id="type_checkbox" style="display:none" type="checkbox" class="form-control"></input>
-          <label><b>Title</b></label>
+          <label><b>Tag</b></label>
+          <div class="input-group">
+            <input id="tag_input" type="text" class="form-control" placeholder="Event Type">
+            <div class="input-group-append">
+              <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="sr-only">Toggle Dropdown</span>
+              </button>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" onclick="setTagField('Project')">Project</a>
+                <a class="dropdown-item" onclick="setTagField('Deadline')">Deadline</a>
+              </div>
+            </div>
+          </div>
+
+          <label id="model_label"><b>Title</b></label>
           <input id="event_title"placeholder="" class="form-control" onchange='$("#title_error").text("")'></input>
           <p class="form_error" id="title_error"></p>
   
@@ -98,25 +112,6 @@
               <label id="model_label">End Time</label>
               <input id="end_time" placeholder="HH:MM" class="form-control"></input>
               <p class="form_error" id="end_time_error"></p>
-          </div>
-
-          <div id="color_div">
-            <label id="model_label"><b>Color</b></label>
-            <div class="input-group">
-              <input id="color_input" type="text" class="form-control" placeholder="Event color" value="Blue">
-              <div class="input-group-append">
-                <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <span class="sr-only">Toggle Dropdown</span>
-                </button>
-                <div class="dropdown-menu">
-                  <a class="dropdown-item" onclick="setColorField('#4c85a8')">Blue</a>
-                  <a class="dropdown-item" onclick="setColorField('#bd403a')">Red</a>
-                  <a class="dropdown-item" onclick="setColorField('#bd85a8')">Pink</a>
-                  <a class="dropdown-item" onclick="setColorField('#53403a')">Brown</a>
-                  <a class="dropdown-item" onclick="setColorField('#5e223a')">Purple</a>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
         <div class="modal-footer">

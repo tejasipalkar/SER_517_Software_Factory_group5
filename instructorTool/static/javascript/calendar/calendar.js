@@ -2,10 +2,10 @@ const DATE_REGEX = /^\d{4}-(0[1-9]|1[12])-(0[1-9]|[12][0-9]|3[01])$/;
 const TIME_REGEX = /^(?:2[0-3]|[01][0-9]):[0-5][0-9]$/;
 
 var selectedEvent = null;
-const DEFAULT_EVENT_COLOR = ""
 var newEvents = [];
 var editEvents = [];
 var deleteEvents = [];
+var colorTagMap = {Project:"#bd85a8",Deadline:"#bd403a"}
 
 $(document).ready(function() {
   $('#calendar').fullCalendar({
@@ -57,14 +57,17 @@ function openModelForNewEvent(Date){
 }
 
 function openModelForUpdateEvent(event){
+  var tag = "";
   var title = "";
   var startDate = "";
   var endDate = "";
   var startTime = "";
   var endTime = "";
-  var color = DEFAULT_EVENT_COLOR;
 
   if(event){
+    if(event.tag){
+      tag = event.tag;
+    }
     if(event.title){
       title = event.title;
     }if(event.start){
@@ -74,12 +77,9 @@ function openModelForUpdateEvent(event){
         endDate = event.end.format().substring(0,10)
         endTime = event.end.format().substring(11,16)
     }
-    if(event.color){
-      color = event.color;
-    }
   }
   clearModel();
-  setModelValue(title, startDate, endDate, startTime, endTime, color);
+  setModelValue(tag,title, startDate, endDate, startTime, endTime);
   $('#delete_button').show();
   $('#event_details_model').modal('show');
   console.log("start", startDate, "end", endDate,
@@ -184,12 +184,12 @@ function openModelForUpdateEvent(event){
   }
 
   function createEvents() {
+    var tag = $('#tag_input').val().trim();
     var title = $('#event_title').val();
     var startDate = $('#start_date').val();
     var endDate = $('#end_date').val();
     var startTime = $('#start_time').val();
     var endTime = $('#end_time').val();
-    var color = $('#color_input').val();
     var isSameDay = $('#same_day_checkbox').is(":checked")
     var isAllDay = $('#all_day_checkbox').is(":checked")
 
@@ -197,7 +197,11 @@ function openModelForUpdateEvent(event){
     if(title == null || title.length < 1){
       $('#title_error').text("Invalid Title");
       errorMessage += "Title, "
-    }if(startDate == null || !DATE_REGEX.test(startDate)){
+    }if(title != null && title.includes(':')){
+      $('#title_error').text("Char not allowed: ':'");
+      errorMessage += "Title, "
+    }
+    if(startDate == null || !DATE_REGEX.test(startDate)){
       $('#start_date_error').text("Invalid Date");
       errorMessage += "StartDate, "
     }if(!isSameDay && (endDate == null || !DATE_REGEX.test(endDate))){
@@ -238,8 +242,9 @@ function openModelForUpdateEvent(event){
         eventData.title = title;
         eventData.start = startDate;
         eventData.end = endDate;
-        eventData.color = color;
+        eventData.color = colorTagMap[tag];
         eventData.allDay = false;
+        eventData.tag = tag;
         editEvents.push(eventData._id)
         $('#calendar').fullCalendar('removeEvents',eventData._id);
       }else{
@@ -250,8 +255,9 @@ function openModelForUpdateEvent(event){
           title: title,
           start: startDate,
           end: endDate,
-          color: color,
-          allDay: false
+          color: colorTagMap[tag],
+          allDay: false,
+          tag: tag
         };
       }
       $('#calendar').fullCalendar('renderEvent', eventData, true);
@@ -382,14 +388,13 @@ function openModelForUpdateEvent(event){
     }
   }
 
-  function setModelValue(title, startDate, endDate, startTime, endTime, color){
-    $('#update').text(' update!')
+  function setModelValue(tag, title, startDate, endDate, startTime, endTime){
+    $('#tag_input').val(tag);
     $('#event_title').val(title);
     $('#start_date').val(startDate);
     $('#end_date').val(endDate);
     $('#start_time').val(startTime);
     $('#end_time').val(endTime);
-    $('#color_input').val(color);
     if(endDate != ""){
       if(endDate == startDate){
         endDate = ""
@@ -413,7 +418,6 @@ function openModelForUpdateEvent(event){
     $('#end_date_error').text("");
     $('#start_time_error').text("");
     $('#end_time_error').text("");
-    $('#color_input').val(DEFAULT_EVENT_COLOR);
 
     $('#event_title').val("");
     $('#start_date').val("");
@@ -429,6 +433,10 @@ function openModelForUpdateEvent(event){
 
   function setColorField(color){
     $('#color_input').val(color);
+  }
+
+  function setTagField(tag){
+    $('#tag_input').val(tag);
   }
 
   function formatDate(Date){
