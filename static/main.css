@@ -263,3 +263,24 @@ input[type=file],select{
 #remove-file{
   margin-left: -230px;
 }
+.login-container{
+  background-color: #EBF5FB;
+  width: 400px;
+  height: 200px;
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+  border-style: groove;
+}
+
+.btn-login{
+  width: 75%;
+  margin-left:40px;
+  margin-top: 40px;
+  position: relative;
+}
+.login-elements{
+  margin-top: 35px;
+  margin-left:25px;
+}
