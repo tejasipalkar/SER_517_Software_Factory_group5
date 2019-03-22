@@ -40,8 +40,3 @@ class Canvas_Group:
                     members.append(user_dict[vals])
             group = group.edit(members = members)
 
-# group = Canvas_Group(API Key)
-#group = Canvas_Group("7236~o5XXfM7GrZZogzsg8xdQoODn3DdBqdwlq2DOM9qo4uD7q3e1Y79Ssi9vmObH9q42")
-
-# group.create_groups(CSV Location, Name Of The Course)
-#group.create_groups("groups.csv","SER515-Group5-TestShell")
