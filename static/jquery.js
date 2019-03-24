@@ -1,3 +1,4 @@
+
 $(document).ready(function(){
 	$("#grp").click(function(){
 		$("#content1").hide()
@@ -7,6 +8,7 @@ $(document).ready(function(){
 		$("#content2").hide()
 		$("#content1").show();
 	})
+	$("")
 
 	var acc = document.getElementsByClassName("accordion");
 
