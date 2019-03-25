@@ -12,8 +12,8 @@ import jwt
 import base64
 import json
 
-course = 'course_15760'
-canvas_token = "7236~p8bdXeGzlCNwcTIiFvdetkcTmS1MHMKyinjnPFQLVOAunOvE8kyzue4fUock3u4V"
+course = '15760'
+canvas_token = '7236~UoRqWAyLYPwM3ArUdvszjsidpNisiFq2N4XnlMFIr3Uh3TNOVuhP7qv05awogom2'
 
 with open('instructorTool/courseslist.json') as f:
         courses = json.load(f)
@@ -33,7 +33,7 @@ def cal():
     result = canvas.getallevents(course)
     print(result['events'])
     myevents = json.dumps(result['events'])
-    return render_template('calendar.html', events = myevents, course= course)
+    return render_template('calendar.html', events = myevents, course= "course_"+course)
 
 @app.route("/newevent", methods=['POST'])
 def newEvents():

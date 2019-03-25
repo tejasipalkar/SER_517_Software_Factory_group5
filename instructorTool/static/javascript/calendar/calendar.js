@@ -232,7 +232,7 @@ function openModelForUpdateEvent(event){
         startDate = startDate + 'T' + startTime;
       }else{
         endDate = endDate + 'T' + '23:59';
-        startDate = startDate + 'T' + '00:00';
+        startDate = startDate + 'T' + '00:01';
       }
       console.log(title,startDate,endDate)
       var eventData;
@@ -315,7 +315,7 @@ function openModelForUpdateEvent(event){
           title: null,
           start_at: null,
           end_at: null,
-          time_zone_edited: "UTC"//America/Phoenix
+          time_zone_edited: "America/Phoenix"
         };
         var title = completeEvent.title;
         if(completeEvent.tag.trim().length != 0){
@@ -412,7 +412,7 @@ function openModelForUpdateEvent(event){
         $('#end_date_div').show()
       }
     }
-    if((startTime == "00:00" && endTime == "23:59")|| (startTime == "" && endTime == "")){
+    if((startTime == "00:01" && endTime == "23:59")|| (startTime == "" && endTime == "")){
       //isAllDay event
     }else{
       $('#all_day_checkbox').prop('checked', false);
@@ -525,12 +525,24 @@ function openModelForUpdateEvent(event){
       delete events[i].start_at;
       delete events[i].end_at;
       delete events[i].url;
-      events[i].start = canvasToFullCalendarDate(events[i].start)
-      events[i].end = canvasToFullCalendarDate(events[i].end)
+      events[i].start = formatDateCanvasToFullCalendar(events[i].start)
+      events[i].end = formatDateCanvasToFullCalendar(events[i].end)
     }
     console.log(events);
     return events;
   }
+
+  function formatDateCanvasToFullCalendar(canvasDate){
+    var fullDate = new Date(Date.parse(canvasDate))
+    var month = fullDate.getMonth()+1
+    var date = fullDate.getFullYear() + "-" + pad(month) + "-" + pad(fullDate.getDate())
+    var time = pad(fullDate.getHours()) + ":" + pad(fullDate.getMinutes())
+    return date + 'T' + time;
+  }
+
+  function pad(d) {
+    return (d < 10) ? '0' + d.toString() : d.toString();
+}
 
   //2019-03-20T05:59:00Z  TO
   //2019-02-10T23:59
@@ -549,7 +561,7 @@ function openModelForUpdateEvent(event){
   //2019-02-10T23:59  to
   //2019-03-20T05:59:00Z 
   function FullCalendarToCanvasDate(localDate, localTime){
-    return localDate + 'T' + localTime + 'Z'
+    return localDate + 'T' + localTime + '-07:00'
   }
 
   function imageDownload(){
