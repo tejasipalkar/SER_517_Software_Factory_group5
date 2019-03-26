@@ -11,6 +11,8 @@ from flask import jsonify, session
 import jwt
 import base64
 import json
+import csv
+import pandas as pd
 
 course = 'course_15760'
 canvas_token = "7236~o5XXfM7GrZZogzsg8xdQoODn3DdBqdwlq2DOM9qo4uD7q3e1Y79Ssi9vmObH9q42"
@@ -94,6 +96,80 @@ def fetch_document():
     doc_id = request.args.get('doc_id')
     access_token = session['access_token']
     r=requests.get("https://www.googleapis.com/drive/v3/files/"+doc_id+"/export?mimeType=text/csv", headers={"Authorization":access_token})
+   
+    destname = 'dummy.csv'
+    with open(destname, 'w') as wf:
+        wf.write(r.text)
+        
+    count = 0
+    with open(destname, 'r') as rf:
+        rawtext = rf.read().splitlines()
+        myreader = csv.reader(rawtext)
+        res = []
+        no_of_pref = 3
+        no_of_avoid = 3
+        for row in myreader:
+            print("-----------------------------------------------------------------------")
+            count = count + 1
+            if(count % 2 != 0):
+                try:
+                    temp = []
+                    i = 1
+                    temp.append(row[i])
+                    i+=1
+                    temp.append(row[i])
+                    i+=1
+                    temp.append(row[i])
+                    i+=1
+                    temp.append(row[i])
+                    i += 1
+                    pref = []
+                    for k in range(i, no_of_pref+i):
+                        #print(line[k])
+                        if row[k] != '' and row[k] != ' ':
+                            #print(line[k])
+                            pref.append(row[k])
+                    temp.append(pref)
+                    i += no_of_pref
+                    avoid = []
+                    for k in range(i, no_of_avoid+i):
+                        if row[k] != '' and row[k] != ' ':
+                            avoid.append(row[k])
+                    temp.append(avoid)
+                    i += no_of_avoid
+                    temp.append(row[i])
+                    i += 1
+                    date_time = []
+                    for idx,word in enumerate(row[i].split(',')):
+                        if idx%2 == 0:
+                            first = word
+                        else:
+                            date_time.append(first + '-' + word)
+
+                    temp.append(date_time)
+                    i += 1
+                    temp.append(row[i])
+                    i += 1
+                    temp.append(row[i])
+                    i += 1
+                    temp.append(row[i])
+                    res.append(temp)
+                    print(temp)
+                except:
+                    print("An exception occurred")
+        #print(rawtext)
+        data = pd.DataFrame(res, columns=['Full Name', 'ASURITE', 'GitHub', 'EmailID', 'Preferences', 'Avoidance', 'TimeZone', 'TimePreference', 'GithubKnowledge', 'ScrumKnowledge', 'Comments'])
+        print(data)
+
+    # for row in csv.reader(['one,two,three,one,two,three,one,two,three,one,two,three']):
+    #     print(row)
+    # count = 0
+    # for row in reader:
+    #     if count > 0:
+    #         print(row)
+    #         # json.dump(row, jsonfile)
+    #         # jsonfile.write('\n')
+    #     count = count + 1
     return r.text
 
 @app.route("/oauthcallback")
@@ -150,6 +226,13 @@ def sendrequest():
 @login_required
 def initdatabase():
     return render_template('initconfig.html')
+
+def getConfig(config_name, default):
+    config = Configuration.query.filter_by(key=config_name).first()
+    if config:
+        return config.value
+    else:
+        return default
 
 @app.route("/addconfig")
 @login_required
