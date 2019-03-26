@@ -19,6 +19,10 @@ with open('instructorTool/courseslist.json') as f:
         courses = json.load(f)
 
 @app.route("/")
+@app.route("/login")
+def login():
+    return render_template('login.html',title ="Login",courses= courses)
+
 @app.route("/home")
 def home():
     return render_template('home.html',title ="Home",courses= courses)
@@ -73,12 +77,6 @@ def send():
 
     return render_template('home.html')
 
-@app.route("/login", methods=['GET', 'POST'])
-def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-            return redirect(url_for('home'))
-    return render_template('login.html', title='Login', form=form)
 
 @app.route("/logout")
 def logout():
@@ -104,7 +102,7 @@ def callback():
     client_id = Configuration.query.filter_by(key="oauth_client_id").first().value
     client_secret = Configuration.query.filter_by(key="oauth_client_secret").first().value
     PARAMS = {'code':code, 'client_id': client_id, 
-    'client_secret': client_secret, 'redirect_uri': 'http://instructortool.us-east-2.elasticbeanstalk.com/oauthcallback',
+    'client_secret': client_secret, 'redirect_uri': 'http://127.0.0.1:5000/oauthcallback',
     'grant_type': 'authorization_code'} 
     URL = "https://oauth2.googleapis.com/token"
     # sending get request and saving the response as response object 
@@ -138,14 +136,14 @@ def callback():
     access_token = data['access_token']
     access_token = "Bearer " + access_token
     session['access_token'] = access_token
-    return redirect(url_for('account'))
+    return redirect(url_for('token'))
 
 @app.route("/google")
 def sendrequest():
     client_id = Configuration.query.filter_by(key="oauth_client_id").first().value
     url = "https://accounts.google.com/o/oauth2/auth?response_type=code&client_id="\
     + str(client_id)\
-    +"&scope=https://www.googleapis.com/auth/spreadsheets+https://www.googleapis.com/auth/drive.file+https://www.googleapis.com/auth/drive+email+profile&redirect_uri=http://instructortool.us-east-2.elasticbeanstalk.com/oauthcallback"
+    +"&scope=https://www.googleapis.com/auth/spreadsheets+https://www.googleapis.com/auth/drive.file+https://www.googleapis.com/auth/drive+email+profile&redirect_uri=http://127.0.0.1:5000/oauthcallback"
     return redirect(url)
 
 @app.route("/initconfig")
@@ -169,4 +167,9 @@ def addconfig():
         db.session.add(config)
         db.session.commit()
     return ("Configuration added successfully")
+
+@app.route("/token")
+@login_required
+def token():
+   return render_template('token.html') 
 
