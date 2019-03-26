@@ -24,8 +24,32 @@ class slack_group:
 
     def create_slack_groups(self, token, course_id):
         group_data = self.get_groupsdata(course_id)
-        # Not accepting the access token and not authorizing.
-        res = requests.get('https://slack.com/api/auth.test?token='+token)
+        res = requests.put('https://slack.com/api/users.list?token='+token+'&pretty=1')
         data = res.json()
-        print(data)
+        members = data["members"]
+        nameToID = {}
+        for i in range(0, len(members)):
+            nameToID[members[i]['name']] = members[i]['id']
+
+        group_append = ["_instructor", "_general"]
+
+        for key in group_data:
+            name = key
+            groupMembers = group_data[key]
+            channelIDs = []
+            if len(group_append) == 0:
+                res = requests.put('https://slack.com/api/groups.create?token='+token+'&name='+name+'&pretty=1')
+                data = res.json()
+                channelIDs.append(data["group"]['id'])
+            else:
+                for append in group_append:
+                    res = requests.put('https://slack.com/api/groups.create?token='+token+'&name='+name+append+'&pretty=1')
+                    data = res.json()
+                    channelIDs.append(data["group"]['id'])
+
+            for i in range(0, len(groupMembers)):
+                userID = nameToID[groupMembers[i]]
+                print(groupMembers[i])
+                for channelID in channelIDs:
+                    res = requests.put('https://slack.com/api/groups.invite?token='+token+'&channel='+channelID+'&user='+userID+'&pretty=1')
 
