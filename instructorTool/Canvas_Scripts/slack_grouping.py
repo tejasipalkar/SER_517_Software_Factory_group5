@@ -1,4 +1,5 @@
 from canvasapi import Canvas
+import requests
 
 class slack_group:
     def __init__(self, api_key):
@@ -20,3 +21,11 @@ class slack_group:
                 members.append(user.login_id)
             group_data[group.name] = members
         return group_data
+
+    def create_slack_groups(self, token, course_id):
+        group_data = self.get_groupsdata(course_id)
+        # Not accepting the access token and not authorizing.
+        res = requests.get('https://slack.com/api/auth.test?token='+token)
+        data = res.json()
+        print(data)
+
