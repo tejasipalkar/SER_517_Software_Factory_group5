@@ -5,7 +5,8 @@ var selectedEvent = null;
 var newEvents = [];
 var editEvents = [];
 var deleteEvents = [];
-var colorTagMap = {Project:"#bd85a8",Deadline:"#bd403a"}
+var editAssign = [];
+var colorTagMap = {Project:"#bd85a8",Deadline:"#bd403a",Assign:"#006666"}
 
 $(document).ready(function() {
   $('#calendar').fullCalendar({
@@ -41,7 +42,14 @@ $(document).ready(function() {
       if (!confirm("Are you sure about this change?")) {
         revertFunc();
       }
-      editEvents.push(event._id);
+      var eventType = event.eventType
+      if(eventType){
+        if(eventType == 'Event'){
+          editEvents.push(event._id);
+        }else if(eventType == 'Assign'){
+          editAssign.push(event._id);
+        }
+      }
     }
   });
   fetchEvents();
@@ -53,7 +61,7 @@ function openModelForNewEvent(Date){
   if(Date){
     $('#start_date').val(formatDate(Date));
   }
-  $('#event_details_model').modal('show');
+  $('#assign_details_model').modal('show');
 }
 
 function openModelForUpdateEvent(event){
@@ -63,8 +71,12 @@ function openModelForUpdateEvent(event){
   var endDate = "";
   var startTime = "";
   var endTime = "";
+  var eventType = "";
 
   if(event){
+    if(event.eventType){
+      eventType = event.eventType;
+    }
     if(event.tag){
       tag = event.tag;
     }
@@ -78,10 +90,18 @@ function openModelForUpdateEvent(event){
         endTime = event.end.format().substring(11,16)
     }
   }
-  clearModel();
-  setModelValue(tag,title, startDate, endDate, startTime, endTime);
-  $('#delete_button').show();
-  $('#event_details_model').modal('show');
+  
+  if(eventType == 'Event'){
+    clearModel();
+    setModelValue(tag,title, startDate, endDate, startTime, endTime);
+    $('#delete_button').show();
+    $('#event_details_model').modal('show');
+  }else if(eventType == 'Assign' || eventType == 'Quiz'){
+    clearAssignModel();
+    setAssignModelValue(tag,title, startDate, startTime);
+    $('#assign_details_model').modal('show');
+  }
+  
   console.log("start", startDate, "end", endDate,
   "start", startTime, "end", endTime)
 }
@@ -108,77 +128,11 @@ function openModelForUpdateEvent(event){
         title: 'Meeting',
         start: '2019-02-12T10:30:00',
         end: '2019-02-12T12:30:00'
-      },
-      {
-        id: 59221,
-        title: 'Meeting minutes',
-        start: '2019-02-12T10:30:00',
-        end: '2019-02-12T12:30:00',
-        description: "<p>\u00a0Upload response document for the following papers:</p>\r\n<ul>\r\n<li><strong>A tour of the visualization zoo</strong></li>\r\n</ul>",
-        due_at: "2018-08-21T06:55:00Z",
-        unlock_at: null,
-        lock_at: "2018-08-21T06:59:00Z",
-        points_possible: 0.0,
-        grading_type: "pass_fail",
-        assignment_group_id: 17727,
-        grading_standard_id: null,
-        created_at: "2018-08-15T03:05:55Z",
-        updated_at: "2018-12-20T04:52:04Z",
-        peer_reviews: false,
-        automatic_peer_reviews: false,
-        position: 1,
-        grade_group_students_individually: false,
-        anonymous_peer_reviews: false,
-        group_category_id: null,
-        post_to_sis: false,
-        moderated_grading: false,
-        omit_from_final_grade: false,
-        intra_group_peer_reviews: false,
-        anonymous_instructor_annotations: false,
-        anonymous_grading: false,
-        graders_anonymous_to_graders: false,
-        grader_count: null,
-        grader_comments_visible_to_graders: true,
-        final_grader_id: null,
-        grader_names_visible_to_final_grader: true,
-        allowed_attempts: -1,
-        lock_info: {
-            lock_at: "2018-08-21T06:59:00Z",
-            can_view: true,
-            asset_string: "assignment_59221"
-        },
-        secure_params: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsdGlfYXNzaWdubWVudF9pZCI6IjEzOTc3YzgwLWZlYTMtNDU2ZS1hMDBmLTFkNDEzMjYyZDczNSJ9.R_UF0CZtaJp9vRi4MgfkCinPxpFm1ybxQIQfe2KhpcY",
-        course_id: 3682,
-        name: "Week 1 Response Doc",
-        submission_types: [
-            "online_upload"
-        ],
-        has_submitted_submissions: true,
-        due_date_required: false,
-        max_name_length: 255,
-        in_closed_grading_period: false,
-        user_submitted: true,
-        is_quiz_assignment: false,
-        can_duplicate: true,
-        original_course_id: null,
-        original_assignment_id: null,
-        original_assignment_name: null,
-        workflow_state: "published",
-        muted: false,
-        html_url: "https://asu.instructure.com/courses/3682/assignments/59221",
-        allowed_extensions: [
-            "pdf",
-            "pdf"
-        ],
-        published: true,
-        only_visible_to_overrides: false,
-        locked_for_user: true,
-        lock_explanation: "This assignment was locked Aug 20, 2018 at 11:59pm.",
-        submissions_download_url: "https://asu.instructure.com/courses/3682/assignments/59221/submissions?zip=1",
-        anonymize_students: false
-    }
+      }
     ]
-    source = canvasToFullCalendarEvents();
+    var events = canvasEventsToFullCalendar();
+    var assign = canvasAssignmentToFullCalendar()
+    source = events.concat(assign)
     $('#calendar').fullCalendar('removeEvents');
     $('#calendar').fullCalendar('addEventSource', source);
   }
@@ -263,6 +217,48 @@ function openModelForUpdateEvent(event){
       $('#calendar').fullCalendar('renderEvent', eventData, true);
       $('#calendar').fullCalendar('unselect');
       $('#event_details_model').modal('hide');
+    }
+  }
+
+  function editAssignment() {
+    var title = $('#assign_title').val();
+    var startDate = $('#assign_start_date').val();
+    var startTime = $('#assign_start_time').val();
+
+    var errorMessage = "Invalid parameter(s): ";
+    if(title == null || title.length < 1){
+      $('#assign_title_error').text("Invalid Title");
+      errorMessage += "Title, "
+    }if(title != null && title.includes(':')){
+      $('#assign_title_error').text("Char not allowed: ':'");
+      errorMessage += "Title, "
+    }
+    if(startDate == null || !DATE_REGEX.test(startDate)){
+      $('#assign_start_date_error').text("Invalid Date");
+      errorMessage += "StartDate, "
+    }if(startTime == null || !TIME_REGEX.test(startTime)){
+      $('#assign_start_time_error').text("Invalid Time");
+      errorMessage += "StartTime, "
+    }
+
+    if(errorMessage != "Invalid parameter(s): "){
+      console.log(errorMessage,)
+    }else{
+      startDate = startDate + 'T' + startTime;
+      console.log(title,startDate)
+      var eventData;
+      if(selectedEvent){
+        eventData = selectedEvent;
+        eventData.title = title;
+        eventData.start = startDate;
+        eventData.end = startDate;
+        eventData.allDay = false;
+        editAssign.push(eventData._id)
+        $('#calendar').fullCalendar('removeEvents',eventData._id);
+      }
+      $('#calendar').fullCalendar('renderEvent', eventData, true);
+      $('#calendar').fullCalendar('unselect');
+      $('#assign_details_model').modal('hide');
     }
   }
 
@@ -384,10 +380,47 @@ function openModelForUpdateEvent(event){
         type: 'POST',
         contentType: 'application/json',
         success: function(response) {
-          pushDeleteEvents();
+          pushEditAssign();
         },
         error: function(error) {
           console.log("editEvents",error);
+          $("#failure-alert").show().delay(2000).fadeOut();
+        }
+      });
+    }else{
+      pushEditAssign();
+    }
+  }
+
+  function pushEditAssign(){
+    console.log("editAssign",editAssign)
+    var events = []
+    for(var i = 0; i < editAssign.length; i++){
+      var completeEvent = $('#calendar').fullCalendar('clientEvents', editAssign[i])[0];
+        if(completeEvent != null && completeEvent.id != null){
+        var event = {
+          id: null,
+          title: null,
+          due_at: null
+        };
+        event.id = completeEvent.id;
+        event.title = completeEvent.title;
+        event.due_at = FullCalendarToCanvasDate(completeEvent.start.format().substring(0,10),completeEvent.start.format().substring(11,16));
+        events.push(event);
+      }
+    }
+    if(events.length>0){
+      console.log("edit events to push",events);
+      $.ajax({
+        url: '/editassign',
+        data: JSON.stringify(events),
+        type: 'POST',
+        contentType: 'application/json',
+        success: function(response) {
+          pushDeleteEvents();
+        },
+        error: function(error) {
+          console.log("editAssign",error);
           $("#failure-alert").show().delay(2000).fadeOut();
         }
       });
@@ -420,6 +453,13 @@ function openModelForUpdateEvent(event){
     }
   }
 
+  function setAssignModelValue(tag, title, startDate, startTime){
+    $('#assign_tag').val(tag);
+    $('#assign_title').val(title);
+    $('#assign_start_date').val(startDate);
+    $('#assign_start_time').val(startTime);
+  }
+
   function clearModel() {
     $('#title_error').text("");
     $('#start_date_error').text("");
@@ -439,8 +479,14 @@ function openModelForUpdateEvent(event){
     $('#delete_button').hide()
   }
 
-  function setColorField(color){
-    $('#color_input').val(color);
+  function clearAssignModel() {
+    $('#assign_title_error').text("");
+    $('#assign_start_date_error').text("");
+    $('#assign_start_time_error').text("");
+
+    $('#assign_title').val("");
+    $('#assign_start_date').val("");
+    $('#assign_start_time').val("");
   }
 
   function setTagField(tag){
@@ -510,9 +556,10 @@ function openModelForUpdateEvent(event){
     return false;
   }
 
-  function canvasToFullCalendarEvents(){
+  function canvasEventsToFullCalendar(){
     var events = JSON.parse(eventsJSON);
     for(var i=0 ;i <events.length ;i++ ){
+      events[i].eventType = "Event";
       events[i].start = events[i].start_at;
       events[i].end = events[i].end_at;
       events[i].tag = "";
@@ -529,6 +576,25 @@ function openModelForUpdateEvent(event){
       events[i].end = formatDateCanvasToFullCalendar(events[i].end)
     }
     console.log(events);
+    return events;
+  }
+
+  function canvasAssignmentToFullCalendar(){
+    var events = JSON.parse(assignmentsJSON);
+    for(var i=0 ;i <events.length ;i++ ){
+      events[i].eventType = "Assign";
+      events[i].title = events[i].name;
+      events[i].start = events[i].due_at;
+      events[i].tag = "Assign";
+      var fullTitle = events[i].name.split(':');
+      if(fullTitle.length == 2){
+        events[i].title = fullTitle[1];
+      }
+      events[i].color = colorTagMap[events[i].tag];
+      delete events[i].due_at;
+      delete events[i].url;
+      events[i].start = formatDateCanvasToFullCalendar(events[i].start)
+    }
     return events;
   }
 
@@ -561,7 +627,7 @@ function openModelForUpdateEvent(event){
   //2019-02-10T23:59  to
   //2019-03-20T05:59:00Z 
   function FullCalendarToCanvasDate(localDate, localTime){
-    return localDate + 'T' + localTime + '-07:00'
+    return localDate + 'T' + localTime + ':00-07:00'
   }
 
   function imageDownload(){

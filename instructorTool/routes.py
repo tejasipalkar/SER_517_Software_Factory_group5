@@ -31,9 +31,10 @@ def about():
 def cal():
     canvas = Canvas_Calendar(canvas_token)
     result = canvas.getallevents(course)
-    print(result['events'])
+    print(result['assignments'])
     myevents = json.dumps(result['events'])
-    return render_template('calendar.html', events = myevents, course= "course_"+course)
+    assignments = json.dumps(result['assignments'])
+    return render_template('calendar.html', events = myevents, assignments = assignments, course= "course_"+course)
 
 @app.route("/newevent", methods=['POST'])
 def newEvents():
@@ -57,6 +58,15 @@ def deleteEvents():
     responseObj = json.loads(response)
     canvas = Canvas_Calendar(canvas_token)
     result = canvas.delete_event(responseObj)
+    return result
+
+@app.route("/editassign", methods=['POST'])
+def editAssign():
+    response = request.data
+    responseObj = json.loads(response)
+    print(responseObj)
+    canvas = Canvas_Calendar(canvas_token)
+    result = canvas.edit_assignment(responseObj, course)
     return result
 
 @app.route('/send', methods=['GET','POST'])
