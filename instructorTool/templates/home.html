@@ -1,20 +1,29 @@
-{% extends "layout.html" %}
-{% block content %}
+<h2>Courses</h2>
+            {%for course in courses%}
+            <div class="card-deck">
+                    <div class="card border-dark mb-3">
+                      <div class="card-body">
+                        
+                        <form action="/send" method="POST">
+                          <h5 class="card-title">{{course.name}}</h5>
+                          <p class="card-text">Instructor: {{course.Instructor}}</p>
+                          <input class ="btn" type="submit" value="View Course Details">
+                        </form>
+                        
+                      </div>
+                    </div>
 
-    <h2>Courses</h2>
-    {%for course in courses%}
-        <div class="card-deck">
-        <div class="card border-dark mb-3">
-            <div class="card-body">
-            
-            <form action="/send" method="POST">
-                <h5 class="card-title">{{course.name}}</h5>
-                <p class="card-text">Instructor: {{course.Instructor}}</p>
-                <input class="btn btn-outline-dark" type="submit" value="View Course">
-            </form>
-            
-            </div>
-        </div>
-    {%endfor%}
+    
+            {%for course in courses%}
+            <div class="card-deck">
+                    <a href="#" class="card border-dark mb-3">
+                      <div class="card-body">
+                        <h5 class="card-title">{{course.name}}</h5>
+                        <p class="card-text">Instructor: {{course.Instructor}}</p>
+                      </div>
+                    </a>
 
-{% endblock content %}
+                
+
+                
+            {%endfor%}
