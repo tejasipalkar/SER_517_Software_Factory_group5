@@ -26,6 +26,7 @@ def login():
     return render_template('login.html',title ="Login",courses= courses)
 
 @app.route("/home")
+@login_required
 def home():
     return render_template('home.html',title ="Home",courses= courses)
 
