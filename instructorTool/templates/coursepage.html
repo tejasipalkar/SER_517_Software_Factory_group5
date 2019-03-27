@@ -23,10 +23,17 @@
 		<div class="panel">
   			<div id ="form_panel">
   				<form id ="surveyform">
-  				<p>Upload the survey details sheet:<br></p>	
-  				   <input type="file" id="file">
-  				   <button id="remove-file" disabled>Remove</button>
-  				   <br>
+  				<p>Select your preference:</p>
+  				<select name = "range" id ="preference-dropdown">
+  					<option value ="0">0</option>
+  					<option value ="1">1</option>
+  					<option value ="2">2</option>
+  					<option value ="3">3</option>
+  				</select>
+  				<p>Enter the URL:<br></p>	
+  				   <input type="url" name="file-path" id="file-location" required>
+  				   <input type ="submit" id="parse-input">
+  				   <input type="reset" id="reset-button"><br>
   				   <input type = "submit" name = "create-group" class="btn-form" id="trigger-grouping" value ="Create Group" disabled/>
   				   <input type = "submit" name = "cancel" class= "btn-form" id="cancel-grouping" value ="Cancel" disabled/>
   				</form>	
