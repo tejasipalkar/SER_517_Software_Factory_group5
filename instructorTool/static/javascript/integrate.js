@@ -1,4 +1,8 @@
-
+$(document).ready(function(){
+	$('.btn-login').click(function(){
+			
+	});
+});
 $(document).ready(function(){
 	$("#grp").click(function(){
 		$("#content1").hide()
@@ -10,7 +14,7 @@ $(document).ready(function(){
 	})
 	
 	$("#trigger-grouping").click(function(){
-
+		
 	})
 
 	var acc = document.getElementsByClassName("accordion");
@@ -28,18 +32,22 @@ $(document).ready(function(){
 	}
 
 });
-var preferences = $("#preference-dropdown :selected").val();
 
-$(document).ready(function(){
-	$('#parse-input').on('click',function(e){
-		//Ganesh's code
-		$('#trigger-grouping').attr('disabled',false);
-		$('#cancel-grouping').attr('disabled',false);
-	});
-});
-
-
-
+function uploadFile(){
+	var x = document.getElementsById("file");
+	x.disabled = true;
+}
+$(document).ready(
+    function(){
+        $('input:file').change(
+            function(){
+                if ($(this).val()) {
+                    $('input:submit').attr('disabled',false); 
+                    $('#remove-file').attr('disabled',false);
+                } 
+            }
+            );
+    });
 $('#remove-file').on('click',function(e){
 	var $el = $('#file');
 	$el.wrap('<form>').closest('form').get(0).reset();
