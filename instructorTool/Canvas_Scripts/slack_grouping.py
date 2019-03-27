@@ -37,6 +37,7 @@ class slack_group:
             name = key
             groupMembers = group_data[key]
             channelIDs = []
+
             if len(group_append) == 0:
                 res = requests.put('https://slack.com/api/groups.create?token='+token+'&name='+name+'&pretty=1')
                 data = res.json()
@@ -52,4 +53,5 @@ class slack_group:
                 print(groupMembers[i])
                 for channelID in channelIDs:
                     res = requests.put('https://slack.com/api/groups.invite?token='+token+'&channel='+channelID+'&user='+userID+'&pretty=1')
+
 
