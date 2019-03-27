@@ -13,6 +13,8 @@ import base64
 import json
 import csv
 import pandas as pd
+import traceback
+import sys
 
 course = 'course_15760'
 canvas_token = "7236~o5XXfM7GrZZogzsg8xdQoODn3DdBqdwlq2DOM9qo4uD7q3e1Y79Ssi9vmObH9q42"
@@ -78,6 +80,11 @@ def send():
     if request.method== 'POST':
         return render_template('coursepage.html',title = "Course Page")
 
+    doc_url = request.args.get('file-path')
+    range_pref = request.args.get('range')
+    if doc_url and range_pref:
+        return fetch_document(doc_url, range_pref)
+
     return render_template('home.html')
 
 
@@ -93,8 +100,10 @@ def account():
 
 @app.route("/document")
 @login_required
-def fetch_document():
-    doc_id = request.args.get('doc_id')
+def fetch_document(doc_id, range_pref):
+    doc_id = doc_id.split("/")[5]
+    range_int = int(range_pref)
+    print(doc_id)
     access_token = session['access_token']
     r=requests.get("https://www.googleapis.com/drive/v3/files/"+doc_id+"/export?mimeType=text/csv", headers={"Authorization":access_token})
    
@@ -107,8 +116,8 @@ def fetch_document():
         rawtext = rf.read().splitlines()
         myreader = csv.reader(rawtext)
         res = []
-        no_of_pref = 3
-        no_of_avoid = 3
+        no_of_pref = range_int
+        no_of_avoid = range_int
         for row in myreader:
             print("-----------------------------------------------------------------------")
             count = count + 1
@@ -157,21 +166,12 @@ def fetch_document():
                     res.append(temp)
                     print(temp)
                 except:
-                    print("An exception occurred")
-        #print(rawtext)
+                    traceback.print_exc(file=sys.stdout)
+
         data = pd.DataFrame(res, columns=['Full Name', 'ASURITE', 'GitHub', 'EmailID', 'Preferences', 'Avoidance', 'TimeZone', 'TimePreference', 'GithubKnowledge', 'ScrumKnowledge', 'Comments'])
         print(data)
 
-    # for row in csv.reader(['one,two,three,one,two,three,one,two,three,one,two,three']):
-    #     print(row)
-    # count = 0
-    # for row in reader:
-    #     if count > 0:
-    #         print(row)
-    #         # json.dump(row, jsonfile)
-    #         # jsonfile.write('\n')
-    #     count = count + 1
-    return r.text
+    return data.to_json(orient='split')
 
 @app.route("/oauthcallback")
 def callback():
