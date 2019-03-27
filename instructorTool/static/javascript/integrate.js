@@ -1,8 +1,4 @@
-$(document).ready(function(){
-	$('.btn-login').click(function(){
-			
-	});
-});
+
 $(document).ready(function(){
 	$("#grp").click(function(){
 		$("#content1").hide()
@@ -53,4 +49,3 @@ $('#remove-file').on('click',function(e){
 	$el.wrap('<form>').closest('form').get(0).reset();
 	$el.unwrap();
 });
-	
