@@ -321,11 +321,23 @@ input[type=file],select{
   margin-left:40px;
   margin-top: 40px;
   position: relative;
-  background-color: white; 
-  color: black; 
-  border: 2px solid #f44336;  
+  
 }
 .login-elements{
   margin-top: 35px;
   margin-left:25px;
+}
+.token-container{
+  background-color: #EBF5FB;
+  width: 400px;
+  height: 200px;
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+  border-style: groove;
+}
+#continue-btn{
+	align-self: center;
+	margin-top: 1.5em;
 }
