@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+{% block content %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="static\javascript\integrate.js"></script>
+
+<div class="wrapper">
+	<nav class="sidenav" id="sidebar">
+	<ul>
+		<li class="active">
+		<li id="home"><a href="#">Home</a></li>
+		</li>
+		<li id="grp"><a href="#">Create Group</a></li>
+		<li id="calender"><a href="#">View Calender</a></li>
+	</ul> 
+	</nav>
+
+	<div id= "content1" class="contentSection">
+		<h2>Course</h2>
+	</div>
+	<div id= "content2" class="contentSection" style="display: none;">
+		<h2>Group Details</h2>
+		<button class="accordion">Create Group</button>
+		<div class="panel">
+  			<div id ="form_panel">
+  				<form id ="surveyform">
+  				<p>Upload the survey details sheet:<br></p>	
+  				   <input type="file" id="file">
+  				   <button id="remove-file" disabled>Remove</button>
+  				   <br>
+  				   <input type = "submit" name = "create-group" class="btn-form" id="trigger-grouping" value ="Create Group" disabled/>
+  				   <input type = "submit" name = "cancel" class= "btn-form" id="cancel-grouping" value ="Cancel" disabled/>
+  				</form>	
+  			</div>
+		</div>
+
+		<button class="accordion">Edit Group Information</button>
+		<div class="panel">
+		</div>
+
+	</div>
+
+</div>
+
+ {% endblock content %}
