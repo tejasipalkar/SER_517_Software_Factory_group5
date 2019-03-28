@@ -61,7 +61,7 @@ function openModelForNewEvent(Date){
   if(Date){
     $('#start_date').val(formatDate(Date));
   }
-  $('#assign_details_model').modal('show');
+  $('#event_details_model').modal('show');
 }
 
 function openModelForUpdateEvent(event){
@@ -400,17 +400,17 @@ function openModelForUpdateEvent(event){
         if(completeEvent != null && completeEvent.id != null){
         var event = {
           id: null,
-          title: null,
+          name: null,
           due_at: null
         };
         event.id = completeEvent.id;
-        event.title = completeEvent.title;
+        event.name = completeEvent.title;
         event.due_at = FullCalendarToCanvasDate(completeEvent.start.format().substring(0,10),completeEvent.start.format().substring(11,16));
         events.push(event);
       }
     }
     if(events.length>0){
-      console.log("edit events to push",events);
+      console.log("edit assign to push",events);
       $.ajax({
         url: '/editassign',
         data: JSON.stringify(events),

@@ -6,3 +6,4 @@
 4. canvasapi
 5. pyjwt
 6. flask_sqlalchemy
+7. pandas
