@@ -32,6 +32,7 @@ class OnlineGroup:
 				count += 1
 		
 		self.stu_available = set(self.stu_list)
+		print(self.stu_list)
 
 	def generate_cost_matrix(self):
 		
@@ -60,6 +61,7 @@ class OnlineGroup:
 					except:
 						print(temp1[a], " Not in the list")
 					a += 1
+			print(i,stu_dist[i])
 
 			temp2 = self.stu_avoid[self.stu_list[i]]
 			if len(temp2) > 0 and temp2[0] != ' ':
@@ -77,11 +79,13 @@ class OnlineGroup:
 					except:
 						print(temp2[b], " Not in the list")
 					b += 1
+			#print(i,stu_dist[i])
 			for j in range(i+1, n):
 				if i != j:
 					if self.stu_utc[self.stu_list[i]] == self.stu_utc[self.stu_list[j]]:
 						stu_dist[i][j] -= n
 						stu_dist[j][i] -= n
+			#print(i,stu_dist[i])
 
 			for j in range(i+1,n):
 				lst1 = self.stu_time_zone[self.stu_list[i]]
@@ -93,12 +97,16 @@ class OnlineGroup:
 
 					stu_dist[i][j] -= factor
 					stu_dist[j][i] -= factor
+			print(i,stu_dist[i])
 
 		return stu_dist
 
 	def generate_group(self):
 
 		stu_dist = self.generate_cost_matrix()
+
+		for s in stu_dist:
+			print(s)
 
 			#----------formulating team---------
 		team_list = []
@@ -109,8 +117,9 @@ class OnlineGroup:
 				temp_team.append(self.stu_list[i])
 				self.stu_available.remove(self.stu_list[i])
 				c = 1
-				while self.no_of_stu > len(temp_team) and c < self.no_of_stu:
+				while self.no_of_stu > len(temp_team) and c <= 3:  #self.no_of_stu:
 					idx_min = numpy.argmin(s)
+					print(i,idx_min)
 					if self.stu_list[idx_min] in self.stu_available:
 						temp_team.append(self.stu_list[idx_min])
 						self.stu_available.remove(self.stu_list[idx_min])
