@@ -8,28 +8,44 @@
   
   <script>
     var eventsJSON = '{{events | safe}}';
+    var assignmentsJSON = '{{assignments | safe}}';
     var course = '{{course | safe}}';
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
   <script src='../static/javascript/calendar/fullcalendar.min.js'></script>
   <script src="../static/javascript/calendar/calendar.js"></script>
+  <script src="../static/javascript/imageExport/html2canvas.min.js"></script>
+  <script src="../static/javascript/imageExport/html2canvas.js"></script>
 </head>
 
 <body>
+  <div id="success-alert" class="alert alert-success text-center" role="alert" style="display:none">Calendar Successfully Updated!</div>
+  <div id="failure-alert" class="alert alert-danger text-center" role="alert" style="display:none">Failed to Update Calendar!</div>
   <div class="row">
     <div class="col col-sm-10">
         <div id='calendar'></div>
     </div>
     <div class="col col-sm-2" style="margin-top: 50px">
       <div class="row" style="margin: 20px">
-        <a id="hyperlink-button" href="{{url_for('cal')}}">Refresh&nbsp;&nbsp; <i class="fa fa-sync"></i></a>
+        <a id="hyperlink-button" href="{{url_for('cal')}}" style="background-color: #5DADE2; color: white">REFRESH&nbsp;&nbsp; <i class="fa fa-sync"></i></a>
       </div>
       <div class="row" style="margin: 20px">
-          <input id="toolbar-button" type="button" class="btn" value="Add Event" onclick="openModelForNewEvent()"/>
+          <input id="toolbar-button" type="button" class="btn btn-block" style="background-color: #D35400; color: white" value="ADD" onclick="openModelForNewEvent()"/>
       </div>
       <div class="row" style="margin: 20px">
-          <input id="toolbar-button" type="button" class="btn" value="Push Event" onclick="pushNewEvents(); pushDeleteEvents(); pushEditEvents()"/>
+          <button id="toolbar-button" type="button" class="btn btn-block" style="background-color: #1E8449; color: white" onclick="pushNewEvents()">PUSH<i id="push-spinner" style="margin-left: 5px; display:none" ng-show="searching" class="fa fa-spinner fa-pulse" aria-hidden="true"></i></button>
+      </div>
+      <div class="row" style="margin: 20px">
+        <div class="dropdown">
+          <button class="btn btn-block btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            DOWNLOAD
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">LaTeX</a>
+            <a class="dropdown-item" onclick="imageDownload()">Image</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -46,7 +62,21 @@
         <div class="modal-body">
 
           <input id="type_checkbox" style="display:none" type="checkbox" class="form-control"></input>
-          <label><b>Title</b></label>
+          <label><b>Tag</b></label>
+          <div class="input-group">
+            <input id="tag_input" type="text" class="form-control" placeholder="Event Type">
+            <div class="input-group-append">
+              <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="sr-only">Toggle Dropdown</span>
+              </button>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" onclick="setTagField('Project')">Project</a>
+                <a class="dropdown-item" onclick="setTagField('Deadline')">Deadline</a>
+              </div>
+            </div>
+          </div>
+
+          <label id="model_label"><b>Title</b></label>
           <input id="event_title"placeholder="" class="form-control" onchange='$("#title_error").text("")'></input>
           <p class="form_error" id="title_error"></p>
   
@@ -84,25 +114,6 @@
               <input id="end_time" placeholder="HH:MM" class="form-control"></input>
               <p class="form_error" id="end_time_error"></p>
           </div>
-
-          <div id="color_div">
-            <label id="model_label"><b>Color</b></label>
-            <div class="input-group">
-              <input id="color_input" type="text" class="form-control" placeholder="Event color" value="Blue">
-              <div class="input-group-append">
-                <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <span class="sr-only">Toggle Dropdown</span>
-                </button>
-                <div class="dropdown-menu">
-                  <a class="dropdown-item" onclick="setColorField('#4c85a8')">Blue</a>
-                  <a class="dropdown-item" onclick="setColorField('#bd403a')">Red</a>
-                  <a class="dropdown-item" onclick="setColorField('#bd85a8')">Pink</a>
-                  <a class="dropdown-item" onclick="setColorField('#53403a')">Brown</a>
-                  <a class="dropdown-item" onclick="setColorField('#5e223a')">Purple</a>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
         <div class="modal-footer">
           <button id="delete_button" class="btn btn-danger mr-auto" data-toggle="modal" data-target="#delete_confirm_model">Delete</button>
@@ -113,6 +124,42 @@
       </div>
     </div>
   </div>
+
+  <div class="modal fade" tabindex="-1" role="dialog" id="assign_details_model" >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Event Details</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+            <label><b>Tag</b></label>
+            <input id="assign_tag"placeholder="" class="form-control" onchange='$("#title_error").text("")' disabled="disabled"></input>
+  
+            <label id="model_label"><b>Title</b></label>
+            <input id="assign_title"placeholder="" class="form-control" onchange='$("#title_error").text("")'></input>
+            <p class="form_error" id="assign_title_error"></p>
+    
+            <label id="model_label"><b>Due Date</b></label>
+            <input id="assign_start_date" placeholder="YYYY-MM-DD" class="form-control"></input>
+            <p class="form_error" id="assign_start_date_error"></p>
+
+            <label id="model_label"><b>Due Time</b></label>
+            <input id="assign_start_time" placeholder="HH:MM" class="form-control"></input>
+            <p class="form_error" id="assign_start_time_error"></p>
+            
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" onclick="editAssignment()">Save changes</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
   <div class="modal fade" tabindex="-1" role="dialog" id="delete_confirm_model" >
       <div class="modal-dialog" role="document">

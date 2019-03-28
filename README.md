@@ -4,3 +4,5 @@
 2. flask_login
 3. flask_wtf
 4. canvasapi
+5. pyjwt
+6. flask_sqlalchemy
