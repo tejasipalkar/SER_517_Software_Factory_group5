@@ -15,6 +15,7 @@ import csv
 import pandas as pd
 import traceback
 import sys
+from instructorTool.Group_Scripts.group_online import OnlineGroup
 
 course = 'course_15760'
 canvas_token = "7236~o5XXfM7GrZZogzsg8xdQoODn3DdBqdwlq2DOM9qo4uD7q3e1Y79Ssi9vmObH9q42"
@@ -121,7 +122,7 @@ def fetch_document(doc_id, range_pref):
         for row in myreader:
             print("-----------------------------------------------------------------------")
             count = count + 1
-            if(count % 2 != 0):
+            if(count % 2 != 0 and count > 1):
                 try:
                     temp = []
                     i = 1
@@ -164,14 +165,21 @@ def fetch_document(doc_id, range_pref):
                     i += 1
                     temp.append(row[i])
                     res.append(temp)
-                    print(temp)
+                    print(count, temp)
                 except:
                     traceback.print_exc(file=sys.stdout)
 
         data = pd.DataFrame(res, columns=['Full Name', 'ASURITE', 'GitHub', 'EmailID', 'Preferences', 'Avoidance', 'TimeZone', 'TimePreference', 'GithubKnowledge', 'ScrumKnowledge', 'Comments'])
         print(data)
+        print("--------------Done----------------")
+    print("calling G")
+    g = OnlineGroup(3, data)
+    res = g.assign_group()
+    print(res)
 
-    return data.to_json(orient='split')
+
+    #return data.to_json(orient='split')
+    return res.to_json(orient='split')
 
 @app.route("/oauthcallback")
 def callback():
