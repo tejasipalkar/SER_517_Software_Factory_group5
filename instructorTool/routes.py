@@ -84,6 +84,15 @@ def editAssign():
     result = canvas.edit_assignment(responseObj, course)
     return result
 
+@app.route("/editquiz", methods=['POST'])
+def editQuiz():
+    response = request.data
+    responseObj = json.loads(response)
+    print(responseObj)
+    canvas = Canvas_Calendar(canvas_token)
+    result = canvas.edit_quiz(responseObj, course)
+    return result
+
 @app.route('/send', methods=['GET','POST'])
 @login_required
 def send():
