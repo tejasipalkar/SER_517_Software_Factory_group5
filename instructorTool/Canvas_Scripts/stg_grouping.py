@@ -1,7 +1,8 @@
 from canvasapi import Canvas
+from taiga import TaigaAPI
 import requests
 
-class slack_group:
+class STG_Group:
     def __init__(self, api_key):
         self.API_URL = "https://asu.instructure.com"
         self.canvas = Canvas(self.API_URL, api_key)
@@ -53,5 +54,21 @@ class slack_group:
                 print(groupMembers[i])
                 for channelID in channelIDs:
                     res = requests.put('https://slack.com/api/groups.invite?token='+token+'&channel='+channelID+'&user='+userID+'&pretty=1')
+
+    def create_taiga_channels(self, username, password, desc, course_id):
+        api = TaigaAPI()
+        api.auth(
+            username=username,
+            password=password
+        )
+        group_data = self.get_groupsdata(course_id)
+        for key in group_data:
+            new_project = api.projects.create(key, desc)
+            new_project.is_private="false"
+            new_project.update()
+
+            for member in group_data[key]:
+                email = member+'@asu.edu'
+                new_project.add_membership(role = new_project.roles[0].id, username = email, email = email)
 
 
