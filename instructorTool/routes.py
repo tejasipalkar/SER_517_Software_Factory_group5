@@ -178,8 +178,9 @@ def callback():
     code = request.args.get('code')
     client_id = Configuration.query.filter_by(key="oauth_client_id").first().value
     client_secret = Configuration.query.filter_by(key="oauth_client_secret").first().value
+    redirect_uri = getConfig("aws_redirect_uri", "http://127.0.0.1:5000/oauthcallback")
     PARAMS = {'code':code, 'client_id': client_id, 
-    'client_secret': client_secret, 'redirect_uri': 'http://127.0.0.1:5000/oauthcallback',
+    'client_secret': client_secret, 'redirect_uri': redirect_uri,
     'grant_type': 'authorization_code'} 
     URL = "https://oauth2.googleapis.com/token"
     # sending get request and saving the response as response object 
@@ -218,9 +219,11 @@ def callback():
 @app.route("/google")
 def sendrequest():
     client_id = Configuration.query.filter_by(key="oauth_client_id").first().value
+    redirect_uri = getConfig("aws_redirect_uri", "http://127.0.0.1:5000/oauthcallback")
     url = "https://accounts.google.com/o/oauth2/auth?response_type=code&client_id="\
     + str(client_id)\
-    +"&scope=https://www.googleapis.com/auth/spreadsheets+https://www.googleapis.com/auth/drive.file+https://www.googleapis.com/auth/drive+email+profile&redirect_uri=http://127.0.0.1:5000/oauthcallback"
+    +"&scope=https://www.googleapis.com/auth/spreadsheets+https://www.googleapis.com/auth/drive.file+https://www.googleapis.com/auth/drive+email+profile&redirect_uri="\
+    + redirect_uri
     return redirect(url)
 
 @app.route("/initconfig")
