@@ -49,4 +49,5 @@ $('#remove-file').on('click',function(e){
 	$el.wrap('<form>').closest('form').get(0).reset();
 	$el.unwrap();
 });
-	
+
+</script>

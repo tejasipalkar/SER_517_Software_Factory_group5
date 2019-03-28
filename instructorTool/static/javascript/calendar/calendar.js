@@ -2,10 +2,11 @@ const DATE_REGEX = /^\d{4}-(0[1-9]|1[12])-(0[1-9]|[12][0-9]|3[01])$/;
 const TIME_REGEX = /^(?:2[0-3]|[01][0-9]):[0-5][0-9]$/;
 
 var selectedEvent = null;
-const DEFAULT_EVENT_COLOR = ""
 var newEvents = [];
 var editEvents = [];
 var deleteEvents = [];
+var editAssign = [];
+var colorTagMap = {Project:"#bd85a8",Deadline:"#bd403a",Assign:"#006666"}
 
 $(document).ready(function() {
   $('#calendar').fullCalendar({
@@ -41,7 +42,14 @@ $(document).ready(function() {
       if (!confirm("Are you sure about this change?")) {
         revertFunc();
       }
-      editEvents.push(event._id);
+      var eventType = event.eventType
+      if(eventType){
+        if(eventType == 'Event'){
+          editEvents.push(event._id);
+        }else if(eventType == 'Assign'){
+          editAssign.push(event._id);
+        }
+      }
     }
   });
   fetchEvents();
@@ -53,18 +61,25 @@ function openModelForNewEvent(Date){
   if(Date){
     $('#start_date').val(formatDate(Date));
   }
-  $('#event_details_model').modal('show');
+  $('#assign_details_model').modal('show');
 }
 
 function openModelForUpdateEvent(event){
+  var tag = "";
   var title = "";
   var startDate = "";
   var endDate = "";
   var startTime = "";
   var endTime = "";
-  var color = DEFAULT_EVENT_COLOR;
+  var eventType = "";
 
   if(event){
+    if(event.eventType){
+      eventType = event.eventType;
+    }
+    if(event.tag){
+      tag = event.tag;
+    }
     if(event.title){
       title = event.title;
     }if(event.start){
@@ -74,14 +89,19 @@ function openModelForUpdateEvent(event){
         endDate = event.end.format().substring(0,10)
         endTime = event.end.format().substring(11,16)
     }
-    if(event.color){
-      color = event.color;
-    }
   }
-  clearModel();
-  setModelValue(title, startDate, endDate, startTime, endTime, color);
-  $('#delete_button').show();
-  $('#event_details_model').modal('show');
+  
+  if(eventType == 'Event'){
+    clearModel();
+    setModelValue(tag,title, startDate, endDate, startTime, endTime);
+    $('#delete_button').show();
+    $('#event_details_model').modal('show');
+  }else if(eventType == 'Assign' || eventType == 'Quiz'){
+    clearAssignModel();
+    setAssignModelValue(tag,title, startDate, startTime);
+    $('#assign_details_model').modal('show');
+  }
+  
   console.log("start", startDate, "end", endDate,
   "start", startTime, "end", endTime)
 }
@@ -108,88 +128,22 @@ function openModelForUpdateEvent(event){
         title: 'Meeting',
         start: '2019-02-12T10:30:00',
         end: '2019-02-12T12:30:00'
-      },
-      {
-        id: 59221,
-        title: 'Meeting minutes',
-        start: '2019-02-12T10:30:00',
-        end: '2019-02-12T12:30:00',
-        description: "<p>\u00a0Upload response document for the following papers:</p>\r\n<ul>\r\n<li><strong>A tour of the visualization zoo</strong></li>\r\n</ul>",
-        due_at: "2018-08-21T06:55:00Z",
-        unlock_at: null,
-        lock_at: "2018-08-21T06:59:00Z",
-        points_possible: 0.0,
-        grading_type: "pass_fail",
-        assignment_group_id: 17727,
-        grading_standard_id: null,
-        created_at: "2018-08-15T03:05:55Z",
-        updated_at: "2018-12-20T04:52:04Z",
-        peer_reviews: false,
-        automatic_peer_reviews: false,
-        position: 1,
-        grade_group_students_individually: false,
-        anonymous_peer_reviews: false,
-        group_category_id: null,
-        post_to_sis: false,
-        moderated_grading: false,
-        omit_from_final_grade: false,
-        intra_group_peer_reviews: false,
-        anonymous_instructor_annotations: false,
-        anonymous_grading: false,
-        graders_anonymous_to_graders: false,
-        grader_count: null,
-        grader_comments_visible_to_graders: true,
-        final_grader_id: null,
-        grader_names_visible_to_final_grader: true,
-        allowed_attempts: -1,
-        lock_info: {
-            lock_at: "2018-08-21T06:59:00Z",
-            can_view: true,
-            asset_string: "assignment_59221"
-        },
-        secure_params: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsdGlfYXNzaWdubWVudF9pZCI6IjEzOTc3YzgwLWZlYTMtNDU2ZS1hMDBmLTFkNDEzMjYyZDczNSJ9.R_UF0CZtaJp9vRi4MgfkCinPxpFm1ybxQIQfe2KhpcY",
-        course_id: 3682,
-        name: "Week 1 Response Doc",
-        submission_types: [
-            "online_upload"
-        ],
-        has_submitted_submissions: true,
-        due_date_required: false,
-        max_name_length: 255,
-        in_closed_grading_period: false,
-        user_submitted: true,
-        is_quiz_assignment: false,
-        can_duplicate: true,
-        original_course_id: null,
-        original_assignment_id: null,
-        original_assignment_name: null,
-        workflow_state: "published",
-        muted: false,
-        html_url: "https://asu.instructure.com/courses/3682/assignments/59221",
-        allowed_extensions: [
-            "pdf",
-            "pdf"
-        ],
-        published: true,
-        only_visible_to_overrides: false,
-        locked_for_user: true,
-        lock_explanation: "This assignment was locked Aug 20, 2018 at 11:59pm.",
-        submissions_download_url: "https://asu.instructure.com/courses/3682/assignments/59221/submissions?zip=1",
-        anonymize_students: false
-    }
+      }
     ]
-    source = canvasToFullCalendarEvents();
+    var events = canvasEventsToFullCalendar();
+    var assign = canvasAssignmentToFullCalendar()
+    source = events.concat(assign)
     $('#calendar').fullCalendar('removeEvents');
     $('#calendar').fullCalendar('addEventSource', source);
   }
 
   function createEvents() {
+    var tag = $('#tag_input').val().trim();
     var title = $('#event_title').val();
     var startDate = $('#start_date').val();
     var endDate = $('#end_date').val();
     var startTime = $('#start_time').val();
     var endTime = $('#end_time').val();
-    var color = $('#color_input').val();
     var isSameDay = $('#same_day_checkbox').is(":checked")
     var isAllDay = $('#all_day_checkbox').is(":checked")
 
@@ -197,7 +151,11 @@ function openModelForUpdateEvent(event){
     if(title == null || title.length < 1){
       $('#title_error').text("Invalid Title");
       errorMessage += "Title, "
-    }if(startDate == null || !DATE_REGEX.test(startDate)){
+    }if(title != null && title.includes(':')){
+      $('#title_error').text("Char not allowed: ':'");
+      errorMessage += "Title, "
+    }
+    if(startDate == null || !DATE_REGEX.test(startDate)){
       $('#start_date_error').text("Invalid Date");
       errorMessage += "StartDate, "
     }if(!isSameDay && (endDate == null || !DATE_REGEX.test(endDate))){
@@ -228,7 +186,7 @@ function openModelForUpdateEvent(event){
         startDate = startDate + 'T' + startTime;
       }else{
         endDate = endDate + 'T' + '23:59';
-        startDate = startDate + 'T' + '00:00';
+        startDate = startDate + 'T' + '00:01';
       }
       console.log(title,startDate,endDate)
       var eventData;
@@ -238,8 +196,9 @@ function openModelForUpdateEvent(event){
         eventData.title = title;
         eventData.start = startDate;
         eventData.end = endDate;
-        eventData.color = color;
+        eventData.color = colorTagMap[tag];
         eventData.allDay = false;
+        eventData.tag = tag;
         editEvents.push(eventData._id)
         $('#calendar').fullCalendar('removeEvents',eventData._id);
       }else{
@@ -250,13 +209,56 @@ function openModelForUpdateEvent(event){
           title: title,
           start: startDate,
           end: endDate,
-          color: color,
-          allDay: false
+          color: colorTagMap[tag],
+          allDay: false,
+          tag: tag
         };
       }
       $('#calendar').fullCalendar('renderEvent', eventData, true);
       $('#calendar').fullCalendar('unselect');
       $('#event_details_model').modal('hide');
+    }
+  }
+
+  function editAssignment() {
+    var title = $('#assign_title').val();
+    var startDate = $('#assign_start_date').val();
+    var startTime = $('#assign_start_time').val();
+
+    var errorMessage = "Invalid parameter(s): ";
+    if(title == null || title.length < 1){
+      $('#assign_title_error').text("Invalid Title");
+      errorMessage += "Title, "
+    }if(title != null && title.includes(':')){
+      $('#assign_title_error').text("Char not allowed: ':'");
+      errorMessage += "Title, "
+    }
+    if(startDate == null || !DATE_REGEX.test(startDate)){
+      $('#assign_start_date_error').text("Invalid Date");
+      errorMessage += "StartDate, "
+    }if(startTime == null || !TIME_REGEX.test(startTime)){
+      $('#assign_start_time_error').text("Invalid Time");
+      errorMessage += "StartTime, "
+    }
+
+    if(errorMessage != "Invalid parameter(s): "){
+      console.log(errorMessage,)
+    }else{
+      startDate = startDate + 'T' + startTime;
+      console.log(title,startDate)
+      var eventData;
+      if(selectedEvent){
+        eventData = selectedEvent;
+        eventData.title = title;
+        eventData.start = startDate;
+        eventData.end = startDate;
+        eventData.allDay = false;
+        editAssign.push(eventData._id)
+        $('#calendar').fullCalendar('removeEvents',eventData._id);
+      }
+      $('#calendar').fullCalendar('renderEvent', eventData, true);
+      $('#calendar').fullCalendar('unselect');
+      $('#assign_details_model').modal('hide');
     }
   }
 
@@ -282,104 +284,158 @@ function openModelForUpdateEvent(event){
         type: 'POST',
         contentType: 'application/json',
         success: function(response) {
-            console.log(response);
+            console.log("deleteEvents",response);
+            $("#success-alert").show().delay(2000).fadeOut();
+            $('#hyperlink-button')[0].click();
         },
         error: function(error) {
-            console.log(error);
+            console.log("deleteEvents",error);
+            $("#failure-alert").show().delay(2000).fadeOut();
         }
       });
+    }else{
+      $("#success-alert").show().delay(2000).fadeOut();
+      $('#hyperlink-button')[0].click();
     }
   }
 
   function pushNewEvents() {
+    $('#push-spinner').show();
     var events = []
     console.log("newEvents",newEvents)
     for(var i = 0; i < newEvents.length; i++){
       var completeEvent = $('#calendar').fullCalendar('clientEvents', newEvents[i])[0];
       if(completeEvent != null){
-        console.log("each event",completeEvent)
         var event = {
           context_code: null,
           title: null,
           start_at: null,
-          end_at: null
+          end_at: null,
+          time_zone_edited: "America/Phoenix"
         };
+        var title = completeEvent.title;
+        if(completeEvent.tag.trim().length != 0){
+          title = completeEvent.tag.trim() + ":" + title
+        }
         event.context_code = course;
-        event.title = completeEvent.title;
+        event.title = title;
         event.start_at = FullCalendarToCanvasDate(completeEvent.start.format().substring(0,10),completeEvent.start.format().substring(11,16));
-        event.end_at = FullCalendarToCanvasDate(completeEvent.end.format().substring(0,10),completeEvent.start.format().substring(11,16));
+        event.end_at = FullCalendarToCanvasDate(completeEvent.end.format().substring(0,10),completeEvent.end.format().substring(11,16));
         events.push(event);
       }
     }
     
     if(events.length>0){
       console.log("new events to push",events);
-      var ab = events//[{name:"karna",phn:1213},{name:"kafsarna",phn:1212423}]
       $.ajax({
         url: '/newevent',
-        data: JSON.stringify(ab),
+        data: JSON.stringify(events),
         type: 'POST',
         contentType: 'application/json',
         success: function(response) {
-            console.log(response);
+            pushEditEvents();
         },
         error: function(error) {
-            console.log(error);
+            console.log("newEvents",error);
+            $("#failure-alert").show().delay(2000).fadeOut();
         }
       });
+    }else{
+      pushEditEvents();
     }
   }
 
-  //events created and then edited will not have id, only _id
-  //events olready created will have id and _id. _id to track and id to pass to canvas
   function pushEditEvents(){
     console.log("editEvents",editEvents)
     var events = []
     for(var i = 0; i < editEvents.length; i++){
       var completeEvent = $('#calendar').fullCalendar('clientEvents', editEvents[i])[0];
         if(completeEvent != null && completeEvent.id != null){
-        console.log("each event",completeEvent)
         var event = {
           id: null,
           title: null,
           start_at: null,
           end_at: null
         };
+        var title = completeEvent.title;
+        if(completeEvent.tag.trim().length != 0){
+          title = completeEvent.tag.trim() + ":" + title
+        }
         event.id = completeEvent.id;
-        event.title = completeEvent.title;
+        event.title = title;
         event.start_at = FullCalendarToCanvasDate(completeEvent.start.format().substring(0,10),completeEvent.start.format().substring(11,16));
         if(completeEvent.end == null){
           event.end_at = event.start_at;
         }else{
-          event.end_at = FullCalendarToCanvasDate(completeEvent.end.format().substring(0,10),completeEvent.start.format().substring(11,16));
+          event.end_at = FullCalendarToCanvasDate(completeEvent.end.format().substring(0,10),completeEvent.end.format().substring(11,16));
         }
         events.push(event);
       }
     }
     if(events.length>0){
-      console.log("new events to push",events);
+      console.log("edit events to push",events);
       $.ajax({
         url: '/editevent',
         data: JSON.stringify(events),
         type: 'POST',
         contentType: 'application/json',
         success: function(response) {
-          console.log(response);
+          pushEditAssign();
         },
         error: function(error) {
-          console.log(error);
+          console.log("editEvents",error);
+          $("#failure-alert").show().delay(2000).fadeOut();
         }
       });
+    }else{
+      pushEditAssign();
     }
   }
 
-  function setModelValue(title, startDate, endDate, startTime, endTime, color){
+  function pushEditAssign(){
+    console.log("editAssign",editAssign)
+    var events = []
+    for(var i = 0; i < editAssign.length; i++){
+      var completeEvent = $('#calendar').fullCalendar('clientEvents', editAssign[i])[0];
+        if(completeEvent != null && completeEvent.id != null){
+        var event = {
+          id: null,
+          title: null,
+          due_at: null
+        };
+        event.id = completeEvent.id;
+        event.title = completeEvent.title;
+        event.due_at = FullCalendarToCanvasDate(completeEvent.start.format().substring(0,10),completeEvent.start.format().substring(11,16));
+        events.push(event);
+      }
+    }
+    if(events.length>0){
+      console.log("edit events to push",events);
+      $.ajax({
+        url: '/editassign',
+        data: JSON.stringify(events),
+        type: 'POST',
+        contentType: 'application/json',
+        success: function(response) {
+          pushDeleteEvents();
+        },
+        error: function(error) {
+          console.log("editAssign",error);
+          $("#failure-alert").show().delay(2000).fadeOut();
+        }
+      });
+    }else{
+      pushDeleteEvents();
+    }
+  }
+
+  function setModelValue(tag, title, startDate, endDate, startTime, endTime){
+    $('#tag_input').val(tag);
     $('#event_title').val(title);
     $('#start_date').val(startDate);
     $('#end_date').val(endDate);
     $('#start_time').val(startTime);
     $('#end_time').val(endTime);
-    $('#color_input').val(color);
     if(endDate != ""){
       if(endDate == startDate){
         endDate = ""
@@ -389,12 +445,19 @@ function openModelForUpdateEvent(event){
         $('#end_date_div').show()
       }
     }
-    if((startTime == "00:00" && endTime == "23:59")|| (startTime == "" && endTime == "")){
+    if((startTime == "00:01" && endTime == "23:59")|| (startTime == "" && endTime == "")){
       //isAllDay event
     }else{
       $('#all_day_checkbox').prop('checked', false);
       $('#all_date_div').show()
     }
+  }
+
+  function setAssignModelValue(tag, title, startDate, startTime){
+    $('#assign_tag').val(tag);
+    $('#assign_title').val(title);
+    $('#assign_start_date').val(startDate);
+    $('#assign_start_time').val(startTime);
   }
 
   function clearModel() {
@@ -403,7 +466,6 @@ function openModelForUpdateEvent(event){
     $('#end_date_error').text("");
     $('#start_time_error').text("");
     $('#end_time_error').text("");
-    $('#color_input').val(DEFAULT_EVENT_COLOR);
 
     $('#event_title').val("");
     $('#start_date').val("");
@@ -417,8 +479,18 @@ function openModelForUpdateEvent(event){
     $('#delete_button').hide()
   }
 
-  function setColorField(color){
-    $('#color_input').val(color);
+  function clearAssignModel() {
+    $('#assign_title_error').text("");
+    $('#assign_start_date_error').text("");
+    $('#assign_start_time_error').text("");
+
+    $('#assign_title').val("");
+    $('#assign_start_date').val("");
+    $('#assign_start_time').val("");
+  }
+
+  function setTagField(tag){
+    $('#tag_input').val(tag);
   }
 
   function formatDate(Date){
@@ -484,21 +556,59 @@ function openModelForUpdateEvent(event){
     return false;
   }
 
-  function canvasToFullCalendarEvents(){
+  function canvasEventsToFullCalendar(){
     var events = JSON.parse(eventsJSON);
     for(var i=0 ;i <events.length ;i++ ){
+      events[i].eventType = "Event";
       events[i].start = events[i].start_at;
       events[i].end = events[i].end_at;
-  
+      events[i].tag = "";
+      var fullTitle = events[i].title.split(':');
+      if(fullTitle.length == 2){
+        events[i].tag = fullTitle[0];
+        events[i].title = fullTitle[1];
+        events[i].color = colorTagMap[fullTitle[0]];
+      }
       delete events[i].start_at;
       delete events[i].end_at;
       delete events[i].url;
-      events[i].start = canvasToFullCalendarDate(events[i].start)
-      events[i].end = canvasToFullCalendarDate(events[i].end)
+      events[i].start = formatDateCanvasToFullCalendar(events[i].start)
+      events[i].end = formatDateCanvasToFullCalendar(events[i].end)
     }
     console.log(events);
     return events;
   }
+
+  function canvasAssignmentToFullCalendar(){
+    var events = JSON.parse(assignmentsJSON);
+    for(var i=0 ;i <events.length ;i++ ){
+      events[i].eventType = "Assign";
+      events[i].title = events[i].name;
+      events[i].start = events[i].due_at;
+      events[i].tag = "Assign";
+      var fullTitle = events[i].name.split(':');
+      if(fullTitle.length == 2){
+        events[i].title = fullTitle[1];
+      }
+      events[i].color = colorTagMap[events[i].tag];
+      delete events[i].due_at;
+      delete events[i].url;
+      events[i].start = formatDateCanvasToFullCalendar(events[i].start)
+    }
+    return events;
+  }
+
+  function formatDateCanvasToFullCalendar(canvasDate){
+    var fullDate = new Date(Date.parse(canvasDate))
+    var month = fullDate.getMonth()+1
+    var date = fullDate.getFullYear() + "-" + pad(month) + "-" + pad(fullDate.getDate())
+    var time = pad(fullDate.getHours()) + ":" + pad(fullDate.getMinutes())
+    return date + 'T' + time;
+  }
+
+  function pad(d) {
+    return (d < 10) ? '0' + d.toString() : d.toString();
+}
 
   //2019-03-20T05:59:00Z  TO
   //2019-02-10T23:59
@@ -514,12 +624,20 @@ function openModelForUpdateEvent(event){
     }
   }
 
-  //2019-03-19T23:59:00-06:00
-  //2019-02-10T23:59
+  //2019-02-10T23:59  to
+  //2019-03-20T05:59:00Z 
   function FullCalendarToCanvasDate(localDate, localTime){
-    var fullTime = '23:59:00' + '-' + localTime
-    return localDate + 'T' +fullTime
+    return localDate + 'T' + localTime + ':00-07:00'
   }
 
+  function imageDownload(){
+    html2canvas(document.querySelector("#calendar")).then(canvas => {
+      image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+      var link = document.createElement('a');
+      link.download = "calendar.png";
+      link.href = image;
+      link.click();
+  });
+  }
   //TODO:
   //clean error message
