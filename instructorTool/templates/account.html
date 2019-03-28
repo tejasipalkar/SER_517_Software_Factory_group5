@@ -2,9 +2,4 @@
 {% block content %}
     <h1>Account page</h1> 
     <h2>{{ current_user.username }}</h2>
-    <form action="/document">
-	    <label for = "name">Enter the document ID: </label><br>
-		<input id = "name" name = "doc_id" type = "text" value = "" />
-		<input type="submit" value="Submit">
-	</form>
 {% endblock content %}
