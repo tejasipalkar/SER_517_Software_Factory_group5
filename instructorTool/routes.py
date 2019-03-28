@@ -236,7 +236,6 @@ def sendrequest():
     return redirect(url)
 
 @app.route("/initconfig")
-@login_required
 def initdatabase():
     return render_template('initconfig.html')
 
@@ -248,7 +247,6 @@ def getConfig(config_name, default):
         return default
 
 @app.route("/addconfig")
-@login_required
 def addconfig():
     name = request.args.get('name')
     value = request.args.get('value')
