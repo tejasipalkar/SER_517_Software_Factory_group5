@@ -316,10 +316,10 @@ input[type=file],select{
   border-style: groove;
 }
 
-.btn-login{
-  width: 75%;
-  margin-left:40px;
-  margin-top: 40px;
+#login-btn{
+  width: 50%;
+  margin-left:20%;
+  margin-top: 10%;
   position: relative;
   
 }
@@ -340,6 +340,10 @@ input[type=file],select{
 #continue-btn{
 	align-self: center;
 	margin-top: 1.5em;
+  width: 50%;
+  margin-left:20%;
+  margin-top: 10%;
+  position: relative;
 }
 
 #container-2{

@@ -1,11 +1,15 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h2 align="center">Welcome to Instructor Tool</h2>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	
 
+	<h2 align="center">Welcome to Instructor Tool</h2>
     <div class="login-container">
+
 		<div class ="login-elements">
-				<p>Please sign in using Google to access the tool</p>
-				<button type="button" class="btn-login" onclick="window.location.href='/google';">Login using Google</button>
+				<h6>Please sign in using Google to access the tool</h6>
+				<button type="button" class="btn btn-primary btn-lg" id="login-btn"
+				onclick="window.location.href='/google';">Login using Google</button>
 		</div>	
 	</div> 
 
