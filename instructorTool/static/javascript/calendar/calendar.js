@@ -6,7 +6,8 @@ var newEvents = [];
 var editEvents = [];
 var deleteEvents = [];
 var editAssign = [];
-var colorTagMap = {Project:"#bd85a8",Deadline:"#bd403a",Assign:"#006666"}
+var editQuiz = [];
+var colorTagMap = {Project:"#bd85a8",Deadline:"#bd403a",Assign:"#006666",Quiz:"#009999"}
 
 $(document).ready(function() {
   $('#calendar').fullCalendar({
@@ -108,28 +109,7 @@ function openModelForUpdateEvent(event){
 
   //get all event and put them on the calendar
   function fetchEvents() {
-    var source = [
-      {
-        title: 'All Day Event',
-        start: '2019-02-01',
-        end: '2019-02-01'
-      },
-      {
-        title: 'Long Event',
-        start: '2019-01-07T00:00',
-        end: '2019-02-10T23:59'
-      },
-      {
-        id: 999,
-        title: 'Repeating Event',
-        start: '2019-02-09T16:00:00'
-      },
-      {
-        title: 'Meeting',
-        start: '2019-02-12T10:30:00',
-        end: '2019-02-12T12:30:00'
-      }
-    ]
+    var source = []
     var events = canvasEventsToFullCalendar();
     var assign = canvasAssignmentToFullCalendar()
     source = events.concat(assign)
@@ -586,6 +566,25 @@ function openModelForUpdateEvent(event){
       events[i].title = events[i].name;
       events[i].start = events[i].due_at;
       events[i].tag = "Assign";
+      var fullTitle = events[i].name.split(':');
+      if(fullTitle.length == 2){
+        events[i].title = fullTitle[1];
+      }
+      events[i].color = colorTagMap[events[i].tag];
+      delete events[i].due_at;
+      delete events[i].url;
+      events[i].start = formatDateCanvasToFullCalendar(events[i].start)
+    }
+    return events;
+  }
+
+  function canvasQuizToFullCalendar(){
+    var events = JSON.parse(quizJSON);
+    for(var i=0 ;i <events.length ;i++ ){
+      events[i].eventType = "Quiz";
+      events[i].title = events[i].title;
+      events[i].start = events[i].due_at;
+      events[i].tag = "Quiz";
       var fullTitle = events[i].name.split(':');
       if(fullTitle.length == 2){
         events[i].title = fullTitle[1];
