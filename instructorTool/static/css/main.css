@@ -340,8 +340,14 @@ input[type=file],select{
 #continue-btn{
 	align-self: center;
 	margin-top: 1.5em;
-<<<<<<< HEAD
 }
-=======
+
+#container-2{
+  margin-top: 8%
 }
->>>>>>> 7ef303ab8a7283a5b3439a86a8b2de5ed5b37cf5
+#btn-links{
+  margin-top: 5%;
+}
+#btn-grp,#btn-cal{
+  margin-top: 2%;
+}

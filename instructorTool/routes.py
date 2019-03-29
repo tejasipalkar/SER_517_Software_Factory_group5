@@ -1,3 +1,4 @@
+
 from flask import render_template, url_for, json, flash, redirect, request
 from instructorTool import app
 from instructorTool.forms import LoginForm
@@ -88,7 +89,7 @@ def editAssign():
 @login_required
 def send():
     if request.method== 'POST':
-        return render_template('coursepage.html',title = "Course Page")
+        return render_template('course_page.html',title = "Course Page")
 
     doc_url = request.args.get('file-path')
     range_pref = request.args.get('range')
