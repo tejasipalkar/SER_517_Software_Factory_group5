@@ -17,6 +17,7 @@ import pandas as pd
 import traceback
 import sys
 from instructorTool.Group_Scripts.group_online import OnlineGroup
+from flask import Flask, session
 
 course = '15760'
 canvas_token = '7236~UoRqWAyLYPwM3ArUdvszjsidpNisiFq2N4XnlMFIr3Uh3TNOVuhP7qv05awogom2'
@@ -185,6 +186,7 @@ def fetch_document(doc_id, range_pref):
                     traceback.print_exc(file=sys.stdout)
 
         data = pd.DataFrame(res, columns=['Full Name', 'ASURITE', 'GitHub', 'EmailID', 'Preferences', 'Avoidance', 'TimeZone', 'TimePreference', 'GithubKnowledge', 'ScrumKnowledge', 'Comments'])
+        session['response'] = data.to_json(orient='split')
         print(data)
         print("--------------Done----------------")
     print("calling G")
@@ -192,9 +194,7 @@ def fetch_document(doc_id, range_pref):
     res = g.assign_group()
     print(res)
 
-
-    #return data.to_json(orient='split')
-    return res.to_json(orient='split')
+    return session['response']
 
 @app.route("/oauthcallback")
 def callback():
