@@ -39,6 +39,11 @@ def home():
 def about():
     return render_template('about.html')
 
+@app.route("/group")
+@login_required
+def group():
+    return render_template('group_page.html',title="Manage Groups")
+
 @app.route("/cal")
 @login_required
 def cal():

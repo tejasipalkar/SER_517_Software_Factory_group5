@@ -9,20 +9,6 @@ $(document).ready(function(){
 		$("#content1").show();
 	})
 
-	var acc = document.getElementsByClassName("accordion");
-
-	for (var i = 0; i < acc.length; i++) {
-	  	acc[i].addEventListener("click", function() {
-	    this.classList.toggle("active");
-	    var panel = this.nextElementSibling;
-	    if (panel.style.maxHeight){
-	      panel.style.maxHeight = null;
-	    } else {
-	      panel.style.maxHeight = panel.scrollHeight + "px";
-	    } 
-	  });
-	}
-
 });
 
 $(document).ready(function() {
@@ -31,7 +17,7 @@ $(document).ready(function() {
       $(this).prop("disabled", true);
       // add spinner to button
       $(this).html(
-        `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>`
+        `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Loading`
       );
     });
     $("#btn-grp").click(function() {
@@ -39,7 +25,7 @@ $(document).ready(function() {
       $(this).prop("disabled", true);
       // add spinner to button
       $(this).html(
-        `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>`
+        `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Loading..`
       );
     });
 
