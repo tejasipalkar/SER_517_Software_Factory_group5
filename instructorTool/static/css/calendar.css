@@ -24,6 +24,7 @@ margin: 0 auto;
   background-color: white; 
   color: black;
   text-decoration: none;
+  border-radius: 4px;
 }
 
 #wrap {
