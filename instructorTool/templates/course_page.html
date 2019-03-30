@@ -12,7 +12,7 @@
 <div id="container-2">
 	<h2>Course Page</h2>
 	<div id ="btn-links">
-		<button type="button" class="btn btn-success btn-lg btn-block" id="btn-grp">Manage Groups</button>
+		<button type="button" class="btn btn-success btn-lg btn-block" id="btn-grp" onclick ="window.location.href='{{ url_for('group')}}'">Manage Groups</button>
     	<button type="button" class="btn btn-success btn-lg btn-block" id ="btn-cal" onclick ="window.location.href='{{ url_for('cal')}}'">
     		View Calender
     	</button>

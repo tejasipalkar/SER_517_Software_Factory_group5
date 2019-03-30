@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>Manage Groups</h2>
+<section class="container py-4">
+        <div class="row">
+            <div class="col-md-12">
+                <ul id="tabbedPane" class="nav nav-tabs">
+                    <li class="nav-item"><a href="" data-target="#triggerGrouping" data-toggle="tab" class="nav-link small text-uppercase">Form Groups</a></li>
+                    <li class="nav-item"><a href="" data-target="#profile1" data-toggle="tab" class="nav-link small text-uppercase active">Edit Group</a></li>
+                </ul>
+                <br>
+                <div id="tabbedPaneContent" class="tab-content">
+                    <div id="triggerGrouping" class="tab-pane fade ">
+                        <div id="grp-info">
+                        	<form id="form1">
+							    <div class="form-group">
+							      <label for="sel1">Select preferences (select one):</label>
+							      <select class="form-control form-control-sm" id="sel1" name="sellist1" required="required">
+							        <option>0</option>
+							        <option>1</option>
+							        <option>2</option>
+							        <option>3</option>
+							      </select>
+							      <br>
+							      <label for="sel1">Select avoidances (select one):</label>
+							      <select class="form-control form-control-sm" id="sel2" name="sellist2" required="required">
+							        <option>0</option>
+							        <option>1</option>
+							        <option>2</option>
+							        <option>3</option>
+							      </select>
+							      <br>
+							      <label for="number">Group Size:</label>
+  								  <input type="number" class="form-control form-control-sm" id="size" required>
+  								  <br>
+  								  <label for="number">Enter the sheet URL:</label>
+  								  <input type="URL" class="form-control form-control-sm" id="size" required>
+							    </div>
+							   	<div id="submit-div">
+							   		<button type="submit" class="btn btn-primary mb-2" onclick=""window.location.href='{{ url_for('send')}}'"">Submit</button>
+							   	</div>
+							</form>
+						</div>
+                    </div>
+                    <div id="profile1" class="tab-pane fade active show">
+                        <h4>We are Indians</h4>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+    
+
+
+
+
+{% endblock content %}

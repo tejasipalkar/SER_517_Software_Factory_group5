@@ -208,9 +208,9 @@ body {
   margin-left: -250px;
 }
 .wrapper{
-  display: flex;
+  
   width: 100%;
-  align-items: stretch;
+  margin-top: 5%;
 }
 @media (max-width: 768px) {
     .sidebar {
@@ -246,25 +246,6 @@ body {
 }
 .contentSection{
   margin-left:1.5em;
-}
-.accordion {
-  background-color: #eee;
-  color: #444;
-  cursor: pointer;
-  padding: 18px;
-  width: 800px;
-  border: none;
-  text-align: left;
-  outline: none;
-  font-size: 15px;
-  transition: 0.4s;
-} 
-.accordion:after {
-  content: '\002B';
-  color: #777;
-  font-weight: bold;
-  float: right;
-  margin-left: 5px;
 }
 input[type=file],select{
   width: 80%;
@@ -302,9 +283,6 @@ input[type=file],select{
 .btn-form:disabled{
   background-color: #dddddd
 }
-#remove-file{
-  margin-left: -230px;
-}
 .login-container{
   background-color: #EBF5FB;
   width: 400px;
@@ -314,6 +292,8 @@ input[type=file],select{
   top: 40%;
   transform: translate(-50%, -50%);
   border-style: groove;
+  border-color: #EBF5FB;
+  
 }
 
 #login-btn{
@@ -336,6 +316,10 @@ input[type=file],select{
   top: 40%;
   transform: translate(-50%, -50%);
   border-style: groove;
+  border-color: #EBF5FB;
+}
+.form-group,#triggerGrouping{
+  background-color: #fafafa;
 }
 #continue-btn{
 	align-self: center;
@@ -354,4 +338,40 @@ input[type=file],select{
 }
 #btn-grp,#btn-cal{
   margin-top: 2%;
+}
+.accordion {
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+  transition: 0.4s;
+}
+
+.active, .accordion:hover {
+  background-color: #ccc;
+}
+
+.accordion:after {
+  content: '\002B';
+  color: #777;
+  font-weight: bold;
+  float: right;
+  margin-left: 5px;
+}
+
+.active:after {
+  content: "\2212";
+}
+
+.panel {
+  padding: 0 18px;
+  background-color: white;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
 }
