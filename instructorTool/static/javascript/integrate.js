@@ -8,10 +8,6 @@ $(document).ready(function(){
 		$("#content2").hide()
 		$("#content1").show();
 	})
-	
-	$("#trigger-grouping").click(function(){
-		
-	})
 
 	var acc = document.getElementsByClassName("accordion");
 
@@ -29,25 +25,24 @@ $(document).ready(function(){
 
 });
 
-function uploadFile(){
-	var x = document.getElementsById("file");
-	x.disabled = true;
-}
-$(document).ready(
-    function(){
-        $('input:file').change(
-            function(){
-                if ($(this).val()) {
-                    $('input:submit').attr('disabled',false); 
-                    $('#remove-file').attr('disabled',false);
-                } 
-            }
-            );
+$(document).ready(function() {
+    $("#btn-cal").click(function() {
+      // disable button
+      $(this).prop("disabled", true);
+      // add spinner to button
+      $(this).html(
+        `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>`
+      );
     });
-$('#remove-file').on('click',function(e){
-	var $el = $('#file');
-	$el.wrap('<form>').closest('form').get(0).reset();
-	$el.unwrap();
+    $("#btn-grp").click(function() {
+      // disable button
+      $(this).prop("disabled", true);
+      // add spinner to button
+      $(this).html(
+        `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>`
+      );
+    });
+
 });
 
-</script>
+
