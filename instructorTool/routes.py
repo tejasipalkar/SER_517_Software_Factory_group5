@@ -3,6 +3,7 @@ from flask import render_template, url_for, json, flash, redirect, request
 from instructorTool import app
 from instructorTool.forms import LoginForm
 from instructorTool.Canvas_Scripts.canvas_calendar import Canvas_Calendar
+from instructorTool.Canvas_Scripts.course import Course
 import json
 from instructorTool.models import User, Configuration
 from instructorTool import db, login_manager
@@ -21,19 +22,21 @@ from flask import Flask, session
 
 course = '15760'
 canvas_token = '7236~UoRqWAyLYPwM3ArUdvszjsidpNisiFq2N4XnlMFIr3Uh3TNOVuhP7qv05awogom2'
-
-with open('instructorTool/courseslist.json') as f:
-        courses = json.load(f)
-
+courses =""
 @app.route("/")
 @app.route("/login")
 def login():
     return render_template('login.html',title ="Login",courses= courses)
 
+
 @app.route("/home")
-@login_required
 def home():
-    return render_template('home.html',title ="Home",courses= courses)
+    canvas = Course(canvas_token)
+    canvas.getcoursejson()
+    with open('course.json') as f:
+        courses = json.load(f)
+    result=courses['children']
+    return render_template('home.html',title ="Home",courses=result)
 
 @app.route("/about")
 @login_required
