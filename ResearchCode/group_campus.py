@@ -4,12 +4,15 @@ import csv
 import numpy
 
 class CampusGroup:
-	def __init__(self, team_size):
+	def __init__(self, team_size, dataframe):
+		self.dataframe = dataframe
 		self.no_of_stu = team_size
-		self.stu_list = []
-		self.stu_time_zone = {}
-		self.stu_pref = {}
-		self.stu_avoid = {}
+		self.stu_list = [x for x in dataframe['ASURITE']]
+		print(self.stu_list)
+		self.stu_time_zone = {x:y for x,y in zip(dataframe['ASURITE'],dataframe['TimePreference'])}
+		self.stu_pref = {x:y for x,y in zip(dataframe['ASURITE'],dataframe['Preferences'])}
+		self.stu_avoid = {x:y for x,y in zip(dataframe['ASURITE'],dataframe['Avoidance'])}
+		
 		
 		
 		
@@ -19,16 +22,16 @@ class CampusGroup:
 	
 	def read_data(self):
 		# This will read data from organized csv file for input
-		with open("Altered.csv") as fp:
-			reader = csv.reader(fp)
-			count = 0
-			for line in reader:
-				if count > 0:
-					self.stu_list.append(line[2])
-					self.stu_pref[line[2]] = [x.replace("'",'') for x in line[5][1:-1].split(', ')]
-					self.stu_avoid[line[2]] = [x.replace("'",'') for x in line[6][1:-1].split(', ')]
-					self.stu_time_zone[line[2]] = line[7][1:-1].split(', ')
-				count += 1
+		#with open("Altered.csv") as fp:
+			#reader = csv.reader(fp)
+			#count = 0
+			#for line in reader:
+				#if count > 0:
+					#self.stu_list.append(line[2])
+					#self.stu_pref[line[2]] = [x.replace("'",'') for x in line[5][1:-1].split(', ')]
+					#self.stu_avoid[line[2]] = [x.replace("'",'') for x in line[6][1:-1].split(', ')]
+					#self.stu_time_zone[line[2]] = line[7][1:-1].split(', ')
+				#count += 1
 		
 		self.stu_available = set(self.stu_list)
 
@@ -103,7 +106,7 @@ class CampusGroup:
 				temp_team.append(self.stu_list[i])
 				self.stu_available.remove(self.stu_list[i])
 				c = 1
-				while self.no_of_stu > len(temp_team) and c < self.no_of_stu:
+				while self.no_of_stu > len(temp_team) and c < 3: #self.no_of_stu:
 					idx_min = numpy.argmin(s)
 					if self.stu_list[idx_min] in self.stu_available:
 						temp_team.append(self.stu_list[idx_min])
@@ -181,17 +184,17 @@ class CampusGroup:
 
 
 # This method is purely for testing purpose
-def main():
+#def main():
 	#Read the group size
-	print("Enter number of students in a Team:", end="")
-	no_of_stu = int(input())
+	#print("Enter number of students in a Team:", end="")
+	#no_of_stu = int(input())
 
-	obj = CampusGroup(no_of_stu)
-	obj.assign_group()
+	#obj = CampusGroup(no_of_stu)
+	#obj.assign_group()
 
 	
-if __name__ == "__main__":
-	main()
+#if __name__ == "__main__":
+	#main()
 
 
 
