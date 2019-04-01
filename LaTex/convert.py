@@ -1,59 +1,73 @@
 import json
 from pprint import pprint
+from datetime import datetime
 
-header = "\\documentclass[10pt]{article}\n\\usepackage{calendar}\n\\usepackage[landscape, a4paper, margin=1cm]{geometry}\n\\usepackage{palatino}\n\\begin{document}\n\\pagestyle{empty}\n\\setlength{\parindent}{0pt}\n\\StartingDayNumber=1\n" 
-print(header)
+with open('my_json_data.json') as f:
+     data = json.load(f)
+
+
+header = "\\documentclass[10pt]{article}\n\\usepackage{calendar}\n\\usepackage[landscape, a4paper, margin=1cm]{geometry}\n\\usepackage{palatino}\n\\begin{document}\n\\pagestyle{empty}\n\\setlength{\parindent}{0pt}\n\\StartingDayNumber=1\n"
 
 name = "Events"
-month_day = "Febraury 2019" 
+
 event = "test"
 information = "test information"
-start = "-2"
+start = 1
 title = "\\begin{center}\n\\textsc{\LARGE " + name + "}\n\\textsc{\large "+ month_day +"}\n\\end{center}"
-print(title)    
-print("\n")
-print("\n")
-config1 = "\\begin{calendar}{\\textwidth}"
-config2 = "\\setcounter{calendardate}{"+start+"}"
+
+
+config1 = "\\begin{calendar}{\\textwidth}\n"
+
 end = "\\finishCalendar\n\\end{calendar}\n\\end{document}"
-print(config1)
-print(config2)
-print("\n")
+
 blank_day = "\\BlankDay"
-normal_day = "\\day{"+event+"}{\\textbf{"+event+"}{"+information+"}}"
+
 body = ""
-i = 0
-while i < 31:
-    if i%2==0:
-        body = body + "\n" + blank_day
+
+tex_file = open("test.tex", "w")
+
+tex_file.write(header + '\n')
+tex_file.write(config1 + '\n')
+
+
+for item in data:
+    keys = item.keys()
+    if "start_at" in keys:
+        date_key = "start_at"
     else:
-        body = body + "\n" + normal_day
-    i+=1
-print(body)
+        date_key = "end_at"
+    split_date = str(item[date_key]).split('T')
+    split_date = split_date[0].split('-')
+    year = split_date[0]
+    month = split_date[1]
+    day = split_date[2]
+    title = "\\begin{center}\n\\textsc{\LARGE " + name + "}\n\\textsc{\large "+ month +"}\n\\end{center}"
+    start = datetime(int(year), int(month), 1).weekday() - 1
+    normal_day = "\\day{{{}}}{{\\textbf{{{}}}".format(name,event)
 
-print(normal_day)
-print("\n")
-print(end)
-
-
-# with open('my_json_data.json') as f:
-#     data = json.load(f)
-
-# pprint(data)
-# """
-# data = data["data"]
-# keys = data[0].keys()
-# for i in data:
-#     print("++++++++++++++++")
-#     for key in keys:
-#         print("---------")
-#         print(i[key])
-#         """
-
-# for (k, v) in data.items():
-#    print("+++++")
-#    print(str(v))
-
-
-
-#    print(data)
+    tex_file.write(normal_day)
+tex_file.write(end + '\n')
+tex_file.close()
+#     i = 0
+#     while i < 30:
+#         i+=1
+#         if i == int(day):
+#             body = body + "\n" + normal_day
+#         else:
+#             body + "\n" + blank_day
+# elif k == "title":
+#     information = v
+# elif k == "context_code":
+#     event = v
+#
+# month_day = month + "/" + year
+# title = "\\begin{center}\n\\textsc{\LARGE " + name + "}\n\\textsc{\large "+ month_day +"}\n\\end{center}"
+# config2 = "\\setcounter{calendardate}{"+str(start)+"}"
+#
+#
+# print(header)
+# print(title)
+# print(config1)
+# print(config2)
+# print(body)
+# print(end)
