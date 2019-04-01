@@ -15,7 +15,7 @@
                         	<form id="form1">
 							    <div class="form-group">
 							      <label for="sel1">Select preferences (select one):</label>
-							      <select class="form-control form-control-sm" id="sel1" name="sellist1" required="required">
+							      <select class="form-control form-control-sm" id="sel1" name="pref" required="required">
 							        <option>0</option>
 							        <option>1</option>
 							        <option>2</option>
@@ -23,7 +23,7 @@
 							      </select>
 							      <br>
 							      <label for="sel1">Select avoidances (select one):</label>
-							      <select class="form-control form-control-sm" id="sel2" name="sellist2" required="required">
+							      <select class="form-control form-control-sm" id="sel2" name="avoid" required="required">
 							        <option>0</option>
 							        <option>1</option>
 							        <option>2</option>
@@ -31,10 +31,10 @@
 							      </select>
 							      <br>
 							      <label for="number">Group Size:</label>
-  								  <input type="number" class="form-control form-control-sm" id="size" required>
+  								  <input type="number" name="group" class="form-control form-control-sm" id="size" required>
   								  <br>
   								  <label for="number">Enter the sheet URL:</label>
-  								  <input type="URL" class="form-control form-control-sm" id="size" required>
+  								  <input type="URL" name="file" class="form-control form-control-sm" id="size" required>
 							    </div>
 							   	<div id="submit-div">
 							   		<button type="submit" class="btn btn-primary mb-2" onclick=""window.location.href='{{ url_for('send')}}'"">Submit</button>
@@ -43,7 +43,7 @@
 						</div>
                     </div>
                     <div id="profile1" class="tab-pane fade active show">
-                        <h4>We are Indians</h4>
+                        <h4>Edit Group</h4>
                     </div>
                     
                 </div>
