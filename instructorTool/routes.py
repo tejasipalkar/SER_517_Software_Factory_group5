@@ -18,25 +18,24 @@ import pandas as pd
 import traceback
 import sys
 from instructorTool.Group_Scripts.group_online import OnlineGroup
-from flask import Flask, session
 
 course = '15760'
-canvas_token = '7236~UoRqWAyLYPwM3ArUdvszjsidpNisiFq2N4XnlMFIr3Uh3TNOVuhP7qv05awogom2'
-courses =""
+canvas_token ='7236~DiulAqdn81ttFzedsN35CUBBkKRk09AvMmgE4YibOW5BqZ4F8iDWmnBvRejtPDqM'
+courses = ""
+
 @app.route("/")
 @app.route("/login")
 def login():
     return render_template('login.html',title ="Login",courses= courses)
 
 
-@app.route("/home")
+@app.route("/home", methods = ['POST'])
+@login_required
 def home():
-    canvas = Course(canvas_token)
-    canvas.getcoursejson()
-    with open('course.json') as f:
-        courses = json.load(f)
-    result=courses['children']
-    return render_template('home.html',title ="Home",courses=result)
+    token = request.form['token']
+    canvas = Course(token)
+    course_names=canvas.getcourse()
+    return render_template('home.html',title ="Home",courses=course_names)
 
 @app.route("/about")
 @login_required
@@ -46,12 +45,6 @@ def about():
 @app.route("/group")
 @login_required
 def group():
-    doc_url = request.args.get('file')
-    pref = request.args.get('pref')
-    avoid = request.args.get('avoid')
-    group_size = request.args.get('group')
-    if doc_url and pref and avoid:
-        return fetch_document(doc_url, pref, avoid, group_size)
     return render_template('group_page.html',title="Manage Groups")
 
 @app.route("/cal")
@@ -103,11 +96,11 @@ def editAssign():
 @app.route('/send', methods=['GET','POST'])
 @login_required
 def send():
+
     if request.method== 'POST':
         return render_template('course_page.html',title = "Course Page")
 
-    return render_template('home.html')
-
+    
 
 @app.route("/logout")
 def logout():
@@ -119,13 +112,20 @@ def logout():
 def account():
     return render_template('account.html')
 
-@app.route("/document")
+@app.route("/document", methods=['POST'])
 @login_required
-def fetch_document(doc_id, pref, avoid, group_size):
+def document():
+    print("hello")
+    doc_url = request.args.get('file-path')
+    range_pref = request.args.get('sellist1')
+    if doc_url and range_pref:
+        return fetch_document(doc_url, range_pref)
+
+    return render_template('home.html')
+
+def fetch_document(doc_id, range_pref):
     doc_id = doc_id.split("/")[5]
-    pref = int(pref)
-    avoid = int(avoid)
-    group_size = int(group_size)
+    range_int = int(range_pref)
     print(doc_id)
     access_token = session['access_token']
     r=requests.get("https://www.googleapis.com/drive/v3/files/"+doc_id+"/export?mimeType=text/csv", headers={"Authorization":access_token})
@@ -139,8 +139,8 @@ def fetch_document(doc_id, pref, avoid, group_size):
         rawtext = rf.read().splitlines()
         myreader = csv.reader(rawtext)
         res = []
-        no_of_pref = pref
-        no_of_avoid = avoid
+        no_of_pref = range_int
+        no_of_avoid = range_int
         for row in myreader:
             print("-----------------------------------------------------------------------")
             count = count + 1
@@ -192,15 +192,16 @@ def fetch_document(doc_id, pref, avoid, group_size):
                     traceback.print_exc(file=sys.stdout)
 
         data = pd.DataFrame(res, columns=['Full Name', 'ASURITE', 'GitHub', 'EmailID', 'Preferences', 'Avoidance', 'TimeZone', 'TimePreference', 'GithubKnowledge', 'ScrumKnowledge', 'Comments'])
-        session['response'] = data.to_json(orient='split')
         print(data)
         print("--------------Done----------------")
     print("calling G")
-    g = OnlineGroup(group_size, data)
+    g = OnlineGroup(3, data)
     res = g.assign_group()
     print(res)
 
-    return session['response']
+
+    #return data.to_json(orient='split')
+    return res.to_json(orient='split')
 
 @app.route("/oauthcallback")
 def callback():
@@ -251,7 +252,7 @@ def sendrequest():
     redirect_uri = getConfig("aws_redirect_uri", "http://127.0.0.1:5000/oauthcallback")
     url = "https://accounts.google.com/o/oauth2/auth?response_type=code&client_id="\
     + str(client_id)\
-    +"&scope=https://www.googleapis.com/auth/drive+email+profile&redirect_uri="\
+    +"&scope=https://www.googleapis.com/auth/spreadsheets+https://www.googleapis.com/auth/drive.file+https://www.googleapis.com/auth/drive+email+profile&redirect_uri="\
     + redirect_uri
     return redirect(url)
 
