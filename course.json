@@ -1,0 +1,17 @@
+{
+    "type": "course",
+    "children": [
+        {
+            "name": "CSE 572: Data Mining (2018 Fall)",
+            "instructor": "Ayan Banerjee"
+        },
+        {
+            "name": "SER 517: Software Factory I (2019 Spring)",
+            "instructor": "Robert Reimar Heinrichs"
+        },
+        {
+            "name": "SER515-Group5-TestShell",
+            "instructor": "Alexandra Mehlhase"
+        }
+    ]
+}
