@@ -409,6 +409,43 @@ function openModelForUpdateEvent(event){
     }
   }
 
+  function pushEditQuiz(){
+    console.log("editquiz",editQuiz)
+    var events = []
+    for(var i = 0; i < editQuiz.length; i++){
+      var completeEvent = $('#calendar').fullCalendar('clientEvents', editQuiz[i])[0];
+        if(completeEvent != null && completeEvent.id != null){
+        var event = {
+          id: null,
+          title: null,
+          due_at: null
+        };
+        event.id = completeEvent.id;
+        event.title = completeEvent.title;
+        event.due_at = FullCalendarToCanvasDate(completeEvent.start.format().substring(0,10),completeEvent.start.format().substring(11,16));
+        events.push(event);
+      }
+    }
+    if(events.length>0){
+      console.log("edit quiz to push",events);
+      $.ajax({
+        url: '/editquiz',
+        data: JSON.stringify(events),
+        type: 'POST',
+        contentType: 'application/json',
+        success: function(response) {
+          pushDeleteEvents();
+        },
+        error: function(error) {
+          console.log("editQuiz",error);
+          $("#failure-alert").show().delay(2000).fadeOut();
+        }
+      });
+    }else{
+      pushDeleteEvents();
+    }
+  }
+
   function setModelValue(tag, title, startDate, endDate, startTime, endTime){
     $('#tag_input').val(tag);
     $('#event_title').val(title);
