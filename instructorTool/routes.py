@@ -2,11 +2,12 @@
 from flask import render_template, url_for, json, flash, redirect, request
 from instructorTool import app
 from instructorTool.forms import LoginForm
+from instructorTool.Canvas_Scripts.course import Course
 from instructorTool.Canvas_Scripts.canvas_calendar import Canvas_Calendar
 import json
 from instructorTool.models import User, Configuration
 from instructorTool import db, login_manager
-import requests 
+import requests
 from flask_login import login_user, current_user, logout_user, login_required
 from flask import jsonify, session
 import jwt
@@ -30,7 +31,7 @@ with open('instructorTool/courseslist.json') as f:
 def login():
     return render_template('login.html',title ="Login",courses= courses)
 
-@app.route("/home")
+@app.route("/home", methods=['POST'])
 @login_required
 def home():
     token = request.form['token']
@@ -130,11 +131,11 @@ def fetch_document(doc_id, pref, avoid, group_size):
     print(doc_id)
     access_token = session['access_token']
     r=requests.get("https://www.googleapis.com/drive/v3/files/"+doc_id+"/export?mimeType=text/csv", headers={"Authorization":access_token})
-   
+
     destname = 'dummy.csv'
     with open(destname, 'w') as wf:
         wf.write(r.text)
-        
+
     count = 0
     with open(destname, 'r') as rf:
         rawtext = rf.read().splitlines()
@@ -209,21 +210,21 @@ def callback():
     client_id = Configuration.query.filter_by(key="oauth_client_id").first().value
     client_secret = Configuration.query.filter_by(key="oauth_client_secret").first().value
     redirect_uri = getConfig("aws_redirect_uri", "http://127.0.0.1:5000/oauthcallback")
-    PARAMS = {'code':code, 'client_id': client_id, 
+    PARAMS = {'code':code, 'client_id': client_id,
     'client_secret': client_secret, 'redirect_uri': redirect_uri,
-    'grant_type': 'authorization_code'} 
+    'grant_type': 'authorization_code'}
     URL = "https://oauth2.googleapis.com/token"
-    # sending get request and saving the response as response object 
-    r = requests.post(url = URL, data = PARAMS) 
-    # extracting data in json format 
-    data = r.json() 
+    # sending get request and saving the response as response object
+    r = requests.post(url = URL, data = PARAMS)
+    # extracting data in json format
+    data = r.json()
     segments = data['id_token'].split('.')
 
-    if (len(segments) != 3): 
-        raise Exception('Wrong number of segments in token: %s' % id_token) 
+    if (len(segments) != 3):
+        raise Exception('Wrong number of segments in token: %s' % id_token)
 
     b64string = segments[1]
-    padding =  '=' * (4 - len(b64string) % 4) 
+    padding =  '=' * (4 - len(b64string) % 4)
     padded = str(b64string) + str(padding)
     response = base64.b64decode(padded)
     response = str(response, 'utf-8')
@@ -286,4 +287,4 @@ def addconfig():
 @app.route("/token")
 @login_required
 def token():
-   return render_template('token.html') 
+   return render_template('token.html')
