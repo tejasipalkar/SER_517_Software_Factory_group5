@@ -85,7 +85,7 @@ body {
    }
    
   .card{
-    max-width: 12rem;
+    max-width: 15rem;
     max-height: 20rem;
     margin: 1.5rem;
     display: flex;             
@@ -288,26 +288,21 @@ input[type=file],select{
 .btn-form:disabled{
   background-color: #dddddd
 }
-.login-container{
+
+.login-div{
   background-color: #EBF5FB;
-  width: 400px;
-  height: 200px;
-  position: absolute;
-  left: 50%;
-  top: 40%;
-  transform: translate(-50%, -50%);
   border-style: groove;
   border-color: #EBF5FB;
-  
+  text-align: center;
+  padding: 30px; 
+  margin-top: 20px;
 }
 
 #login-btn{
-  width: 50%;
-  margin-left:20%;
-  margin-top: 10%;
-  position: relative;
-  
+  background-color: #cf543d; 
+  margin-top: 30px
 }
+
 .login-elements{
   margin-top: 35px;
   margin-left:25px;
@@ -327,12 +322,12 @@ input[type=file],select{
   background-color: #fafafa;
 }
 #continue-btn{
-	align-self: center;
-	margin-top: 1.5em;
   width: 50%;
-  margin-left:20%;
-  margin-top: 10%;
-  position: relative;
+  margin-top: 20px
+}
+
+#token-textbox{
+  width: 60%
 }
 
 #container-2{
