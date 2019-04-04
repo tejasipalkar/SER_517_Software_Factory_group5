@@ -116,6 +116,14 @@ def editQuiz():
 @login_required
 def send():
     if request.method== 'POST':
+        course_name = request.form.get('course_name')
+        token = session['canvas_token']
+        canvas = Course(token)
+        course_names=canvas.getcourse()
+        for key, value in course_names.items():
+            if key == course_name:
+                course_id = value
+        session['course_id'] = course_id
         return render_template('course_page.html',title = "Course Page")
 
     return render_template('home.html')

@@ -3,27 +3,27 @@ body {
     color: #333333;
     margin-top: 5rem;
   }
-  
+
   h1, h2, h3, h4, h5, h6 {
     color: #444444;
   }
-  
+
   .bg-steel {
     background-color: #5f788a;
   }
-  
+
   .site-header .navbar-nav .nav-link {
     color: #cbd5db;
   }
-  
+
   .site-header .navbar-nav .nav-link:hover {
     color: #ffffff;
   }
-  
+
   .site-header .navbar-nav .nav-link.active {
     font-weight: 500;
   }
-  
+
   .content-section {
     background: #ffffff;
     padding: 10px 20px;
@@ -31,50 +31,50 @@ body {
     border-radius: 3px;
     margin-bottom: 20px;
   }
-  
+
   .article-title {
     color: #444444;
   }
-  
+
   a.article-title:hover {
     color: #428bca;
     text-decoration: none;
   }
-  
+
   .article-content {
     white-space: pre-line;
   }
-  
+
   .article-img {
     height: 65px;
     width: 65px;
     margin-right: 16px;
   }
-  
+
   .article-metadata {
     padding-bottom: 1px;
     margin-bottom: 4px;
     border-bottom: 1px solid #e3e3e3
   }
-  
+
   .article-metadata a:hover {
     color: #333;
     text-decoration: none;
   }
-  
+
   .article-svg {
     width: 25px;
     height: 25px;
     vertical-align: middle;
   }
-  
+
   .account-img {
     height: 125px;
     width: 125px;
     margin-right: 20px;
     margin-bottom: 16px;
   }
-  
+
   .account-heading {
     font-size: 2.5rem;
   }
@@ -83,12 +83,12 @@ body {
   .mt-2{
     margin: .5rem;
    }
-   
+
   .card{
     max-width: 12rem;
     max-height: 20rem;
     margin: 1.5rem;
-    display: flex;             
+    display: flex;
     align-items: center;
     justify-content: center;
   }
@@ -97,12 +97,22 @@ body {
     max-height: 20rem;
   }
 
+  .card-title{
+    width: 100%;
+    height: 100%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding:1%;
+    border:none;
+  }
+
   .btn-default {
     color: #333;
     background-color: #fff;
     border-color: #ccc;
   }
-    
+
   /* .btn {
   display: inline-block;
   padding: 6px 12px;
@@ -122,16 +132,16 @@ body {
   border: 1px solid transparent;
   border-radius: 4px;
   } */
-    
+
   #page-content-wrapper {
   width: 100%;
   padding: 15px;
   }
-  
+
   #page-content-wrapper {
   padding: 20px;
   }
-    
+
 .sidebar {
   list-style-type:none;
   background-color:#333;
@@ -147,13 +157,13 @@ body {
   list-style: none;
   transition:1s ease;
 }
-  
+
 .btn-default {
     color: #333;
     background-color: #fff;
     border-color: #ccc;
     }
-    
+
     .btn {
     display: inline-block;
     padding: 6px 12px;
@@ -173,12 +183,12 @@ body {
     border: 1px solid transparent;
     border-radius: 4px;
     }
-    
+
     #page-content-wrapper {
     width: 100%;
     padding: 15px;
     }
-    
+
     #page-content-wrapper {
     padding: 20px;
     }
@@ -213,7 +223,7 @@ body {
   margin-left: -250px;
 }
 .wrapper{
-  
+
   width: 100%;
   margin-top: 5%;
 }
@@ -247,7 +257,7 @@ body {
 }
 .buttonLogin{
   size: 36px;
-  
+
 }
 .contentSection{
   margin-left:1.5em;
@@ -298,7 +308,7 @@ input[type=file],select{
   transform: translate(-50%, -50%);
   border-style: groove;
   border-color: #EBF5FB;
-  
+
 }
 
 #login-btn{
@@ -306,7 +316,7 @@ input[type=file],select{
   margin-left:20%;
   margin-top: 10%;
   position: relative;
-  
+
 }
 .login-elements{
   margin-top: 35px;
