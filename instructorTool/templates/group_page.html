@@ -1,19 +1,21 @@
 {% extends "layout.html" %}
 {% block content %}
 <h2>Manage Groups</h2>
-<section class="container py-4">
-        <div class="row">
-            <div class="col-md-12">
-                <ul id="tabbedPane" class="nav nav-tabs">
-                    <li class="nav-item"><a href="" data-target="#triggerGrouping" data-toggle="tab" class="nav-link small text-uppercase">Form Groups</a></li>
-                    <li class="nav-item"><a href="" data-target="#profile1" data-toggle="tab" class="nav-link small text-uppercase active">Edit Group</a></li>
-                </ul>
-                <br>
-                <div id="tabbedPaneContent" class="tab-content">
-                    <div id="triggerGrouping" class="tab-pane fade ">
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="create-tab" data-toggle="tab" href="#tab1" role="tab" aria-controls="home" aria-selected="true">Create Groups</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="edit-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="profile" aria-selected="false">Edit Groups</a>
+  </li>
+ </ul>
+<div class="tab-content" id="nav-tabContent">
+  <div class="tab-pane show active" id="tab1" role="tabpanel" aria-labelledby="nav-home-tab">
+  	
                         <div id="grp-info">
-                        	<form id="form1" action="javascript:postgrouppref();">
+                        	<form id="form1">
 							    <div class="form-group">
+							      <br>
 							      <label for="sel1">Select preferences (select one):</label>
 							      <select class="form-control form-control-sm" id="sel1" name="pref" required="required">
 							        <option>0</option>
@@ -34,22 +36,43 @@
   								  <input type="number" name="group" class="form-control form-control-sm" id="size" required>
   								  <br>
   								  <label for="number">Enter the sheet URL:</label>
-  								  <input type="URL" name="file" class="form-control form-control-sm" id="file" required>
+  								  <input type="URL" name="file" class="form-control form-control-sm" id="size" required>
 							    </div>
 							   	<div id="submit-div">
-							   		<button type="submit" class="btn btn-primary mb-2">Submit</button>
+							   		<button id="trigger-group" type="submit" class="btn btn-primary mb-2" onclick=
+							   		"window.location.href='{{ url_for('group')}}'">Submit</button>
 							   	</div>
 							</form>
 						</div>
-                    </div>
-                    <div id="profile1" class="tab-pane fade active show">
-                        <h4>Edit Group</h4>
-                    </div>
-                    
-                </div>
-            </div>
-        </div>
-    </section>
+  
+
+  </div>
+	  <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="nav-profile-tab">
+  			<div id="container">
+  				<div id="table-container">
+  					<table class="table table-bordered" id="grp-table" style="width: 100%">
+  					<thead class="thead-light">
+			            <tr>
+			                <th data-field="Full Name">Name</th>
+			                <th data-field="Asurite">Asurite</th>
+			                <th data-field="Github">Github</th>
+			                <th data-field="EmailID">EmailID</th>
+			                <th data-field="Preferences">Prefrences</th>
+			                <th data-field="Avoidance">Avoidance</th>
+			                <th data-field="TimeZone">Time Zone</th>
+			                <th data-field="TimePreference">TimePreference</th>
+			                <th data-field="GithubKnowledge">GithubKnowledge</th>
+			                <th data-field="ScrumKnowledge">ScrumKnowledge</th>
+			                <th data-field="Comments">Comments</th>
+			                <th data-field="Group Name">Group Name</th>
+
+			            </tr>
+		        	</thead>
+		  					
+  				</table>
+  				</div>
+  			</div>
+  		</div>
     
 
 <script type="text/javascript">
