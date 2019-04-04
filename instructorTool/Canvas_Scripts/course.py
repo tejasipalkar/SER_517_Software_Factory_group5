@@ -8,10 +8,9 @@ class Course:
 
     def getcourse(self):
         courses = self.canvas.get_courses()
-        course_array = []
+        course_json = {}
         for course in courses:
-            course_name = course.name
-            course_array.append(course_name)
-        return course_array
+            course_json[course.name] = course.id
+        return course_json
 
 
