@@ -7,14 +7,9 @@ store_list = []
 MONTHS = ['Jan','Feb','March','April', 'May', 'June', 'July', 'Aug', 'Sept',
             'Oct', 'Nov', 'Dec']
 
-def myfun():
-    with open("sample.json", "r") as f:
-      json_string = json.load(f)
-    #print(json_string)
-
+def myfun(y):
     result = []
-    f = open("test_file.tex", "w")
-    for item in json_string:
+    for item in y:
         #print(item['title'])
         line1 = []
         line2 = []
@@ -57,5 +52,7 @@ def myfun():
     return result
 
 if __name__ == '__main__':
-    retval = myfun()
+    y = [{"title":"project:sprintONE", "start":"2019-04-06T23:57:00", "end":"2019-06-06T23:57:00"},{"title":"project:sprintONE", "start":"2019-03-06T23:57:00", "end":"2019-03-06T23:57:00"}, {"title":"project:sprintONE", "start":"2019-03-06T23:57:00", "end":"2019-03-06T23:57:00"},{"title":"project:sprintONE", "start":"2019-04-06T23:57:00", "end":"2019-06-06T23:57:00"},{"title":"project:sprintONE", "start":"2019-03-06T23:57:00", "end":"2019-03-06T23:57:00"}, {"title":"project:sprintONE", "start":"2019-03-06T23:57:00", "end":"2019-03-06T23:57:00"}]
+
+    retval = myfun(y)
     print(retval)
