@@ -30,7 +30,7 @@ with open('instructorTool/courseslist.json') as f:
 @app.route("/")
 @app.route("/login")
 def login():
-    return render_template('login.html',title ="Login",courses= courses)
+    return render_template('login.html',title ="Login")
 
 @app.route("/home", methods=['POST'])
 @login_required
@@ -38,7 +38,11 @@ def home():
     token = request.form['token']
     canvas = Course(token)
     session['canvas_token'] = token
-    course_names=canvas.getcourse()
+    try:
+        course_names=canvas.getcourse()
+    except:
+        return render_template('token.html')
+    session['canvas_token'] = token
     return render_template('home.html',title ="Home",courses=course_names)
 
 @app.route("/about")
