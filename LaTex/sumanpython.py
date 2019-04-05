@@ -41,11 +41,11 @@ def myfun(y):
             line1.append(start_month + ' ' + str(int(float(start_day))) + '}' )
             result.append(str.join('', [temp for temp in line1]) + '\n')
         else:
-            line1.append(string[1]+'start')
+            line1.append(string[1]+'START')
             line1.append('}{')
             line1.append(start_month + ' ' + str(int(float(start_day))) + '}' )
             result.append(str.join('', [temp for temp in line1]) + '\n')
-            line2.append(string[1]+'end')
+            line2.append(string[1]+'END')
             line2.append('}{')
             line2.append(end_month + ' ' + str(int(float(end_day))) + '}' )
             result.append(str.join('', [temp for temp in line2]) + '\n')
