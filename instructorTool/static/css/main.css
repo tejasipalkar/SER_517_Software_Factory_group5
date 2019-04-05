@@ -12,7 +12,7 @@ body {
     background-color: #5f788a;
   }
 
-  .nav-item .nav-link {
+  .site-header .navbar-nav .nav-link {
     color: #cbd5db;
   }
 
@@ -93,7 +93,7 @@ body {
     justify-content: center;
   }
   .card-body{
-    width: 20rem;
+    width: 15rem;
     max-height: 20rem;
   }
 
@@ -333,7 +333,7 @@ input[type=file],select{
   border-style: groove;
   border-color: #EBF5FB;
 }
-#form1,#submit-div{
+.form-group,#triggerGrouping{
   background-color: #fafafa;
 }
 #continue-btn{
