@@ -6,73 +6,46 @@
     <a class="nav-link active" id="create-tab" data-toggle="tab" href="#tab1" role="tab" aria-controls="home" aria-selected="true">Create Groups</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" id="edit-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="profile" aria-selected="false">Edit Groups</a>
+    <a class="nav-link disabled" href="#">Group Information</a>
   </li>
  </ul>
-<div class="tab-content" id="nav-tabContent">
-  <div class="tab-pane show active" id="tab1" role="tabpanel" aria-labelledby="nav-home-tab">
-  	
-                        <div id="grp-info">
-                        	<form id="form1">
-							    <div class="form-group">
-							      <br>
-							      <label for="sel1">Select preferences (select one):</label>
-							      <select class="form-control form-control-sm" id="sel1" name="pref" required="required">
-							        <option>0</option>
-							        <option>1</option>
-							        <option>2</option>
-							        <option>3</option>
-							      </select>
-							      <br>
-							      <label for="sel1">Select avoidances (select one):</label>
-							      <select class="form-control form-control-sm" id="sel2" name="avoid" required="required">
-							        <option>0</option>
-							        <option>1</option>
-							        <option>2</option>
-							        <option>3</option>
-							      </select>
-							      <br>
-							      <label for="number">Group Size:</label>
-  								  <input type="number" name="group" class="form-control form-control-sm" id="size" required>
-  								  <br>
-  								  <label for="number">Enter the sheet URL:</label>
-  								  <input type="URL" name="file" class="form-control form-control-sm" id="size" required>
-							    </div>
-							   	<div id="submit-div">
-							   		<button id="trigger-group" type="submit" class="btn btn-primary mb-2" onclick=
-							   		"window.location.href='{{ url_for('group')}}'">Submit</button>
-							   	</div>
-							</form>
-						</div>
-  
-
-  </div>
-	  <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="nav-profile-tab">
-  			<div id="container">
-  				<div id="table-container">
-  					<table class="table table-bordered" id="grp-table" style="width: 100%">
-  					<thead class="thead-light">
-			            <tr>
-			                <th data-field="Full Name">Name</th>
-			                <th data-field="Asurite">Asurite</th>
-			                <th data-field="Github">Github</th>
-			                <th data-field="EmailID">EmailID</th>
-			                <th data-field="Preferences">Prefrences</th>
-			                <th data-field="Avoidance">Avoidance</th>
-			                <th data-field="TimeZone">Time Zone</th>
-			                <th data-field="TimePreference">TimePreference</th>
-			                <th data-field="GithubKnowledge">GithubKnowledge</th>
-			                <th data-field="ScrumKnowledge">ScrumKnowledge</th>
-			                <th data-field="Comments">Comments</th>
-			                <th data-field="Group Name">Group Name</th>
-
-			            </tr>
-		        	</thead>
-		  					
-  				</table>
-  				</div>
-  			</div>
-  		</div>
+ <div id ="form-section" method="post">
+ 	<form id="form1" action="javascript:postgrouppref()">
+ 		<div class ="form-group">
+ 			<br>
+ 			<label for="sel1">Select preferences (select one):</label>
+      		<select class="form-control" id="sel1" required="required">
+		        <option>0</option>
+		        <option>1</option>
+		        <option>2</option>
+		        <option>3</option>
+		    </select>
+		    <br>
+		    <label for="sel2">Select avoidances (select one):</label>
+      		<select class="form-control" id="sel2" required="required">
+		        <option>0</option>
+		        <option>1</option>
+		        <option>2</option>
+		        <option>3</option>
+		    </select>
+		    <br>
+		    <label for="sel3">Select size(select one):</label>
+      		<select class="form-control" id="size" required="required">
+		        <option>1</option>
+		        <option>2</option>
+		        <option>3</option>
+		        <option>4</option>
+		        <option>5</option>
+		    </select>
+		    <br>
+		    <label for="file-path">Enter file URL:</label>
+		    <input type="URL" name="file" class="form-control form-control-sm" id="file" required>
+		    <br>
+		    <button type="submit" class="btn btn-primary mb-2">Create Groups</button>
+ 		</div>
+ 	</form>
+ 	
+ </div>
     
 
 <script type="text/javascript">
@@ -89,7 +62,7 @@ function postgrouppref(){
 }
 
   function callbackfn(response){
-    alert(response)
+    alert(response);
 }
 
 function sendRequestWithCallback(action, params, async, callback) {
