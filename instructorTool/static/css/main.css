@@ -12,7 +12,7 @@ body {
     background-color: #5f788a;
   }
 
-  .site-header .navbar-nav .nav-link {
+  .nav-item .nav-link {
     color: #cbd5db;
   }
 
@@ -333,7 +333,7 @@ input[type=file],select{
   border-style: groove;
   border-color: #EBF5FB;
 }
-.form-group,#triggerGrouping{
+#form1,#submit-div{
   background-color: #fafafa;
 }
 #continue-btn{
