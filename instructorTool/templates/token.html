@@ -5,10 +5,13 @@
 
     <div class="token-container">
 		<div class ="login-elements">
-				<h6>Please enter the Canvas token to continue</h6>
-
+                {% if error %}
+                    <h6><strong>Error:</strong> {{ error }}</h6>
+                {% else %}
+                    <h6>Please enter the Canvas token to continue</h6>
+                {% endif %}
 				<form action="/home" method="post">
-  					<input size="40" type="text" name="token" required>
+  					<input type="text" name="token" style="width:90%;height:100%;" required>
   					<br>
   					<button type="submit" class="btn btn-primary" id ="continue-btn">Continue</button>
 				</form>

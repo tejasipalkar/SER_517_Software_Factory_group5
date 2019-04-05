@@ -32,17 +32,24 @@ with open('instructorTool/courseslist.json') as f:
 def login():
     return render_template('login.html',title ="Login")
 
-@app.route("/home", methods=['POST'])
+@app.route("/home", methods=['POST', 'GET'])
 @login_required
 def home():
-    token = request.form['token']
-    canvas = Course(token)
-    session['canvas_token'] = token
-    try:
+    if request.method == 'POST':
+        token = request.form['token']
+        canvas = Course(token)
+        try:
+            course_names=canvas.getcourse()
+        except:
+            error = "Token Not Valid. Please Enter the Correct Token"
+            return render_template('token.html', error = error)
+        session['canvas_token'] = token
+    else:
+        if 'canvas_token' not in session:
+            return render_template('token.html')
+        token = session['canvas_token']
+        canvas = Course(token)
         course_names=canvas.getcourse()
-    except:
-        return render_template('token.html')
-    session['canvas_token'] = token
     return render_template('home.html',title ="Home",courses=course_names)
 
 @app.route("/about")
