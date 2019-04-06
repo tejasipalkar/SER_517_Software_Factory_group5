@@ -72,3 +72,17 @@ class STG_Group:
                 new_project.add_membership(role = new_project.roles[0].id, username = email, email = email)
 
 
+    def create_github_repo(self, repo_name):
+        description = 'Welcome to ' + repo_name
+        payload = {'name': repo_name, 'description': description, 'auto_init': 'true', "private": 'true'}
+        user = Configuration.query.filter_by(key='repo.owner').first().value
+        token = Configuration.query.filter_by(key='repo.personal.access.token').first().value
+        requests.post('https://api.github.com/' + 'user/repos', auth=(owner,token), data=json.dumps(payload))
+
+
+    def add_collaborator(self, repo_name, username):
+        owner = Configuration.query.filter_by(key='repo.owner').first().value
+        token = Configuration.query.filter_by(key='repo.personal.access.token').first().value
+        requests.put('https://api.github.com/' + 'repos/' + owner +'/' + repo_name + '/collaborators/' + username, auth=(owner,token))
+
+
