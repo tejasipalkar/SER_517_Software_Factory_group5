@@ -5,9 +5,6 @@
   <li class="nav-item">
     <a class="nav-link active" id="create-tab" data-toggle="tab" href="#tab1" role="tab" aria-controls="home" aria-selected="true">Create Groups</a>
   </li>
-  <li class="nav-item">
-    <a class="nav-link disabled" href="#">Group Information</a>
-  </li>
  </ul>
  <div id ="form-section" method="post">
  	<form id="form1" action="javascript:postgrouppref()">
@@ -44,13 +41,22 @@
 		    <button type="submit" class="btn btn-primary mb-2">Create Groups</button>
  		</div>
  	</form>
+ 	<div id ="new">
+ 		<table id="table" border=1 width="600"></table>
+ 	</div>
+ 	<div id="social-btns">
+ 		<br>
+ 		<button type="submit" class="btn btn-primary">Slack</button>
+ 		<button type="submit" class="btn btn-primary">Github</button>
+ 	</div>
  	
  </div>
     
 
 <script type="text/javascript">
 	
-
+var col_names =[]
+var rows =[]
 function postgrouppref(){
   var pref = document.getElementById("sel1").value;
   var avoid = document.getElementById("sel2").value;
@@ -61,8 +67,42 @@ function postgrouppref(){
   //document.getElementById("content").value="";
 }
 
+function createtable(rows,col_names){
+	
+	var  tab = document.createElement("TABLE");
+	tab.border = "1";
+	var columnCount = col_names.length;
+	var row = tab.insertRow(-1);
+        for (var i = 0; i < columnCount; i++) {
+            var headerCell = document.createElement("TH");
+            headerCell.innerHTML = col_names[i];
+            row.appendChild(headerCell);
+        }
+        for (var i = 0; i < rows.length; i++) {
+            row = tab.insertRow(-1);
+            for (var j = 0; j < columnCount; j++) {
+                var cell = row.insertCell(-1);
+                cell.innerHTML = rows[i][j];
+            }
+        }
+        var table= document.getElementById("table");
+        table.innerHTML="";
+        table.appendChild(tab);
+}
+
   function callbackfn(response){
-    alert(response);
+  	var res = JSON.parse(response);
+  	const value_1 =res.columns;
+  	const value_2=res.data;
+  	//console.log(value);
+  	for(x in value_1){
+  		col_names[x] =value_1[x];
+  	}
+  	for(x in value_2){
+  		rows[x] =value_2[x];
+  	}
+  	createtable(rows,col_names);
+    //alert(response);
 }
 
 function sendRequestWithCallback(action, params, async, callback) {
