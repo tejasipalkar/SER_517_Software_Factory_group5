@@ -4,6 +4,7 @@ from instructorTool import app
 from instructorTool.forms import LoginForm
 from instructorTool.Canvas_Scripts.course import Course
 from instructorTool.Canvas_Scripts.canvas_calendar import Canvas_Calendar
+from instructorTool.Canvas_Scripts.stg_grouping import STG_Group
 import json
 from instructorTool.models import User, Configuration
 from instructorTool import db, login_manager
@@ -149,6 +150,26 @@ def logout():
 @login_required
 def account():
     return render_template('account.html')
+
+@app.route("/slack", methods = ['POST'])
+@login_required
+def slack():
+    slack_token = request.form.get('slack_token')
+    canvas_token = session['canvas_token']
+    course_id = session['course_id']
+    slack = STG_Group(canvas_token)
+    slack.create_slack_groups(slack_token, course_id)
+
+@app.route("/taiga", methods = ['POST'])
+@login_required
+def taiga():
+    taiga_username = request.form.get('username')
+    taiga_password = request.form.get('password')
+    taiga_desc = request.form.get('description')
+    canvas_token = session['canvas_token']
+    course_id = session['course_id']
+    taiga = STG_Group(canvas_token)
+    taiga.create_taiga_channels(taiga_username, taiga_password, taiga_desc, course_id)
 
 @app.route("/document")
 @login_required
