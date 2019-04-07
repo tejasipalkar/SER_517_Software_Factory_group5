@@ -390,3 +390,19 @@ input[type=file],select{
   overflow: hidden;
   transition: max-height 0.2s ease-out;
 }
+#table {  
+  border-collapse:collapse; 
+  border-radius: 5px;
+  background: white;
+  overflow-y: auto;
+}
+.isDisabled{
+  color: currentColor;
+  cursor: default;
+  opacity: 0.5;
+  text-decoration: none;
+  pointer-events: none;
+}
+#new{
+  overflow-x: auto;
+}
