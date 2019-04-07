@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
+<script type="text/javascript" src="static\javascript\integrate.js"></script>
 <h2>Manage Groups</h2>
 <ul class="nav nav-tabs" id="myTab" role="tablist">
   <li class="nav-item">
@@ -7,54 +8,54 @@
   </li>
  </ul>
  <div id ="form-section" method="post">
- 	<form id="form1" action="javascript:postgrouppref()">
- 		<div class ="form-group">
- 			<br>
- 			<label for="sel1">Select preferences (select one):</label>
-      		<select class="form-control" id="sel1" required="required">
-		        <option>0</option>
-		        <option>1</option>
-		        <option>2</option>
-		        <option>3</option>
-		    </select>
-		    <br>
-		    <label for="sel2">Select avoidances (select one):</label>
-      		<select class="form-control" id="sel2" required="required">
-		        <option>0</option>
-		        <option>1</option>
-		        <option>2</option>
-		        <option>3</option>
-		    </select>
-		    <br>
-		    <label for="sel3">Select size(select one):</label>
-      		<select class="form-control" id="size" required="required">
-		        <option>1</option>
-		        <option>2</option>
-		        <option>3</option>
-		        <option>4</option>
-		        <option>5</option>
-		    </select>
-		    <br>
-		    <label for="file-path">Enter file URL:</label>
-		    <input type="URL" name="file" class="form-control form-control-sm" id="file" required>
-		    <br>
-		    <button type="submit" class="btn btn-primary mb-2">Create Groups</button>
- 		</div>
- 	</form>
- 	<div id ="new">
- 		<table id="table" border=1 width="600"></table>
- 	</div>
- 	<div id="social-btns">
- 		<br>
- 		<button type="submit" class="btn btn-primary">Slack</button>
- 		<button type="submit" class="btn btn-primary">Github</button>
- 	</div>
- 	
+  <form id="form1" action="javascript:postgrouppref()">
+    <div class ="form-group">
+      <br>
+      <label for="sel1">Select preferences (select one):</label>
+          <select class="form-control" id="sel1" required="required">
+            <option>0</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+        </select>
+        <br>
+        <label for="sel2">Select avoidances (select one):</label>
+          <select class="form-control" id="sel2" required="required">
+            <option>0</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+        </select>
+        <br>
+        <label for="sel3">Select size(select one):</label>
+          <select class="form-control" id="size" required="required">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+        </select>
+        <br>
+        <label for="file-path">Enter file URL:</label>
+        <input type="URL" name="file" class="form-control form-control-sm" id="file" required>
+        <br>
+        <button type="submit" class="btn btn-primary mb-2" id ="create-grp">Create Groups</button>
+    </div>
+  </form>
+  <div id ="new">
+    <table id=table border="1"></table>
+  </div>
+  <div id="social-btns">
+    <br>
+    <button type="submit" class="btn btn-primary">Slack</button>
+    <button type="submit" class="btn btn-primary">Github</button>
+  </div>
+  
  </div>
     
 
 <script type="text/javascript">
-	
+  
 var col_names =[]
 var rows =[]
 function postgrouppref(){
@@ -67,42 +68,63 @@ function postgrouppref(){
   //document.getElementById("content").value="";
 }
 
-function createtable(rows,col_names){
-	
-	var  tab = document.createElement("TABLE");
-	tab.border = "1";
-	var columnCount = col_names.length;
-	var row = tab.insertRow(-1);
-        for (var i = 0; i < columnCount; i++) {
-            var headerCell = document.createElement("TH");
-            headerCell.innerHTML = col_names[i];
-            row.appendChild(headerCell);
-        }
-        for (var i = 0; i < rows.length; i++) {
-            row = tab.insertRow(-1);
-            for (var j = 0; j < columnCount; j++) {
-                var cell = row.insertCell(-1);
-                cell.innerHTML = rows[i][j];
-            }
-        }
-        var table= document.getElementById("table");
-        table.innerHTML="";
-        table.appendChild(tab);
+
+function randomid(){
+   return '_' + Math.random().toString(36).substr(2, 9);
 }
 
+function createtable(rows,col_names){
+  
+  var tbl ='';
+  tbl +='<table class="table table-bordered">';
+  tbl+='<thead>';
+  tbl+='<tr>';
+  for(var head_cell=0;head_cell<col_names.length;head_cell++){
+    tbl+='<th>'+col_names[head_cell]+'</th>';
+  }
+  tbl+='<th>Options</th>';
+  tbl+='</tr>';
+  for( var row=0;row<rows.length;row++){
+    var row_id =randomid();
+    tbl +='<tr row_id="'+row_id+'">';
+    for(var col =0;col<col_names.length-1;col++){
+        tbl +='<td ><div class="row_data" col_name="'+col_names[col]+'">'+rows[row][col]+'</div></td>';
+      }
+      tbl +='<td ><div class="row_data" edit_type="click" col_name="'+col_names[col_names.length-1]+'">'+rows[row][col_names.length-1]+'</div></td>';
+      tbl +='<td>';
+           
+      tbl +='<span class="btn_edit" ><a href="#" class="btn btn-link " row_id="'+row_id+'" > Edit</a> </span>';
+      tbl +='<span class="btn_save"> <a href="#" class="btn btn-link" class="isDisabled" row_id="'+row_id+'"> Save</a> </span>';
+      tbl +='<span class="btn_cancel"><a href ="#"class="btn btn-link" class="isDisabled" row_id="'+row_id+'"> Cancel</a></span>';
+      tbl +='</td>';
+     
+      
+    tbl +='</tr>';
+  }
+
+  tbl +='</table>'
+
+
+  var table = document.getElementById("table");
+  table.innerHTML="";
+  table.innerHTML+=tbl;
+  
+
+}
+
+
   function callbackfn(response){
-  	var res = JSON.parse(response);
-  	const value_1 =res.columns;
-  	const value_2=res.data;
-  	//console.log(value);
-  	for(x in value_1){
-  		col_names[x] =value_1[x];
-  	}
-  	for(x in value_2){
-  		rows[x] =value_2[x];
-  	}
-  	createtable(rows,col_names);
-    //alert(response);
+    var res = JSON.parse(response);
+    const value_1 =res.columns;
+    const value_2=res.data;
+    //console.log(value);
+    for(x in value_1){
+      col_names[x] =value_1[x];
+    }
+    for(x in value_2){
+      rows[x] =value_2[x];
+    }
+    createtable(rows,col_names);
 }
 
 function sendRequestWithCallback(action, params, async, callback) {
