@@ -8,6 +8,7 @@
   </li>
  </ul>
  <div id ="form-section" method="post">
+<<<<<<< HEAD
   <form id="form1" action="javascript:postgrouppref()">
     <div class ="form-group">
       <br>
@@ -51,11 +52,116 @@
     <button type="submit" class="btn btn-primary">Github</button>
   </div>
   
+=======
+ 	<form id="form1" action="javascript:postgrouppref()">
+ 		<div class ="form-group">
+ 			<br>
+ 			<label for="sel1">Select preferences (select one):</label>
+      		<select class="form-control" id="sel1" required="required">
+		        <option>0</option>
+		        <option>1</option>
+		        <option>2</option>
+		        <option>3</option>
+		    </select>
+		    <br>
+		    <label for="sel2">Select avoidances (select one):</label>
+      		<select class="form-control" id="sel2" required="required">
+		        <option>0</option>
+		        <option>1</option>
+		        <option>2</option>
+		        <option>3</option>
+		    </select>
+		    <br>
+		    <label for="sel3">Select size(select one):</label>
+      		<select class="form-control" id="size" required="required">
+		        <option>1</option>
+		        <option>2</option>
+		        <option>3</option>
+		        <option>4</option>
+		        <option>5</option>
+		    </select>
+		    <br>
+		    <label for="file-path">Enter file URL:</label>
+		    <input type="URL" name="file" class="form-control form-control-sm" id="file" required>
+		    <br>
+		    <button type="submit" class="btn btn-primary mb-2">Create Groups</button>
+ 		</div>
+ 	</form>
+ 	<div id ="new">
+ 		<table id="table" border=1 width="600"></table>
+ 	</div>
+ 	<div id="social-btns">
+ 		<br>
+ 		<button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#slackModal">Slack</button>
+ 		<button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#taigaModal">Taiga</button>
+ 	</div>
+
+>>>>>>> ce57add97eede2022a02db126f64049b04748fc7
  </div>
-    
+
+ <div class="modal fade" id="slackModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create Slack Groups</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h6>Please enter the Slack Token</h6>
+        <form action="/slack" id="form" method="post" name="form">
+        <input id="slack_token" name="slack_token" type="text" required>
+        <br>
+        <br>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="taigaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create Taiga Channels</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="/taiga" id="form" method="post" name="form">
+        <h6>Taiga Username: </h6>
+        <input id="username" name="username" type="text" required>
+        <br>
+        <br>
+        <h6>Taiga Password: </h6>
+        <input id="password" name="password" type="password" required>
+        <br>
+        <br>
+        <h6>Taiga Project Description: </h6>
+        <textarea id="description" name="description" required></textarea>
+        <br>
+        <br>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <script type="text/javascript">
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> ce57add97eede2022a02db126f64049b04748fc7
 var col_names =[]
 var rows =[]
 function postgrouppref(){
@@ -68,6 +174,7 @@ function postgrouppref(){
   //document.getElementById("content").value="";
 }
 
+<<<<<<< HEAD
 
 function randomid(){
    return '_' + Math.random().toString(36).substr(2, 9);
@@ -125,6 +232,44 @@ function createtable(rows,col_names){
       rows[x] =value_2[x];
     }
     createtable(rows,col_names);
+=======
+function createtable(rows,col_names){
+
+	var  tab = document.createElement("TABLE");
+	tab.border = "1";
+	var columnCount = col_names.length;
+	var row = tab.insertRow(-1);
+        for (var i = 0; i < columnCount; i++) {
+            var headerCell = document.createElement("TH");
+            headerCell.innerHTML = col_names[i];
+            row.appendChild(headerCell);
+        }
+        for (var i = 0; i < rows.length; i++) {
+            row = tab.insertRow(-1);
+            for (var j = 0; j < columnCount; j++) {
+                var cell = row.insertCell(-1);
+                cell.innerHTML = rows[i][j];
+            }
+        }
+        var table= document.getElementById("table");
+        table.innerHTML="";
+        table.appendChild(tab);
+}
+
+  function callbackfn(response){
+  	var res = JSON.parse(response);
+  	const value_1 =res.columns;
+  	const value_2=res.data;
+  	//console.log(value);
+  	for(x in value_1){
+  		col_names[x] =value_1[x];
+  	}
+  	for(x in value_2){
+  		rows[x] =value_2[x];
+  	}
+  	createtable(rows,col_names);
+    //alert(response);
+>>>>>>> ce57add97eede2022a02db126f64049b04748fc7
 }
 
 function sendRequestWithCallback(action, params, async, callback) {
@@ -146,7 +291,7 @@ function sendRequestWithCallback(action, params, async, callback) {
             callback(objHTTP.responseText);
         }
     }
-} 
+}
 function xhr() {
     var xmlhttp;
     if (window.XMLHttpRequest) {
