@@ -394,7 +394,7 @@ input[type=file],select{
   border-collapse:collapse; 
   border-radius: 5px;
   background: white;
-  overflow-x:auto;
+  overflow-y: auto;
 }
 .isDisabled{
   color: currentColor;
@@ -402,4 +402,7 @@ input[type=file],select{
   opacity: 0.5;
   text-decoration: none;
   pointer-events: none;
+}
+#new{
+  overflow-x: auto;
 }
