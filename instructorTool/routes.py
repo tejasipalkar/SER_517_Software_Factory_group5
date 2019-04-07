@@ -154,6 +154,7 @@ def account():
 @app.route("/slack", methods = ['POST'])
 @login_required
 def slack():
+    print("hello")
     slack_token = request.form.get('slack_token')
     canvas_token = session['canvas_token']
     course_id = session['course_id']
