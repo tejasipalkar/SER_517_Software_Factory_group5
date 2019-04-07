@@ -154,12 +154,13 @@ def account():
 @app.route("/slack", methods = ['POST'])
 @login_required
 def slack():
-    print("hello")
     slack_token = request.form.get('slack_token')
     canvas_token = session['canvas_token']
     course_id = session['course_id']
     slack = STG_Group(canvas_token)
-    slack.create_slack_groups(slack_token, course_id)
+    result = slack.create_slack_groups(slack_token, course_id)
+    if result == "invalid_auth":
+        return 'invalid token';
 
 @app.route("/taiga", methods = ['POST'])
 @login_required

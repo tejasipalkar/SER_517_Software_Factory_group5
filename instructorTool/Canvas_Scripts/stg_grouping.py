@@ -27,33 +27,35 @@ class STG_Group:
         group_data = self.get_groupsdata(course_id)
         res = requests.put('https://slack.com/api/users.list?token='+token+'&pretty=1')
         data = res.json()
-        members = data["members"]
-        nameToID = {}
-        for i in range(0, len(members)):
-            nameToID[members[i]['name']] = members[i]['id']
+        if "error" in data:
+            return data["error"]
+        else:
+            members = data["members"]
+            nameToID = {}
+            for i in range(0, len(members)):
+                nameToID[members[i]['name']] = members[i]['id']
 
-        group_append = ["_instructor", "_general"]
+            group_append = ["_instructor", "_general"]
 
-        for key in group_data:
-            name = key
-            groupMembers = group_data[key]
-            channelIDs = []
+            for key in group_data:
+                name = key
+                groupMembers = group_data[key]
+                channelIDs = []
 
-            if len(group_append) == 0:
-                res = requests.put('https://slack.com/api/groups.create?token='+token+'&name='+name+'&pretty=1')
-                data = res.json()
-                channelIDs.append(data["group"]['id'])
-            else:
-                for append in group_append:
-                    res = requests.put('https://slack.com/api/groups.create?token='+token+'&name='+name+append+'&pretty=1')
+                if len(group_append) == 0:
+                    res = requests.put('https://slack.com/api/groups.create?token='+token+'&name='+name+'&pretty=1')
                     data = res.json()
                     channelIDs.append(data["group"]['id'])
+                else:
+                    for append in group_append:
+                        res = requests.put('https://slack.com/api/groups.create?token='+token+'&name='+name+append+'&pretty=1')
+                        data = res.json()
+                        channelIDs.append(data["group"]['id'])
 
-            for i in range(0, len(groupMembers)):
-                userID = nameToID[groupMembers[i]]
-                print(groupMembers[i])
-                for channelID in channelIDs:
-                    res = requests.put('https://slack.com/api/groups.invite?token='+token+'&channel='+channelID+'&user='+userID+'&pretty=1')
+                for i in range(0, len(groupMembers)):
+                    userID = nameToID[groupMembers[i]]
+                    for channelID in channelIDs:
+                        res = requests.put('https://slack.com/api/groups.invite?token='+token+'&channel='+channelID+'&user='+userID+'&pretty=1')
 
     def create_taiga_channels(self, username, password, desc, course_id):
         api = TaigaAPI()
