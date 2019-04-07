@@ -46,15 +46,71 @@
  	</div>
  	<div id="social-btns">
  		<br>
- 		<button type="submit" class="btn btn-primary">Slack</button>
- 		<button type="submit" class="btn btn-primary">Github</button>
+ 		<button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#slackModal">Slack</button>
+ 		<button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#taigaModal">Taiga</button>
  	</div>
- 	
+
  </div>
-    
+
+ <div class="modal fade" id="slackModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create Slack Groups</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h6>Please enter the Slack Token</h6>
+        <form action="/slack" id="form" method="post" name="form">
+        <input id="slack_token" name="slack_token" type="text" required>
+        <br>
+        <br>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="taigaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create Taiga Channels</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="/taiga" id="form" method="post" name="form">
+        <h6>Taiga Username: </h6>
+        <input id="username" name="username" type="text" required>
+        <br>
+        <br>
+        <h6>Taiga Password: </h6>
+        <input id="password" name="password" type="password" required>
+        <br>
+        <br>
+        <h6>Taiga Project Description: </h6>
+        <textarea id="description" name="description" required></textarea>
+        <br>
+        <br>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <script type="text/javascript">
-	
+
 var col_names =[]
 var rows =[]
 function postgrouppref(){
@@ -68,7 +124,7 @@ function postgrouppref(){
 }
 
 function createtable(rows,col_names){
-	
+
 	var  tab = document.createElement("TABLE");
 	tab.border = "1";
 	var columnCount = col_names.length;
@@ -124,7 +180,7 @@ function sendRequestWithCallback(action, params, async, callback) {
             callback(objHTTP.responseText);
         }
     }
-} 
+}
 function xhr() {
     var xmlhttp;
     if (window.XMLHttpRequest) {
