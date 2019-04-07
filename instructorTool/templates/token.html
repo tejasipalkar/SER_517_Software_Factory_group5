@@ -2,20 +2,18 @@
 {% block content %}
     <h2 align="center">Welcome to Instructor Tool</h2>
     <h4 align="center">Step - II</h4>
-
-    <div class="token-container">
-		<div class ="login-elements">
-                {% if error %}
-                    <h6><strong>Error:</strong> {{ error }}</h6>
-                {% else %}
-                    <h6>Please enter the Canvas token to continue</h6>
-                {% endif %}
-				<form action="/home" method="post">
-  					<input type="text" name="token" style="width:90%;height:100%;" required>
-  					<br>
-  					<button type="submit" class="btn btn-primary" id ="continue-btn">Continue</button>
-				</form>
-
+	<div class="row">
+		<div class="login-div col-sm-6 offset-sm-3">
+			{% if error %}
+				<h6><strong>Error:</strong> {{ error }}</h6>
+			{% else %}
+				<h6>Please enter the Canvas token to continue</h6>
+			{% endif %}
+			<form action="/home" method="post" style="margin-top:30px">
+				<input id="token-textbox" type="text" name="token" required>
+				<br>
+				<button type="submit" class="btn btn-primary" id="continue-btn">Continue</button>
+			</form>
 		</div>
 	</div>
 
