@@ -4,6 +4,7 @@ from instructorTool import app
 from instructorTool.forms import LoginForm
 from instructorTool.Canvas_Scripts.course import Course
 from instructorTool.Canvas_Scripts.canvas_calendar import Canvas_Calendar
+from instructorTool.Canvas_Scripts.stg_grouping import STG_Group
 import json
 from instructorTool.models import User, Configuration
 from instructorTool import db, login_manager
@@ -30,15 +31,26 @@ with open('instructorTool/courseslist.json') as f:
 @app.route("/")
 @app.route("/login")
 def login():
-    return render_template('login.html',title ="Login",courses= courses)
+    return render_template('login.html',title ="Login")
 
-@app.route("/home", methods=['POST'])
+@app.route("/home", methods=['POST', 'GET'])
 @login_required
 def home():
-    token = request.form['token']
-    canvas = Course(token)
-    session['canvas_token'] = token
-    course_names=canvas.getcourse()
+    if request.method == 'POST':
+        token = request.form['token']
+        canvas = Course(token)
+        try:
+            course_names=canvas.getcourse()
+        except:
+            error = "Token Not Valid. Please Enter the Correct Token"
+            return render_template('token.html', error = error)
+        session['canvas_token'] = token
+    else:
+        if 'canvas_token' not in session:
+            return render_template('token.html')
+        token = session['canvas_token']
+        canvas = Course(token)
+        course_names=canvas.getcourse()
     return render_template('home.html',title ="Home",courses=course_names)
 
 @app.route("/about")
@@ -116,6 +128,14 @@ def editQuiz():
 @login_required
 def send():
     if request.method== 'POST':
+        course_name = request.form.get('course_name')
+        token = session['canvas_token']
+        canvas = Course(token)
+        course_names=canvas.getcourse()
+        for key, value in course_names.items():
+            if key == course_name:
+                course_id = value
+        session['course_id'] = course_id
         return render_template('course_page.html',title = "Course Page")
 
     return render_template('home.html')
@@ -124,98 +144,41 @@ def send():
 @app.route("/logout")
 def logout():
     logout_user()
-    return redirect(url_for('home'))
+    return redirect(url_for('login'))
 
 @app.route("/account")
 @login_required
 def account():
     return render_template('account.html')
 
+@app.route("/slack", methods = ['POST'])
+@login_required
+def slack():
+    print("hello")
+    slack_token = request.form.get('slack_token')
+    canvas_token = session['canvas_token']
+    course_id = session['course_id']
+    slack = STG_Group(canvas_token)
+    slack.create_slack_groups(slack_token, course_id)
+
+@app.route("/taiga", methods = ['POST'])
+@login_required
+def taiga():
+    taiga_username = request.form.get('username')
+    taiga_password = request.form.get('password')
+    taiga_desc = request.form.get('description')
+    canvas_token = session['canvas_token']
+    course_id = session['course_id']
+    taiga = STG_Group(canvas_token)
+    taiga.create_taiga_channels(taiga_username, taiga_password, taiga_desc, course_id)
+
 @app.route("/document")
 @login_required
 def fetch_document(doc_id, pref, avoid, group_size):
-
-    # doc_id = doc_id.split("/")[5]
-    # pref = int(pref)
-    # avoid = int(avoid)
-    # group_size = int(group_size)
-    # print(doc_id)
-    # access_token = session['access_token']
-    # r=requests.get("https://www.googleapis.com/drive/v3/files/"+doc_id+"/export?mimeType=text/csv", headers={"Authorization":access_token})
-
-    # destname = 'dummy.csv'
-    # with open(destname, 'w') as wf:
-    #     wf.write(r.text)
-
-    # count = 0
-    # with open(destname, 'r') as rf:
-    #     rawtext = rf.read().splitlines()
-    #     myreader = csv.reader(rawtext)
-    #     res = []
-    #     no_of_pref = pref
-    #     no_of_avoid = avoid
-    #     for row in myreader:
-    #         print("-----------------------------------------------------------------------")
-    #         count = count + 1
-    #         if(count % 2 != 0 and count > 1):
-    #             try:
-    #                 temp = []
-    #                 i = 1
-    #                 temp.append(row[i])
-    #                 i+=1
-    #                 temp.append(row[i])
-    #                 i+=1
-    #                 temp.append(row[i])
-    #                 i+=1
-    #                 temp.append(row[i])
-    #                 i += 1
-    #                 pref = []
-    #                 for k in range(i, no_of_pref+i):
-    #                     #print(line[k])
-    #                     if row[k] != '' and row[k] != ' ':
-    #                         #print(line[k])
-    #                         pref.append(row[k])
-    #                 temp.append(pref)
-    #                 i += no_of_pref
-    #                 avoid = []
-    #                 for k in range(i, no_of_avoid+i):
-    #                     if row[k] != '' and row[k] != ' ':
-    #                         avoid.append(row[k])
-    #                 temp.append(avoid)
-    #                 i += no_of_avoid
-    #                 temp.append(row[i])
-    #                 i += 1
-    #                 date_time = []
-    #                 for idx,word in enumerate(row[i].split(',')):
-    #                     if idx%2 == 0:
-    #                         first = word
-    #                     else:
-    #                         date_time.append(first + '-' + word)
-    #                 temp.append(date_time)
-    #                 i += 1
-    #                 temp.append(row[i])
-    #                 i += 1
-    #                 temp.append(row[i])
-    #                 i += 1
-    #                 temp.append(row[i])
-    #                 res.append(temp)
-    #                 print(count, temp)
-    #             except:
-    #                 traceback.print_exc(file=sys.stdout)
-
-    #     data = pd.DataFrame(res, columns=['Full Name', 'ASURITE', 'GitHub', 'EmailID', 'Preferences', 'Avoidance', 'TimeZone', 'TimePreference', 'GithubKnowledge', 'ScrumKnowledge', 'Comments'])
-    #     session['response'] = data.to_json(orient='split')
-    #     print(data)
-    #     print("--------------Done----------------")
-    # print("calling G")
-    # g = OnlineGroup(group_size, data)
-    # res = g.assign_group()
-    # print(res)
-
     f = FetchInfo(doc_id, pref, avoid, group_size)
     res = f.fetch_document()
     session['response'] = res.to_json(orient='split')
-    return session['response']
+    return res.to_json(orient='split')
 
 @app.route("/oauthcallback")
 def callback():

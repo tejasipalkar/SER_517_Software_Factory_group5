@@ -1,58 +1,226 @@
 {% extends "layout.html" %}
 {% block content %}
+<script type="text/javascript" src="static\javascript\integrate.js"></script>
 <h2>Manage Groups</h2>
-<section class="container py-4">
-        <div class="row">
-            <div class="col-md-12">
-                <ul id="tabbedPane" class="nav nav-tabs">
-                    <li class="nav-item"><a href="" data-target="#triggerGrouping" data-toggle="tab" class="nav-link small text-uppercase">Form Groups</a></li>
-                    <li class="nav-item"><a href="" data-target="#profile1" data-toggle="tab" class="nav-link small text-uppercase active">Edit Group</a></li>
-                </ul>
-                <br>
-                <div id="tabbedPaneContent" class="tab-content">
-                    <div id="triggerGrouping" class="tab-pane fade ">
-                        <div id="grp-info">
-                        	<form id="form1">
-							    <div class="form-group">
-							      <label for="sel1">Select preferences (select one):</label>
-							      <select class="form-control form-control-sm" id="sel1" name="pref" required="required">
-							        <option>0</option>
-							        <option>1</option>
-							        <option>2</option>
-							        <option>3</option>
-							      </select>
-							      <br>
-							      <label for="sel1">Select avoidances (select one):</label>
-							      <select class="form-control form-control-sm" id="sel2" name="avoid" required="required">
-							        <option>0</option>
-							        <option>1</option>
-							        <option>2</option>
-							        <option>3</option>
-							      </select>
-							      <br>
-							      <label for="number">Group Size:</label>
-  								  <input type="number" name="group" class="form-control form-control-sm" id="size" required>
-  								  <br>
-  								  <label for="number">Enter the sheet URL:</label>
-  								  <input type="URL" name="file" class="form-control form-control-sm" id="size" required>
-							    </div>
-							   	<div id="submit-div">
-							   		<button type="submit" class="btn btn-primary mb-2" onclick=""window.location.href='{{ url_for('send')}}'"">Submit</button>
-							   	</div>
-							</form>
-						</div>
-                    </div>
-                    <div id="profile1" class="tab-pane fade active show">
-                        <h4>Edit Group</h4>
-                    </div>
-                    
-                </div>
-            </div>
-        </div>
-    </section>
-    
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="create-tab" data-toggle="tab" href="#tab1" role="tab" aria-controls="home" aria-selected="true">Create Groups</a>
+  </li>
+ </ul>
+ <div id ="form-section" method="post">
+  <form id="form1" action="javascript:postgrouppref()">
+    <div class ="form-group">
+      <br>
+      <label for="sel1">Select preferences (select one):</label>
+          <select class="form-control" id="sel1" required="required">
+            <option>0</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+        </select>
+        <br>
+        <label for="sel2">Select avoidances (select one):</label>
+          <select class="form-control" id="sel2" required="required">
+            <option>0</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+        </select>
+        <br>
+        <label for="sel3">Select size(select one):</label>
+          <select class="form-control" id="size" required="required">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+        </select>
+        <br>
+        <label for="file-path">Enter file URL:</label>
+        <input type="URL" name="file" class="form-control form-control-sm" id="file" required>
+        <br>
+        <button type="submit" class="btn btn-primary mb-2" id ="create-grp">Create Groups</button>
+    </div>
+  </form>
+  <div id ="new">
+    <table id=table border="1"></table>
+  </div>
+  <div id="social-btns">
+    <br>
+    <button type="submit" class="btn btn-primary">Slack</button>
+    <button type="submit" class="btn btn-primary">Github</button>
+  </div>
+
+
+ <div class="modal fade" id="slackModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create Slack Groups</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h6>Please enter the Slack Token</h6>
+        <form action="/slack" id="form" method="post" name="form">
+        <input id="slack_token" name="slack_token" type="text" required>
+        <br>
+        <br>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="taigaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create Taiga Channels</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="/taiga" id="form" method="post" name="form">
+        <h6>Taiga Username: </h6>
+        <input id="username" name="username" type="text" required>
+        <br>
+        <br>
+        <h6>Taiga Password: </h6>
+        <input id="password" name="password" type="password" required>
+        <br>
+        <br>
+        <h6>Taiga Project Description: </h6>
+        <textarea id="description" name="description" required></textarea>
+        <br>
+        <br>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+
+var col_names =[]
+var rows =[]
+function postgrouppref(){
+  var pref = document.getElementById("sel1").value;
+  var avoid = document.getElementById("sel2").value;
+  var group_size = document.getElementById("size").value;
+  var file = document.getElementById("file").value;
+  url ="/group?"+"pref="+pref+"&avoid="+avoid+"&group="+group_size+"&file="+file;
+  sendRequestWithCallback(url, null, true, callbackfn);
+  //document.getElementById("content").value="";
+}
+
+
+function randomid(){
+   return '_' + Math.random().toString(36).substr(2, 9);
+}
+
+function createtable(rows,col_names){
+  
+  var tbl ='';
+  tbl +='<table class="table table-bordered">';
+  tbl+='<thead>';
+  tbl+='<tr>';
+  for(var head_cell=0;head_cell<col_names.length;head_cell++){
+    tbl+='<th>'+col_names[head_cell]+'</th>';
+  }
+  tbl+='<th>Options</th>';
+  tbl+='</tr>';
+  for( var row=0;row<rows.length;row++){
+    var row_id =randomid();
+    tbl +='<tr row_id="'+row_id+'">';
+    for(var col =0;col<col_names.length-1;col++){
+        tbl +='<td ><div class="row_data" col_name="'+col_names[col]+'">'+rows[row][col]+'</div></td>';
+      }
+      tbl +='<td ><div class="row_data" edit_type="click" col_name="'+col_names[col_names.length-1]+'">'+rows[row][col_names.length-1]+'</div></td>';
+      tbl +='<td>';
+           
+      tbl +='<span class="btn_edit" ><a href="#" class="btn btn-link " row_id="'+row_id+'" > Edit</a> </span>';
+      tbl +='<span class="btn_save"> <a href="#" class="btn btn-link" class="isDisabled" row_id="'+row_id+'"> Save</a> </span>';
+      tbl +='<span class="btn_cancel"><a href ="#"class="btn btn-link" class="isDisabled" row_id="'+row_id+'"> Cancel</a></span>';
+      tbl +='</td>';
+     
+      
+    tbl +='</tr>';
+  }
+
+  tbl +='</table>'
+
+
+  var table = document.getElementById("table");
+  table.innerHTML="";
+  table.innerHTML+=tbl;
+  
+
+}
+
+
+  function callbackfn(response){
+  	var res = JSON.parse(response);
+  	const value_1 =res.columns;
+  	const value_2=res.data;
+  	//console.log(value);
+  	for(x in value_1){
+  		col_names[x] =value_1[x];
+  	}
+  	for(x in value_2){
+  		rows[x] =value_2[x];
+  	}
+  	createtable(rows,col_names);
+    //alert(response);
+}
+
+function sendRequestWithCallback(action, params, async, callback) {
+    var objHTTP = xhr();
+    objHTTP.open('GET', action, async);
+    objHTTP.setRequestHeader('Content-Type','application/x-www-form-urlencoded;charset=UTF-8');
+    if(async){
+  objHTTP.onreadystatechange=function() {
+      if(objHTTP.readyState==4) {
+    if(callback) {
+        callback(objHTTP.responseText);
+    }
+      }
+  };
+    }
+    objHTTP.send(params);
+    if(!async) {
+  if(callback) {
+            callback(objHTTP.responseText);
+        }
+    }
+}
+function xhr() {
+    var xmlhttp;
+    if (window.XMLHttpRequest) {
+  xmlhttp=new XMLHttpRequest();
+    }
+    else if(window.ActiveXObject) {
+  try {
+      xmlhttp=new ActiveXObject("Msxml2.XMLHTTP");
+  }
+  catch(e) {
+      xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+    }
+    return xmlhttp;
+}
 
 
 
+</script>
 
 {% endblock content %}
