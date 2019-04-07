@@ -4,7 +4,11 @@
     <h4 align="center">Step - II</h4>
 	<div class="row">
 		<div class="login-div col-sm-6 offset-sm-3">
-			<h5>Please enter the Canvas token to continue</h5>
+			{% if error %}
+				<h6><strong>Error:</strong> {{ error }}</h6>
+			{% else %}
+				<h6>Please enter the Canvas token to continue</h6>
+			{% endif %}
 			<form action="/home" method="post" style="margin-top:30px">
 				<input id="token-textbox" type="text" name="token" required>
 				<br>
