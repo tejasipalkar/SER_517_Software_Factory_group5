@@ -5,18 +5,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 <div id="container-2">
 	<h2>Course Page</h2>
-	<div id ="btn-links">
-		<button type="button" class="btn btn-success btn-lg btn-block" id="btn-grp" onclick ="window.location.href='{{ url_for('group')}}'">Manage Groups</button>
-    	<button type="button" class="btn btn-success btn-lg btn-block" id ="btn-cal" onclick ="window.location.href='{{ url_for('cal')}}'">
-    		View Calender
-    	</button>
-		
+	<div class="row" style="margin-top: 50px">
+		<div class="col-sm-3 offset-sm-2">
+			<button class="btn" id="btn-grp" onclick ="window.location.href='{{ url_for('group')}}'">Manage Groups</button>
+		</div>
+		<div class="col-sm-3 offset-sm-2">
+				<button class="btn" id ="btn-cal" onclick ="window.location.href='{{ url_for('cal')}}'">View Calendar</button>
+		</div>
 	</div>
 </div>
  {% endblock content %}
