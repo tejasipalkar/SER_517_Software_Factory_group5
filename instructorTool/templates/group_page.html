@@ -47,8 +47,9 @@
   </div>
   <div id="social-btns">
     <br>
-    <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#slackModal">Slack</button>
-    <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#taigaModal">Taiga</button>
+    <button id="slack-btn"type="submit" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#slackModal" disabled="disabled">Slack</button>
+    <button id="taiga-btn" type="submit" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#taigaModal" disabled="disabled">Taiga</button>
+    <p></p>
   </div>
 
 
@@ -214,7 +215,8 @@ function createtable(rows,col_names){
   		rows[x] =value_2[x];
   	}
   	createtable(rows,col_names);
-    //alert(response);
+    document.getElementById("slack-btn").disabled=false;
+    document.getElementById("taiga-btn").disabled=false;
 }
 
 function sendRequestWithCallback(action, params, async, callback) {
