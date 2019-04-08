@@ -63,11 +63,11 @@
       </div>
       <div class="modal-body">
         <h6>Please enter the Slack Token</h6>
-        <form action="/slack" id="form" method="post" name="form">
+        <form id="form" method="post" name="form">
         <input id="slack_token" name="slack_token" type="text" required>
         <br>
         <br>
-        <button type="submit" class="btn btn-primary" name = "submit_slack">Submit</button>
+        <button type="button" class="btn btn-primary" id = "submit_slack">Submit</button>
         </form>
       </div>
       <div class="modal-footer">
@@ -86,7 +86,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form action="/taiga" id="form" method="post" name="form">
+        <form id="form" method="post" name="form">
         <h6>Taiga Username: </h6>
         <input id="username" name="username" type="text" required>
         <br>
@@ -99,7 +99,7 @@
         <textarea id="description" name="description" required></textarea>
         <br>
         <br>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="button" class="btn btn-primary" id = "submit_taiga">Submit</button>
         </form>
       </div>
       <div class="modal-footer">
@@ -112,16 +112,35 @@
 <script type="text/javascript">
 
   $(function() {
-    $('submit_slack').click(function() {
+    $('#submit_slack').bind('click', function(){
         $.ajax({
             url: '/slack',
             data: $('form').serialize(),
-            async: false,
-            type: 'POST',
-            success: function(response) {
-                if(response.textStatus=='invalid token')
-                  {alert("Invalid Token");}
-            }
+            type: 'POST'
+        })
+        .done(function(response) {
+          if(response == "invalid token")
+            alert("Invalid Token");
+          else
+            {$("#slackModal").modal('hide');
+            alert("Slack Groups Created");}
+        });
+    });
+});
+
+  $(function() {
+    $('#submit_taiga').bind('click', function(){
+        $.ajax({
+            url: '/taiga',
+            data: $('form').serialize(),
+            type: 'POST'
+        })
+        .done(function(response) {
+          if(response == "invalid auth")
+            alert("Invalid Username/Password");
+          else
+            {$("#taigaModal").modal('hide');
+            alert("Taiga Channels Created");}
         });
     });
 });

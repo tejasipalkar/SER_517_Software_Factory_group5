@@ -59,10 +59,13 @@ class STG_Group:
 
     def create_taiga_channels(self, username, password, desc, course_id):
         api = TaigaAPI()
-        api.auth(
-            username=username,
-            password=password
-        )
+        try:
+            api.auth(
+                username=username,
+                password=password
+            )
+        except:
+            return 'invalid auth'
         group_data = self.get_groupsdata(course_id)
         for key in group_data:
             new_project = api.projects.create(key, desc)
