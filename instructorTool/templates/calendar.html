@@ -28,7 +28,7 @@
     </div>
     <div class="col col-sm-2" style="margin-top: 50px">
       <div class="row" style="margin: 20px">
-        <a id="hyperlink-button" href="{{url_for('cal')}}" style="background-color: #5DADE2; color: white">REFRESH&nbsp;&nbsp; <i class="fa fa-sync"></i></a>
+        <a id="hyperlink-button" class="btn-block text-center" href="{{url_for('cal')}}" style="background-color: #5DADE2; color: white">REFRESH&nbsp;&nbsp; <i class="fa fa-sync"></i></a>
       </div>
       <div class="row" style="margin: 20px">
           <input id="toolbar-button" type="button" class="btn btn-block" style="background-color: #D35400; color: white" value="ADD" onclick="openModelForNewEvent()"/>
@@ -42,10 +42,16 @@
             DOWNLOAD
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#">LaTeX</a>
+            <a class="dropdown-item" onclick="latexDownload()">LaTeX</a>
             <a class="dropdown-item" onclick="imageDownload()">Image</a>
           </div>
         </div>
+      </div>
+      <div class="row" style="margin: 20px; margin-top: 80px">
+          <h4>Legend</h4>
+          <span><i class="fa fa-circle" style="color:#bd85a8; margin-right: 10px"></i>Project</span>
+          <span><i class="fa fa-circle" style="color:#bd403a; margin-right: 10px"></i>Deadline</span>
+          <span><i class="fa fa-circle" style="color:#006666; margin-right: 10px"></i>Assignment</span>
       </div>
     </div>
   </div>

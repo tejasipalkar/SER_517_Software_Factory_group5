@@ -93,11 +93,17 @@ $(document).ready(function() {
 
     tbl_row.find('.btn_save').hide();
     tbl_row.find('.btn_cancel').hide();
+<<<<<<< HEAD
 
     //show edit button
     tbl_row.find('.btn_edit').show();
 
     //make the whole row editable
+=======
+    tbl_row.find('.btn_edit').show();
+
+    
+>>>>>>> dd8dcba6bd2d7bdcd2190be3522303ce1fb8db82
     tbl_row.find('.row_data')
     .attr('edit_type', 'click')
     .removeClass('bg-warning')
@@ -142,14 +148,22 @@ $(document).ready(function() {
       var col_val  =  $(this).html();
       arr[col_name] = col_val;
     });
+<<<<<<< HEAD
     //--->get row data > end
 
     //use the "arr" object for your ajax call
+=======
+  
+>>>>>>> dd8dcba6bd2d7bdcd2190be3522303ce1fb8db82
     $.extend(arr, {row_id:row_id});
      
 
   });
+<<<<<<< HEAD
   //--->save whole row entery > end
+=======
+  
+>>>>>>> dd8dcba6bd2d7bdcd2190be3522303ce1fb8db82
 
 }); 
 
