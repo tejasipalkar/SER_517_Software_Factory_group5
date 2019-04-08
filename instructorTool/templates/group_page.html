@@ -47,8 +47,8 @@
   </div>
   <div id="social-btns">
     <br>
-    <button type="submit" class="btn btn-primary">Slack</button>
-    <button type="submit" class="btn btn-primary">Github</button>
+    <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#slackModal">Slack</button>
+    <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#taigaModal">Taiga</button>
   </div>
 
 
@@ -63,11 +63,11 @@
       </div>
       <div class="modal-body">
         <h6>Please enter the Slack Token</h6>
-        <form action="/slack" id="form" method="post" name="form">
+        <form id="form" method="post" name="form">
         <input id="slack_token" name="slack_token" type="text" required>
         <br>
         <br>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="button" class="btn btn-primary" id = "submit_slack">Submit</button>
         </form>
       </div>
       <div class="modal-footer">
@@ -86,7 +86,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form action="/taiga" id="form" method="post" name="form">
+        <form id="form" method="post" name="form">
         <h6>Taiga Username: </h6>
         <input id="username" name="username" type="text" required>
         <br>
@@ -99,7 +99,7 @@
         <textarea id="description" name="description" required></textarea>
         <br>
         <br>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="button" class="btn btn-primary" id = "submit_taiga">Submit</button>
         </form>
       </div>
       <div class="modal-footer">
@@ -110,6 +110,40 @@
 
 
 <script type="text/javascript">
+
+  $(function() {
+    $('#submit_slack').bind('click', function(){
+        $.ajax({
+            url: '/slack',
+            data: $('form').serialize(),
+            type: 'POST'
+        })
+        .done(function(response) {
+          if(response == "invalid token")
+            alert("Invalid Token");
+          else
+            {$("#slackModal").modal('hide');
+            alert("Slack Groups Created");}
+        });
+    });
+});
+
+  $(function() {
+    $('#submit_taiga').bind('click', function(){
+        $.ajax({
+            url: '/taiga',
+            data: $('form').serialize(),
+            type: 'POST'
+        })
+        .done(function(response) {
+          if(response == "invalid auth")
+            alert("Invalid Username/Password");
+          else
+            {$("#taigaModal").modal('hide');
+            alert("Taiga Channels Created");}
+        });
+    });
+});
 
 var col_names =[]
 var rows =[]
@@ -129,7 +163,7 @@ function randomid(){
 }
 
 function createtable(rows,col_names){
-  
+
   var tbl ='';
   tbl +='<table class="table table-bordered">';
   tbl+='<thead>';
@@ -147,13 +181,13 @@ function createtable(rows,col_names){
       }
       tbl +='<td ><div class="row_data" edit_type="click" col_name="'+col_names[col_names.length-1]+'">'+rows[row][col_names.length-1]+'</div></td>';
       tbl +='<td>';
-           
+
       tbl +='<span class="btn_edit" ><a href="#" class="btn btn-link " row_id="'+row_id+'" > Edit</a> </span>';
       tbl +='<span class="btn_save"> <a href="#" class="btn btn-link" class="isDisabled" row_id="'+row_id+'"> Save</a> </span>';
       tbl +='<span class="btn_cancel"><a href ="#"class="btn btn-link" class="isDisabled" row_id="'+row_id+'"> Cancel</a></span>';
       tbl +='</td>';
-     
-      
+
+
     tbl +='</tr>';
   }
 
@@ -163,7 +197,7 @@ function createtable(rows,col_names){
   var table = document.getElementById("table");
   table.innerHTML="";
   table.innerHTML+=tbl;
-  
+
 
 }
 
