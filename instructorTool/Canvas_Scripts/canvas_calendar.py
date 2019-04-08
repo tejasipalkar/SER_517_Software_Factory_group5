@@ -11,9 +11,11 @@ class Canvas_Calendar:
         course_events = self.canvas.get_calendar_events(all_events = 1, type = 'event', context_codes=courses_array)
         course_assignments = self.canvas.get_calendar_events(all_events = 1, type = 'assignment', context_codes=courses_array)
         for event in course_events:
-            resultant_json_format["events"].append(event.__dict__['attributes'])
+            temp = {key:event.__dict__['attributes'][key] for key in ['id', 'title', 'start_at', 'end_at']}
+            resultant_json_format["events"].append(temp)
         for assignment in course_assignments:
-            resultant_json_format["assignments"].append(assignment.__dict__['assignment'])
+            temp = {key:assignment.__dict__['assignment'][key] for key in ['id', 'name', 'due_at']}
+            resultant_json_format["assignments"].append(temp)
 
         return resultant_json_format
 
