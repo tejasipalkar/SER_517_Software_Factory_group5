@@ -9,9 +9,6 @@
  </ul>
  <div id ="form-section" method="post">
 <<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> dd8dcba6bd2d7bdcd2190be3522303ce1fb8db82
   <form id="form1" action="javascript:postgrouppref()">
     <div class ="form-group">
       <br>
@@ -51,12 +48,11 @@
   </div>
   <div id="social-btns">
     <br>
-<<<<<<< HEAD
     <button type="submit" class="btn btn-primary">Slack</button>
     <button type="submit" class="btn btn-primary">Github</button>
   </div>
   
-=======
+
  	<form id="form1" action="javascript:postgrouppref()">
  		<div class ="form-group">
  			<br>
@@ -92,7 +88,7 @@
  		</div>
  	</form>
  	<div id ="new">
- 		<table id="table" border=1 width="600"></table>
+ 		<table id="table" border=1></table>
  	</div>
  	<div id="social-btns">
  		<br>
@@ -100,14 +96,8 @@
  		<button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#taigaModal">Taiga</button>
  	</div>
 
->>>>>>> ce57add97eede2022a02db126f64049b04748fc7
- </div>
-=======
-    <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#slackModal">Slack</button>
-    <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#taigaModal">Taiga</button>
-  </div>
 
->>>>>>> dd8dcba6bd2d7bdcd2190be3522303ce1fb8db82
+ </div>
 
  <div class="modal fade" id="slackModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -120,11 +110,11 @@
       </div>
       <div class="modal-body">
         <h6>Please enter the Slack Token</h6>
-        <form id="form" method="post" name="form">
+        <form action="/slack" id="form" method="post" name="form">
         <input id="slack_token" name="slack_token" type="text" required>
         <br>
         <br>
-        <button type="button" class="btn btn-primary" id = "submit_slack">Submit</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
         </form>
       </div>
       <div class="modal-footer">
@@ -143,7 +133,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form id="form" method="post" name="form">
+        <form action="/taiga" id="form" method="post" name="form">
         <h6>Taiga Username: </h6>
         <input id="username" name="username" type="text" required>
         <br>
@@ -156,7 +146,7 @@
         <textarea id="description" name="description" required></textarea>
         <br>
         <br>
-        <button type="button" class="btn btn-primary" id = "submit_taiga">Submit</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
         </form>
       </div>
       <div class="modal-footer">
@@ -167,48 +157,6 @@
 
 
 <script type="text/javascript">
-<<<<<<< HEAD
-  
-=======
-
-<<<<<<< HEAD
->>>>>>> ce57add97eede2022a02db126f64049b04748fc7
-=======
-  $(function() {
-    $('#submit_slack').bind('click', function(){
-        $.ajax({
-            url: '/slack',
-            data: $('form').serialize(),
-            type: 'POST'
-        })
-        .done(function(response) {
-          if(response == "invalid token")
-            alert("Invalid Token");
-          else
-            {$("#slackModal").modal('hide');
-            alert("Slack Groups Created");}
-        });
-    });
-});
-
-  $(function() {
-    $('#submit_taiga').bind('click', function(){
-        $.ajax({
-            url: '/taiga',
-            data: $('form').serialize(),
-            type: 'POST'
-        })
-        .done(function(response) {
-          if(response == "invalid auth")
-            alert("Invalid Username/Password");
-          else
-            {$("#taigaModal").modal('hide');
-            alert("Taiga Channels Created");}
-        });
-    });
-});
-
->>>>>>> dd8dcba6bd2d7bdcd2190be3522303ce1fb8db82
 var col_names =[]
 var rows =[]
 function postgrouppref(){
@@ -221,16 +169,11 @@ function postgrouppref(){
   //document.getElementById("content").value="";
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> dd8dcba6bd2d7bdcd2190be3522303ce1fb8db82
 
 function randomid(){
    return '_' + Math.random().toString(36).substr(2, 9);
 }
 
-<<<<<<< HEAD
 function createtable(rows,col_names){
   
   var tbl ='';
@@ -283,48 +226,29 @@ function createtable(rows,col_names){
       rows[x] =value_2[x];
     }
     createtable(rows,col_names);
-=======
-=======
->>>>>>> dd8dcba6bd2d7bdcd2190be3522303ce1fb8db82
-function createtable(rows,col_names){
-
-  var tbl ='';
-  tbl +='<table class="table table-bordered">';
-  tbl+='<thead>';
-  tbl+='<tr>';
-  for(var head_cell=0;head_cell<col_names.length;head_cell++){
-    tbl+='<th>'+col_names[head_cell]+'</th>';
-  }
-  tbl+='<th>Options</th>';
-  tbl+='</tr>';
-  for( var row=0;row<rows.length;row++){
-    var row_id =randomid();
-    tbl +='<tr row_id="'+row_id+'">';
-    for(var col =0;col<col_names.length-1;col++){
-        tbl +='<td ><div class="row_data" col_name="'+col_names[col]+'">'+rows[row][col]+'</div></td>';
-      }
-      tbl +='<td ><div class="row_data" edit_type="click" col_name="'+col_names[col_names.length-1]+'">'+rows[row][col_names.length-1]+'</div></td>';
-      tbl +='<td>';
-
-      tbl +='<span class="btn_edit" ><a href="#" class="btn btn-link " row_id="'+row_id+'" > Edit</a> </span>';
-      tbl +='<span class="btn_save"> <a href="#" class="btn btn-link" class="isDisabled" row_id="'+row_id+'"> Save</a> </span>';
-      tbl +='<span class="btn_cancel"><a href ="#"class="btn btn-link" class="isDisabled" row_id="'+row_id+'"> Cancel</a></span>';
-      tbl +='</td>';
-
-
-    tbl +='</tr>';
-  }
-
-  tbl +='</table>'
-
-
-  var table = document.getElementById("table");
-  table.innerHTML="";
-  table.innerHTML+=tbl;
-
-
 }
+// function createtable(rows,col_names){
 
+// 	var  tab = document.createElement("TABLE");
+// 	tab.border = "1";
+// 	var columnCount = col_names.length;
+// 	var row = tab.insertRow(-1);
+//         for (var i = 0; i < columnCount; i++) {
+//             var headerCell = document.createElement("TH");
+//             headerCell.innerHTML = col_names[i];
+//             row.appendChild(headerCell);
+//         }
+//         for (var i = 0; i < rows.length; i++) {
+//             row = tab.insertRow(-1);
+//             for (var j = 0; j < columnCount; j++) {
+//                 var cell = row.insertCell(-1);
+//                 cell.innerHTML = rows[i][j];
+//             }
+//         }
+//         var table= document.getElementById("table");
+//         table.innerHTML="";
+//         table.appendChild(tab);
+// }
 
   function callbackfn(response){
   	var res = JSON.parse(response);
@@ -339,7 +263,6 @@ function createtable(rows,col_names){
   	}
   	createtable(rows,col_names);
     //alert(response);
->>>>>>> ce57add97eede2022a02db126f64049b04748fc7
 }
 
 function sendRequestWithCallback(action, params, async, callback) {
