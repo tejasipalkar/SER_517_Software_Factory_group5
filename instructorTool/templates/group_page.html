@@ -42,9 +42,13 @@
         <button type="submit" class="btn btn-primary mb-2" id ="create-grp">Create Groups</button>
     </div>
   </form>
-  <div id ="new">
+  <div id ="new1">
     <table id=table1 border="1"></table>
+  </div>
+  <div id ="new2">
     <table id=table2 border="1"></table>
+  </div>
+    
   </div>
   <div id="social-btns">
     <br>
@@ -174,7 +178,7 @@ function createtable_map_id(team_name,team_map){
   for(x in team_name){
     tbl_1+='<tr row_id="'+x+'">';
     tbl_1+='<td>'+x+'</td>';
-    tbl_1+='<td>'+team_map[x]+'</td>';
+    tbl_1+='<td><input type="text" value="'+team_map[x]+'"></td>';
     tbl_1+='</tr>';
     
   }
@@ -234,15 +238,15 @@ function createtable(rows,col_names){
     //alert(response);
     var team_map= new Object();
     var team_name= new Object();
-    var res = JSON.parse(response);
-    const value_1 =res.columns;
-    const value_2=res.data;
-    //console.log(value);
-    for(x in value_1){
-      col_names[x] =value_1[x];
-    }
-    for(x in value_2){
-      rows[x] =value_2[x];
+  	var res = JSON.parse(response);
+  	const value_1 =res.columns;
+  	const value_2=res.data;
+  	//console.log(value);
+  	for(x in value_1){
+  		col_names[x] =value_1[x];
+  	}
+  	for(x in value_2){
+  		rows[x] =value_2[x];
       console.log("x1"+rows[x][11]);
       console.log("x1"+rows[x][1]);
       if(rows[x][11] in team_map){
@@ -255,11 +259,11 @@ function createtable(rows,col_names){
       if(!(rows[x][11] in team_name)){
           team_name[rows[x][11]]= rows[x][11];
       }
-    }
+  	}
     console.log(team_map);
     console.log(team_name);
     createtable_map_id(team_map,team_name);
-    createtable(rows,col_names);
+  	createtable(rows,col_names);
    //  document.getElementById("slack-btn").disabled=false;
    //  document.getElementById("taiga-btn").disabled=false;
 }
