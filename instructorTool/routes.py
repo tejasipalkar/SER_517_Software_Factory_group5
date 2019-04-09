@@ -22,7 +22,6 @@ from instructorTool.Group_Scripts.group_online import OnlineGroup
 from instructorTool.Group_Scripts.fetch import FetchInfo
 from flask import Flask, session
 
-course = '15760'
 canvas_calendar = ''
 
 with open('instructorTool/courseslist.json') as f:
@@ -117,15 +116,13 @@ def deleteEvents():
 def editAssign():
     response = request.data
     responseObj = json.loads(response)
-    print(responseObj)
-    result = canvas_calendar.edit_assignment(responseObj, course)
+    result = canvas_calendar.edit_assignment(responseObj['event'], responseObj['course'].split("_")[1])
     return result
 
 @app.route("/editquiz", methods=['POST'])
 def editQuiz():
     response = request.data
     responseObj = json.loads(response)
-    print(responseObj)
     result = canvas_calendar.edit_quiz(responseObj, course)
     return result
 

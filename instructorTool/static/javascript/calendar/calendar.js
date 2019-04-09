@@ -391,10 +391,13 @@ function openModelForUpdateEvent(event){
       }
     }
     if(events.length>0){
+      var data = {}
+      data.event = events;
+      data.course = course;
       console.log("edit assign to push",events);
       $.ajax({
         url: '/editassign',
-        data: JSON.stringify(events),
+        data: JSON.stringify(data),
         type: 'POST',
         contentType: 'application/json',
         success: function(response) {
