@@ -260,12 +260,10 @@ function createtable(rows,col_names){
           team_name[rows[x][11]]= rows[x][11];
       }
   	}
-    console.log(team_map);
-    console.log(team_name);
     createtable_map_id(team_map,team_name);
   	createtable(rows,col_names);
-   //  document.getElementById("slack-btn").disabled=false;
-   //  document.getElementById("taiga-btn").disabled=false;
+    document.getElementById("slack-btn").disabled=false;
+    document.getElementById("taiga-btn").disabled=false;
 }
 
 function sendRequestWithCallback(action, params, async, callback) {
