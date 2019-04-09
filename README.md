@@ -7,3 +7,4 @@
 5. pyjwt
 6. flask_sqlalchemy
 7. pandas
+8. python-taiga

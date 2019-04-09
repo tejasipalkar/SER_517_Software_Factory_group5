@@ -23,7 +23,7 @@ from instructorTool.Group_Scripts.fetch import FetchInfo
 from flask import Flask, session
 
 course = '15760'
-canvas_token = '7236~UoRqWAyLYPwM3ArUdvszjsidpNisiFq2N4XnlMFIr3Uh3TNOVuhP7qv05awogom2'
+canvas_calendar = ''
 
 with open('instructorTool/courseslist.json') as f:
         courses = json.load(f)
@@ -72,20 +72,29 @@ def group():
 @app.route("/cal")
 @login_required
 def cal():
-    canvas = Canvas_Calendar(canvas_token)
-    result = canvas.getallevents(course)
-    print(result['assignments'])
-    myevents = json.dumps(result['events'])
-    assignments = json.dumps(result['assignments'])
-    return render_template('calendar.html', events = myevents, assignments = assignments, course= "course_"+course)
+    if 'canvas_token' in session:
+        if 'course_id' in session:
+            course_id = session['course_id']
+            global canvas_calendar
+            token = session['canvas_token']
+            canvas_calendar = Canvas_Calendar(token)
+            result = canvas_calendar.getallevents(str(course_id))
+            myevents = json.dumps(result['events'])
+            assignments = json.dumps(result['assignments'])
+            return render_template('calendar.html', events = myevents, assignments = assignments, course= "course_"+str(course_id))
+        else:
+            flash('Select a course to access calendar!','danger')
+            return redirect(url_for('home')) 
+    else:
+        flash('Session expired!','danger')
+        return redirect(url_for('login'))
 
 @app.route("/newevent", methods=['POST'])
 @login_required
 def newEvents():
     response = request.data
     responseObj = json.loads(response)
-    canvas = Canvas_Calendar(canvas_token)
-    result = canvas.create_event(responseObj)
+    result = canvas_calendar.create_event(responseObj)
     return result
 
 @app.route("/editevent", methods=['POST'])
@@ -93,8 +102,7 @@ def newEvents():
 def editEvents():
     response = request.data
     responseObj = json.loads(response)
-    canvas = Canvas_Calendar(canvas_token)
-    result = canvas.edit_event(responseObj)
+    result = canvas_calendar.edit_event(responseObj)
     return result
 
 @app.route("/deleteevent", methods=['POST'])
@@ -102,8 +110,7 @@ def editEvents():
 def deleteEvents():
     response = request.data
     responseObj = json.loads(response)
-    canvas = Canvas_Calendar(canvas_token)
-    result = canvas.delete_event(responseObj)
+    result = canvas_calendar.delete_event(responseObj)
     return result
 
 @app.route("/editassign", methods=['POST'])
@@ -111,8 +118,7 @@ def editAssign():
     response = request.data
     responseObj = json.loads(response)
     print(responseObj)
-    canvas = Canvas_Calendar(canvas_token)
-    result = canvas.edit_assignment(responseObj, course)
+    result = canvas_calendar.edit_assignment(responseObj, course)
     return result
 
 @app.route("/editquiz", methods=['POST'])
@@ -120,8 +126,7 @@ def editQuiz():
     response = request.data
     responseObj = json.loads(response)
     print(responseObj)
-    canvas = Canvas_Calendar(canvas_token)
-    result = canvas.edit_quiz(responseObj, course)
+    result = canvas_calendar.edit_quiz(responseObj, course)
     return result
 
 @app.route('/send', methods=['GET','POST'])

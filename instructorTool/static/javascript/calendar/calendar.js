@@ -600,18 +600,20 @@ function openModelForUpdateEvent(event){
   function canvasAssignmentToFullCalendar(){
     var events = JSON.parse(assignmentsJSON);
     for(var i=0 ;i <events.length ;i++ ){
-      events[i].eventType = "Assign";
-      events[i].title = events[i].name;
-      events[i].start = events[i].due_at;
-      events[i].tag = "Assign";
-      var fullTitle = events[i].name.split(':');
-      if(fullTitle.length == 2){
-        events[i].title = fullTitle[1];
+      if(events[i].due_at != null){
+        events[i].eventType = "Assign";
+        events[i].title = events[i].name;
+        events[i].start = events[i].due_at;
+        events[i].tag = "Assign";
+        var fullTitle = events[i].name.split(':');
+        if(fullTitle.length == 2){
+          events[i].title = fullTitle[1];
+        }
+        events[i].color = colorTagMap[events[i].tag];
+        delete events[i].due_at;
+        delete events[i].url;
+        events[i].start = formatDateCanvasToFullCalendar(events[i].start)
       }
-      events[i].color = colorTagMap[events[i].tag];
-      delete events[i].due_at;
-      delete events[i].url;
-      events[i].start = formatDateCanvasToFullCalendar(events[i].start)
     }
     return events;
   }
