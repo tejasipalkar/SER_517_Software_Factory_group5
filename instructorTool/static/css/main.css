@@ -438,3 +438,8 @@ input[type=file],select{
 #table1{
   margin: 0 auto;
 }
+#table2{
+  display: block;
+  height: 800px;
+  overflow-y: scroll;
+}
