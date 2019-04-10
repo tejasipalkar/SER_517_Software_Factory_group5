@@ -6,7 +6,7 @@ from instructorTool.Canvas_Scripts.course import Course
 from instructorTool.Canvas_Scripts.canvas_calendar import Canvas_Calendar
 from instructorTool.Canvas_Scripts.stg_grouping import STG_Group
 import json
-from instructorTool.models import User, Configuration
+from instructorTool.models import User, Configuration, courseObj
 from instructorTool import db, login_manager
 import requests
 from flask_login import login_user, current_user, logout_user, login_required
@@ -22,8 +22,7 @@ from instructorTool.Group_Scripts.group_online import OnlineGroup
 from instructorTool.Group_Scripts.fetch import FetchInfo
 from flask import Flask, session
 
-course = '15760'
-canvas_token = '7236~UoRqWAyLYPwM3ArUdvszjsidpNisiFq2N4XnlMFIr3Uh3TNOVuhP7qv05awogom2'
+canvas_calendar = ''
 
 with open('instructorTool/courseslist.json') as f:
         courses = json.load(f)
@@ -51,7 +50,18 @@ def home():
         token = session['canvas_token']
         canvas = Course(token)
         course_names=canvas.getcourse()
-    return render_template('home.html',title ="Home",courses=course_names)
+    courseList = []
+    for course in course_names:
+        courseobj = courseObj()
+        courseobj.id = course
+        courseobj.name = ""
+        courseobj.full_name = course
+        fullName = course.split(':')
+        if len(fullName) > 1 :
+            courseobj.id = fullName[0]
+            courseobj.name = fullName[1]
+        courseList.append(courseobj)
+    return render_template('home.html',title ="Home",courses=courseList)
 
 @app.route("/about")
 @login_required
@@ -72,20 +82,29 @@ def group():
 @app.route("/cal")
 @login_required
 def cal():
-    canvas = Canvas_Calendar(canvas_token)
-    result = canvas.getallevents(course)
-    print(result['assignments'])
-    myevents = json.dumps(result['events'])
-    assignments = json.dumps(result['assignments'])
-    return render_template('calendar.html', events = myevents, assignments = assignments, course= "course_"+course)
+    if 'canvas_token' in session:
+        if 'course_id' in session:
+            course_id = session['course_id']
+            global canvas_calendar
+            token = session['canvas_token']
+            canvas_calendar = Canvas_Calendar(token)
+            result = canvas_calendar.getallevents(str(course_id))
+            myevents = json.dumps(result['events'])
+            assignments = json.dumps(result['assignments'])
+            return render_template('calendar.html', events = myevents, assignments = assignments, course= "course_"+str(course_id))
+        else:
+            flash('Select a course to access calendar!','danger')
+            return redirect(url_for('home')) 
+    else:
+        flash('Session expired!','danger')
+        return redirect(url_for('login'))
 
 @app.route("/newevent", methods=['POST'])
 @login_required
 def newEvents():
     response = request.data
     responseObj = json.loads(response)
-    canvas = Canvas_Calendar(canvas_token)
-    result = canvas.create_event(responseObj)
+    result = canvas_calendar.create_event(responseObj)
     return result
 
 @app.route("/editevent", methods=['POST'])
@@ -93,8 +112,7 @@ def newEvents():
 def editEvents():
     response = request.data
     responseObj = json.loads(response)
-    canvas = Canvas_Calendar(canvas_token)
-    result = canvas.edit_event(responseObj)
+    result = canvas_calendar.edit_event(responseObj)
     return result
 
 @app.route("/deleteevent", methods=['POST'])
@@ -102,26 +120,21 @@ def editEvents():
 def deleteEvents():
     response = request.data
     responseObj = json.loads(response)
-    canvas = Canvas_Calendar(canvas_token)
-    result = canvas.delete_event(responseObj)
+    result = canvas_calendar.delete_event(responseObj)
     return result
 
 @app.route("/editassign", methods=['POST'])
 def editAssign():
     response = request.data
     responseObj = json.loads(response)
-    print(responseObj)
-    canvas = Canvas_Calendar(canvas_token)
-    result = canvas.edit_assignment(responseObj, course)
+    result = canvas_calendar.edit_assignment(responseObj['event'], responseObj['course'].split("_")[1])
     return result
 
 @app.route("/editquiz", methods=['POST'])
 def editQuiz():
     response = request.data
     responseObj = json.loads(response)
-    print(responseObj)
-    canvas = Canvas_Calendar(canvas_token)
-    result = canvas.edit_quiz(responseObj, course)
+    result = canvas_calendar.edit_quiz(responseObj, course)
     return result
 
 @app.route('/send', methods=['GET','POST'])
@@ -136,7 +149,7 @@ def send():
             if key == course_name:
                 course_id = value
         session['course_id'] = course_id
-        return render_template('course_page.html',title = "Course Page")
+        return render_template('course_page.html',title = "Course Page", course= course_name)
 
     return render_template('home.html')
 

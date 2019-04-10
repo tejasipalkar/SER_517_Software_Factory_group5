@@ -28,3 +28,8 @@ class Configuration(db.Model, UserMixin):
 
 	def __repr__(self):
 		return "User('{}',{})".format({self.key},{self.value})
+
+class courseObj(object):
+    name = ""
+    id = ""
+    full_name =""
