@@ -6,7 +6,7 @@ from instructorTool.Canvas_Scripts.course import Course
 from instructorTool.Canvas_Scripts.canvas_calendar import Canvas_Calendar
 from instructorTool.Canvas_Scripts.stg_grouping import STG_Group
 import json
-from instructorTool.models import User, Configuration
+from instructorTool.models import User, Configuration, courseObj
 from instructorTool import db, login_manager
 import requests
 from flask_login import login_user, current_user, logout_user, login_required
@@ -50,7 +50,18 @@ def home():
         token = session['canvas_token']
         canvas = Course(token)
         course_names=canvas.getcourse()
-    return render_template('home.html',title ="Home",courses=course_names)
+    courseList = []
+    for course in course_names:
+        courseobj = courseObj()
+        courseobj.id = course
+        courseobj.name = ""
+        courseobj.full_name = course
+        fullName = course.split(':')
+        if len(fullName) > 1 :
+            courseobj.id = fullName[0]
+            courseobj.name = fullName[1]
+        courseList.append(courseobj)
+    return render_template('home.html',title ="Home",courses=courseList)
 
 @app.route("/about")
 @login_required
@@ -138,7 +149,7 @@ def send():
             if key == course_name:
                 course_id = value
         session['course_id'] = course_id
-        return render_template('course_page.html',title = "Course Page")
+        return render_template('course_page.html',title = "Course Page", course= course_name)
 
     return render_template('home.html')
 
