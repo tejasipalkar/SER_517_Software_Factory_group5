@@ -33,6 +33,35 @@
     });
 });
 
+$(function() {
+    $('#submitgroups').bind('click', function(){
+          var actuallist = new Array();
+          var grouplist = new Array();
+          $("#table2 tr:not(:first)").each(function () {
+              var tds = $(this).find("td");
+              var SStudent = { Group: $(this).find('td:eq(11)').text(), EmailID: $(this).find('td:eq(3)').text()}
+              actuallist.push(SStudent);
+          });
+          // $("#table1 tr:not(:first)").each(function () {
+          //     var tds = $(this).find("td");
+          //     var SStudent = { Group Number: $(this).find('td:eq(0)').text(), Group Name: $(this).find('td:eq(1)').text()}
+          //     grouplist.push(SStudent);
+          // });
+        $.ajax({
+            url: '/submitgroups',
+            data: JSON.stringify(actuallist),
+            type: 'POST'
+        })
+        // .done(function(response) {
+        //   if(response == "invalid token")
+        //     alert("Invalid Token");
+        //   else
+        //     {$("#slackModal").modal('hide');
+        //     alert("Slack Groups Created");}
+        // });
+    });
+});
+
 var col_names =[]
 var rows =[]
 function postgrouppref(){
@@ -55,7 +84,7 @@ function createtable_map_id(team_name,team_map){
   tbl_1+='<thead>';
   tbl_1+='<tr>';
   tbl_1+='<th>Group Name</th>';
-  tbl_1+='<th>Group Members</th>';
+  tbl_1+='<th>New Group Name</th>';
   tbl_1+='</tr>';
   for(x in team_name){
     tbl_1+='<tr row_id="'+x+'">';
@@ -120,6 +149,7 @@ function createtable(rows,col_names, team_name){
     var value = this.value;
     var text = this.options[this.selectedIndex].text;
     rows[value][col_names.length-1] = text;
+
     createtable(rows,col_names, team_name);
     }
   }
@@ -149,7 +179,7 @@ function createtable(rows,col_names, team_name){
     }
     createtable_map_id(team_map,team_name);
     createtable(rows,col_names, team_name);
-    document.getElementById("submit-groups").disabled =false;
+    document.getElementById("submitgroups").style.display="block";
     document.getElementById("slack-btn").disabled=false;
     document.getElementById("taiga-btn").disabled=false;
 }

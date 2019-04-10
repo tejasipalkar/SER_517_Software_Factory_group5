@@ -69,6 +69,14 @@ def group():
         return fetch_document(doc_url, pref, avoid, group_size)
     return render_template('group_page.html',title="Manage Groups")
 
+@app.route("/submitgroups", methods = ['POST'])
+@login_required
+def submitgroups():
+    value = request
+    print(value)
+    return 0
+
+
 @app.route("/cal")
 @login_required
 def cal():
