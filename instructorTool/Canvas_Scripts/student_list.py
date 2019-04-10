@@ -8,7 +8,7 @@ class Student_List:
     def get_student_list(self, course_id):
         course = self.canvas.get_course(course_id)
         users = course.get_users()
-        list_users = []
+        list_users = {}
         enrollments = course.get_enrollments()
         students = []
         for enroll in enrollments:
@@ -17,5 +17,6 @@ class Student_List:
         for user in users:
             if 'email' in user.__dict__:
                 if user.id in students:
-                    list_users.append(user.email.replace('@asu.edu', ''))
+                    #list_users.append(user.email.replace('@asu.edu', ''))
+                    list_users[user.email.replace('@asu.edu', '')] = user.name
         return list_users
