@@ -430,6 +430,16 @@ input[type=file],select{
   text-decoration: none;
   pointer-events: none;
 }
-#new{
+#new1,#new2{
   overflow-x: auto;
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+#table1{
+  margin: 0 auto;
+}
+#table2{
+  display: block;
+  height: 800px;
+  overflow-y: scroll;
 }

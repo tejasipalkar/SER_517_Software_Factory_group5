@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
 <script type="text/javascript" src="static\javascript\integrate.js"></script>
+<script type="text/javascript" src="static\javascript\group_page.js"></script>
 <h2>Manage Groups</h2>
 <ul class="nav nav-tabs" id="myTab" role="tablist">
   <li class="nav-item">
@@ -42,8 +43,15 @@
         <button type="submit" class="btn btn-primary mb-2" id ="create-grp">Create Groups</button>
     </div>
   </form>
-  <div id ="new">
-    <table id=table border="1"></table>
+  <div id ="new1">
+    <table id=table1 border="1"></table>
+  </div>
+  <div id ="new2">
+    <table id=table2 border="1"></table>
+  </div>
+  </div>
+  <div id = "group-button">
+    <button id = "submit-groups" type="button" class="btn btn-primary btn-lg" disabled ="disabled">Submit Groups</button>
   </div>
   <div id="social-btns">
     <br>
@@ -108,155 +116,4 @@
     </div>
   </div>
 </div>
-
-
-<script type="text/javascript">
-
-  $(function() {
-    $('#submit_slack').bind('click', function(){
-        $.ajax({
-            url: '/slack',
-            data: $('form').serialize(),
-            type: 'POST'
-        })
-        .done(function(response) {
-          if(response == "invalid token")
-            alert("Invalid Token");
-          else
-            {$("#slackModal").modal('hide');
-            alert("Slack Groups Created");}
-        });
-    });
-});
-
-  $(function() {
-    $('#submit_taiga').bind('click', function(){
-        $.ajax({
-            url: '/taiga',
-            data: $('form').serialize(),
-            type: 'POST'
-        })
-        .done(function(response) {
-          if(response == "invalid auth")
-            alert("Invalid Username/Password");
-          else
-            {$("#taigaModal").modal('hide');
-            alert("Taiga Channels Created");}
-        });
-    });
-});
-
-var col_names =[]
-var rows =[]
-function postgrouppref(){
-  var pref = document.getElementById("sel1").value;
-  var avoid = document.getElementById("sel2").value;
-  var group_size = document.getElementById("size").value;
-  var file = document.getElementById("file").value;
-  url ="/group?"+"pref="+pref+"&avoid="+avoid+"&group="+group_size+"&file="+file;
-  sendRequestWithCallback(url, null, true, callbackfn);
-  //document.getElementById("content").value="";
-}
-
-
-function randomid(){
-   return '_' + Math.random().toString(36).substr(2, 9);
-}
-
-function createtable(rows,col_names){
-
-  var tbl ='';
-  tbl +='<table class="table table-bordered">';
-  tbl+='<thead>';
-  tbl+='<tr>';
-  for(var head_cell=0;head_cell<col_names.length;head_cell++){
-    tbl+='<th>'+col_names[head_cell]+'</th>';
-  }
-  tbl+='<th>Options</th>';
-  tbl+='</tr>';
-  for( var row=0;row<rows.length;row++){
-    var row_id =randomid();
-    tbl +='<tr row_id="'+row_id+'">';
-    for(var col =0;col<col_names.length-1;col++){
-        tbl +='<td ><div class="row_data" col_name="'+col_names[col]+'">'+rows[row][col]+'</div></td>';
-      }
-      tbl +='<td ><div class="row_data" edit_type="click" col_name="'+col_names[col_names.length-1]+'">'+rows[row][col_names.length-1]+'</div></td>';
-      tbl +='<td>';
-
-      tbl +='<span class="btn_edit" ><a href="#" class="btn btn-link " row_id="'+row_id+'" > Edit</a> </span>';
-      tbl +='<span class="btn_save"> <a href="#" class="btn btn-link" class="isDisabled" row_id="'+row_id+'"> Save</a> </span>';
-      tbl +='<span class="btn_cancel"><a href ="#"class="btn btn-link" class="isDisabled" row_id="'+row_id+'"> Cancel</a></span>';
-      tbl +='</td>';
-
-
-    tbl +='</tr>';
-  }
-
-  tbl +='</table>'
-
-
-  var table = document.getElementById("table");
-  table.innerHTML="";
-  table.innerHTML+=tbl;
-
-
-}
-
-
-  function callbackfn(response){
-  	var res = JSON.parse(response);
-  	const value_1 =res.columns;
-  	const value_2=res.data;
-  	//console.log(value);
-  	for(x in value_1){
-  		col_names[x] =value_1[x];
-  	}
-  	for(x in value_2){
-  		rows[x] =value_2[x];
-  	}
-  	createtable(rows,col_names);
-    document.getElementById("slack-btn").disabled=false;
-    document.getElementById("taiga-btn").disabled=false;
-}
-
-function sendRequestWithCallback(action, params, async, callback) {
-    var objHTTP = xhr();
-    objHTTP.open('GET', action, async);
-    objHTTP.setRequestHeader('Content-Type','application/x-www-form-urlencoded;charset=UTF-8');
-    if(async){
-  objHTTP.onreadystatechange=function() {
-      if(objHTTP.readyState==4) {
-    if(callback) {
-        callback(objHTTP.responseText);
-    }
-      }
-  };
-    }
-    objHTTP.send(params);
-    if(!async) {
-  if(callback) {
-            callback(objHTTP.responseText);
-        }
-    }
-}
-function xhr() {
-    var xmlhttp;
-    if (window.XMLHttpRequest) {
-  xmlhttp=new XMLHttpRequest();
-    }
-    else if(window.ActiveXObject) {
-  try {
-      xmlhttp=new ActiveXObject("Msxml2.XMLHTTP");
-  }
-  catch(e) {
-      xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-  }
-    }
-    return xmlhttp;
-}
-
-
-
-</script>
-
 {% endblock content %}
