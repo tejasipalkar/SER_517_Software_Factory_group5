@@ -26,7 +26,7 @@ from flask import Flask, session
 
 canvas_calendar = ''
 
-with open('C://Users//Ganesh Kumar//SER_517_Software_Factory_group5//instructorTool//courseslist.json') as f:
+with open('instructorTool/courseslist.json') as f:
         courses = json.load(f)
 
 @app.route("/")
@@ -304,4 +304,5 @@ def addconfig():
 @login_required
 def token():
    return render_template('token.html')
+
 
