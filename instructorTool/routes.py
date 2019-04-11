@@ -4,6 +4,7 @@ from instructorTool import app
 from instructorTool.forms import LoginForm
 from instructorTool.Canvas_Scripts.course import Course
 from instructorTool.Canvas_Scripts.canvas_calendar import Canvas_Calendar
+from instructorTool.Canvas_Scripts.canvas_group import Canvas_Group
 from instructorTool.Canvas_Scripts.stg_grouping import STG_Group
 import json
 from instructorTool.models import User, Configuration, courseObj
@@ -11,6 +12,7 @@ from instructorTool import db, login_manager
 import requests
 from flask_login import login_user, current_user, logout_user, login_required
 from flask import jsonify, session
+import flask
 import jwt
 import base64
 import json
@@ -78,6 +80,26 @@ def group():
     if doc_url and pref and avoid:
         return fetch_document(doc_url, pref, avoid, group_size)
     return render_template('group_page.html',title="Manage Groups")
+
+@app.route("/submitgroups", methods = ['POST'])
+@login_required
+def submitgroups():
+    newvalues = request.json['new']
+    items = request.json['items']
+    newDict ={}
+    for item in items:
+        for value in newvalues:
+            if(item['Group'] == value['GroupNumber']):
+                item['Group'] = value['GroupName']
+    for item in items:
+        if item['Group'] not in newDict:
+            newDict[item['Group']] = [item['EmailID']]
+        else:
+            newDict[item['Group']].append(item['EmailID'])
+    groupObject = Canvas_Group(session['canvas_token'])
+    result = groupObject.create_groups(newDict, session['course_id'])
+    return flask.jsonify(result)
+
 
 @app.route("/cal")
 @login_required

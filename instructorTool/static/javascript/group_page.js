@@ -33,9 +33,44 @@
     });
 });
 
+$(function() {
+    $('#submitgroups').bind('click', function(){
+          var actuallist = new Array();
+          var grouplist = new Array();
+          $("#table2 tr:not(:first)").each(function () {
+              var tds = $(this).find("td");
+              var SStudent = { Group: $(this).find('td:eq(11)').text(), EmailID: $(this).find('td:eq(3)').text()};
+              actuallist.push(SStudent);
+          });
+          $("#table1 tr:not(:first)").each(function () {
+              var tds = $(this).find("td");
+              var SStudent1 = { GroupNumber: $(this).find('td:eq(0)').text(), GroupName: $(this).find('td:eq(1) input').val() };
+              grouplist.push(SStudent1);
+          });
+          var valuetosend = {'items':actuallist, 'new':grouplist};
+        $.ajax({
+            url: '/submitgroups',
+            data: JSON.stringify(valuetosend),
+            type: 'POST',
+            dataType: "json",
+            contentType: 'application/json;charset=UTF-8',
+        })
+        .done(function(response) {
+          if(response == 'Groups Pushed to Canvas')
+            { alert(response);
+              document.getElementById("slack-btn").style.display="block";
+              document.getElementById("taiga-btn").style.display="block";
+            }
+          else
+            {alert(response);}
+        });
+    });
+});
+
 var col_names =[]
 var rows =[]
 function postgrouppref(){
+
   var pref = document.getElementById("sel1").value;
   var avoid = document.getElementById("sel2").value;
   var group_size = document.getElementById("size").value;
@@ -55,7 +90,7 @@ function createtable_map_id(team_name,team_map){
   tbl_1+='<thead>';
   tbl_1+='<tr>';
   tbl_1+='<th>Group Name</th>';
-  tbl_1+='<th>Group Members</th>';
+  tbl_1+='<th>New Group Name</th>';
   tbl_1+='</tr>';
   for(x in team_name){
     tbl_1+='<tr row_id="'+x+'">';
@@ -85,7 +120,7 @@ function createtable(rows,col_names, team_name){
   for(var head_cell=0;head_cell<col_names.length;head_cell++){
     tbl+='<th>'+col_names[head_cell]+'</th>';
   }
-  tbl+='<th>Change Group Name</th>';
+  tbl+='<th>Move to Group</th>';
   tbl+='</tr>';
   for( var row=0;row<rows.length;row++){
     var row_id =randomid();
@@ -120,6 +155,7 @@ function createtable(rows,col_names, team_name){
     var value = this.value;
     var text = this.options[this.selectedIndex].text;
     rows[value][col_names.length-1] = text;
+
     createtable(rows,col_names, team_name);
     }
   }
@@ -147,11 +183,11 @@ function createtable(rows,col_names, team_name){
           team_name[rows[x][11]]= rows[x][11];
       }
     }
+    document.getElementById("new1").style.display="block";
+    document.getElementById("new2").style.display="block";
     createtable_map_id(team_map,team_name);
     createtable(rows,col_names, team_name);
-    document.getElementById("submit-groups").disabled =false;
-    document.getElementById("slack-btn").disabled=false;
-    document.getElementById("taiga-btn").disabled=false;
+    document.getElementById("submitgroups").style.display="block";
 }
 
 function sendRequestWithCallback(action, params, async, callback) {
