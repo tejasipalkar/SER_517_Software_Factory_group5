@@ -70,6 +70,7 @@ $(function() {
 var col_names =[]
 var rows =[]
 function postgrouppref(){
+
   var pref = document.getElementById("sel1").value;
   var avoid = document.getElementById("sel2").value;
   var group_size = document.getElementById("size").value;
@@ -182,6 +183,8 @@ function createtable(rows,col_names, team_name){
           team_name[rows[x][11]]= rows[x][11];
       }
     }
+    document.getElementById("new1").style.display="block";
+    document.getElementById("new2").style.display="block";
     createtable_map_id(team_map,team_name);
     createtable(rows,col_names, team_name);
     document.getElementById("submitgroups").style.display="block";
