@@ -39,26 +39,31 @@ $(function() {
           var grouplist = new Array();
           $("#table2 tr:not(:first)").each(function () {
               var tds = $(this).find("td");
-              var SStudent = { Group: $(this).find('td:eq(11)').text(), EmailID: $(this).find('td:eq(3)').text()}
+              var SStudent = { Group: $(this).find('td:eq(11)').text(), EmailID: $(this).find('td:eq(3)').text()};
               actuallist.push(SStudent);
           });
-          // $("#table1 tr:not(:first)").each(function () {
-          //     var tds = $(this).find("td");
-          //     var SStudent = { Group Number: $(this).find('td:eq(0)').text(), Group Name: $(this).find('td:eq(1)').text()}
-          //     grouplist.push(SStudent);
-          // });
+          $("#table1 tr:not(:first)").each(function () {
+              var tds = $(this).find("td");
+              var SStudent1 = { GroupNumber: $(this).find('td:eq(0)').text(), GroupName: $(this).find('td:eq(1) input').val() };
+              grouplist.push(SStudent1);
+          });
+          var valuetosend = {'items':actuallist, 'new':grouplist};
         $.ajax({
             url: '/submitgroups',
-            data: JSON.stringify(actuallist),
-            type: 'POST'
+            data: JSON.stringify(valuetosend),
+            type: 'POST',
+            dataType: "json",
+            contentType: 'application/json;charset=UTF-8',
         })
-        // .done(function(response) {
-        //   if(response == "invalid token")
-        //     alert("Invalid Token");
-        //   else
-        //     {$("#slackModal").modal('hide');
-        //     alert("Slack Groups Created");}
-        // });
+        .done(function(response) {
+          if(response == 'Groups Pushed to Canvas')
+            { alert(response);
+              document.getElementById("slack-btn").style.display="block";
+              document.getElementById("taiga-btn").style.display="block";
+            }
+          else
+            {alert(response);}
+        });
     });
 });
 
@@ -114,7 +119,7 @@ function createtable(rows,col_names, team_name){
   for(var head_cell=0;head_cell<col_names.length;head_cell++){
     tbl+='<th>'+col_names[head_cell]+'</th>';
   }
-  tbl+='<th>Change Group Name</th>';
+  tbl+='<th>Move to Group</th>';
   tbl+='</tr>';
   for( var row=0;row<rows.length;row++){
     var row_id =randomid();
@@ -180,8 +185,6 @@ function createtable(rows,col_names, team_name){
     createtable_map_id(team_map,team_name);
     createtable(rows,col_names, team_name);
     document.getElementById("submitgroups").style.display="block";
-    document.getElementById("slack-btn").disabled=false;
-    document.getElementById("taiga-btn").disabled=false;
 }
 
 function sendRequestWithCallback(action, params, async, callback) {
