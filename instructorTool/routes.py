@@ -304,3 +304,5 @@ def addconfig():
 @login_required
 def token():
    return render_template('token.html')
+
+

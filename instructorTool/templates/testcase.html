@@ -1,0 +1,74 @@
+<head>
+<script> 
+
+
+var endpoints = [
+  "/testcase/create_githubrepo",
+  "/testcase/add_collaborator"
+  ];
+
+function run_testcases(){
+    for (var i = 0; i < endpoints.length; i++) {
+        sendRequestWithCallback(endpoints[i], null, true, callbackfn)
+        sleep(2000);
+    }
+}
+
+  function callbackfn(response){
+	document.getElementById("results").innerHTML += ("<br>" + response);
+    //alert(response);
+}
+
+function sleep(delay) {
+    var start = new Date().getTime();
+    while (new Date().getTime() < start + delay);
+}
+
+function sendRequestWithCallback(action, params, async, callback) {
+    var objHTTP = xhr();
+    objHTTP.open('GET', action, async);
+    objHTTP.setRequestHeader('Content-Type','application/x-www-form-urlencoded;charset=UTF-8');
+    if(async){
+  objHTTP.onreadystatechange=function() {
+      if(objHTTP.readyState==4) {
+    if(callback) {
+        callback(objHTTP.responseText);
+    }
+      }
+  };
+    }
+    objHTTP.send(params);
+    if(!async) {
+  if(callback) {
+            callback(objHTTP.responseText);
+        }
+    }
+} 
+function xhr() {
+    var xmlhttp;
+    if (window.XMLHttpRequest) {
+  xmlhttp=new XMLHttpRequest();
+    }
+    else if(window.ActiveXObject) {
+  try {
+      xmlhttp=new ActiveXObject("Msxml2.XMLHTTP");
+  }
+  catch(e) {
+      xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+    }
+    return xmlhttp;
+}
+
+
+</script>
+</head>
+<body onload="run_testcases()">
+
+    <h1>Test Cases Results</h1> 
+    <div id="results">
+    	
+    </div>
+</body>
+
+

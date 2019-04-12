@@ -12,6 +12,7 @@ Jinja2==2.10
 MarkupSafe==1.1.0
 numpy==1.15.4
 python-dateutil==2.7.5
+python-taiga==0.9.0
 pytz==2018.7
 requests==2.20.1
 six==1.11.0
