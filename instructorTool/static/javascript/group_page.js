@@ -89,13 +89,13 @@ function createtable_map_id(team_name,team_map){
   tbl_1 +='<table class="table table-bordered">';
   tbl_1+='<thead>';
   tbl_1+='<tr>';
-  tbl_1+='<th>Group Name</th>';
-  tbl_1+='<th>New Group Name</th>';
+  tbl_1+='<th bgcolor="#D1B894">Group Name</th>';
+  tbl_1+='<th bgcolor="#D1B894">New Group Name</th>';
   tbl_1+='</tr>';
   for(x in team_name){
     tbl_1+='<tr row_id="'+x+'">';
     tbl_1+='<td>'+x+'</td>';
-    tbl_1+='<td><input type="text" value="'+team_map[x]+'"></td>';
+    tbl_1+='<td><input type="text" value="'+team_map[x]+'" style="background-color: #F0EAD6"></td>';
     tbl_1+='</tr>';
 
   }
@@ -118,9 +118,9 @@ function createtable(rows,col_names, team_name){
   tbl+='<thead>';
   tbl+='<tr>';
   for(var head_cell=0;head_cell<col_names.length;head_cell++){
-    tbl+='<th>'+col_names[head_cell]+'</th>';
+    tbl+='<th bgcolor="#D1B894">'+col_names[head_cell]+'</th>';
   }
-  tbl+='<th>Move to Group</th>';
+  tbl+='<th bgcolor="#D1B894">Move to Group</th>';
   tbl+='</tr>';
   for( var row=0;row<rows.length;row++){
     var row_id =randomid();
@@ -130,7 +130,7 @@ function createtable(rows,col_names, team_name){
       }
       tbl +='<td ><div class="row_data" col_name="'+col_names[col_names.length-1]+'">'+rows[row][col_names.length-1]+'</div></td>';
 
-      tbl += '<td class="dropdown"><form action="" name="FILTER"> <select name="filter_for" id = "select' + row + '" >';
+      tbl += '<td class="dropdown"><form action="" name="FILTER"> <select name="filter_for" id = "select' + row + '" style="background-color: #F0EAD6">';
       for(var number in team_name){
         if(number == rows[row][col_names.length-1])
         {
