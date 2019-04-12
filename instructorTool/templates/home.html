@@ -3,14 +3,14 @@
   <h2>Courses</h2>
   <div class="row" style="overflow-x: scroll;">
     {%for course in courses%}
-    <div class="col-sm-3" style="margin: 20px; padding: 20px; background-color: wheat; border-color: #f2f2f2; border-radius: 4px">
+    <div class="card-view col-sm-3">
       <div style="min-height: 100px">
           <h3>{{course.id}}</h3>
           <h5>{{course.name}}</h5>
       </div>
       <form action="/send" method="POST">
         <textarea name="course_name" style="display:none">{{course.full_name}}</textarea>
-        <button class="btn" type="submit" style="margin-top: 20px; background-color: rgb(211, 191, 155);padding: 10px;">View Details</button>
+        <button class="card-view-btn btn" type="submit">View Details</button>
       </form>
     </div>
     {%endfor%}
