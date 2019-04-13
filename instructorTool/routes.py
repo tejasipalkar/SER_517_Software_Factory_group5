@@ -6,6 +6,7 @@ from instructorTool.Canvas_Scripts.course import Course
 from instructorTool.Canvas_Scripts.canvas_calendar import Canvas_Calendar
 from instructorTool.Canvas_Scripts.canvas_group import Canvas_Group
 from instructorTool.Canvas_Scripts.stg_grouping import STG_Group
+from instructorTool.LaTex import Assign_tex
 import json
 from instructorTool.models import User, Configuration, courseObj
 from instructorTool import db, login_manager
@@ -157,6 +158,13 @@ def editQuiz():
     response = request.data
     responseObj = json.loads(response)
     result = canvas_calendar.edit_quiz(responseObj, course)
+    return result
+
+@app.route("/latexevent", methods=['POST'])
+def latex():
+    response = request.data
+    responseObj = json.loads(response)
+    result = Assign_tex.myfun(responseObj)
     return result
 
 @app.route('/send', methods=['GET','POST'])
