@@ -681,5 +681,37 @@ function openModelForUpdateEvent(event){
       link.click();
   });
   }
-  //TODO:
-  //clean error message
+
+  function latexDownload(){
+    var project = [];
+    var assignments = [];
+    var events = $('#calendar').fullCalendar('clientEvents');
+    for(var i=0; i <events.length; i++){
+      if(events[i].tag == 'Project'){
+        var event = {};
+        event.title = events[i].title;
+        event.start =  events[i].start._i;
+        event.end =  events[i].end._i;
+        project.push(event);
+      }
+    }
+    $.ajax({
+      url: '/latexevent',
+      data: JSON.stringify(project),
+      type: 'POST',
+      contentType: 'application/json',
+      success: function(response) {
+        var element = document.createElement('a');
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(response));
+        element.setAttribute('download', 'latex.tex');
+        element.style.display = 'none';
+        document.body.appendChild(element);
+        element.click();
+        document.body.removeChild(element);
+      },
+      error: function(error) {
+        console.log("editQuiz",error);
+        $("#failure-alert").show().delay(2000).fadeOut();
+      }
+    });
+  }
