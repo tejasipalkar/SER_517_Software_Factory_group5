@@ -60,10 +60,13 @@ function xhr() {
     return xmlhttp;
 }
 
+window.onload = function(){
+  run_testcases();
+}
 
 </script>
 </head>
-<body onload="run_testcases()">
+<body>
 
     <h1>Test Cases Results</h1> 
     <div id="results">

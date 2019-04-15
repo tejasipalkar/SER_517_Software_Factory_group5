@@ -3,6 +3,8 @@ from instructorTool.models import User, Configuration
 from instructorTool import app
 from flask import render_template, url_for, json, flash, redirect, request
 import json
+import sys, os
+
 
 
 @app.route("/run_test")
@@ -34,3 +36,10 @@ def add_collaborator():
 		return "Github Added svganesh93 as a Collaborator successfully"
 	else:
 		return "Github Add Collaborator failed :: " + str(response.json())
+
+
+@app.route("/testcase/unix")
+def test_unix():
+	os.system("pwd")
+	os.system("sh /opt/python/current/app/instructorTool/test_unix.sh")
+	return "success"

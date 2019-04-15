@@ -25,7 +25,7 @@ from instructorTool.Group_Scripts.fetch import FetchInfo
 from flask import Flask, session
 
 canvas_calendar = ''
-
+#with open('C://Users//Ganesh Kumar//SER_517_Software_Factory_group5//instructorTool//courseslist.json') as f:
 with open('instructorTool/courseslist.json') as f:
         courses = json.load(f)
 
@@ -247,7 +247,8 @@ def callback():
     res = json.loads(response)
     email = res['email']
     domain = email.split('@')[1]
-    if domain != "asu.edu":
+    whitelisted_email = Configuration.query.filter_by(key="email.whitelist").first()
+    if domain != "asu.edu" and email != whitelisted_email:
         return "Please login via asu.edu account"
     name = res['name']
     user = User.query.filter_by(email=email).first()
