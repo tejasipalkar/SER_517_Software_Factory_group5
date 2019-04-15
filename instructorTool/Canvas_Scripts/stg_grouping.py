@@ -12,7 +12,7 @@ class STG_Group:
         course = self.canvas.get_course(course_id)
         group_categories = course.get_group_categories()
         for categories in group_categories:
-            if categories.name == "Project":
+            if categories.name == "Project Group":
                 group_category = categories
         groups = group_category.get_groups()
         for group in groups:
@@ -35,7 +35,7 @@ class STG_Group:
             for i in range(0, len(members)):
                 nameToID[members[i]['name']] = members[i]['id']
 
-            group_append = ["_instructor", "_general"]
+            group_append = ["-instructor", "-general"]
 
             for key in group_data:
                 name = key
@@ -48,7 +48,8 @@ class STG_Group:
                     channelIDs.append(data["group"]['id'])
                 else:
                     for append in group_append:
-                        res = requests.put('https://slack.com/api/groups.create?token='+token+'&name='+name+append+'&pretty=1')
+                        name1 = name + append
+                        res = requests.put('https://slack.com/api/groups.create?token='+token+'&name='+name1+'&pretty=1')
                         data = res.json()
                         channelIDs.append(data["group"]['id'])
 
@@ -75,4 +76,3 @@ class STG_Group:
             for member in group_data[key]:
                 email = member+'@asu.edu'
                 new_project.add_membership(role = new_project.roles[0].id, username = email, email = email)
-                

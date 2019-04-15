@@ -117,7 +117,7 @@ def cal():
             return render_template('calendar.html', events = myevents, assignments = assignments, course= "course_"+str(course_id))
         else:
             flash('Select a course to access calendar!','danger')
-            return redirect(url_for('home')) 
+            return redirect(url_for('home'))
     else:
         flash('Session expired!','danger')
         return redirect(url_for('login'))
