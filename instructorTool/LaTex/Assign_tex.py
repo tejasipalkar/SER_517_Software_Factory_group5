@@ -6,7 +6,7 @@ store_list = []
 
 MONTHS = ['Jan','Feb','March','April', 'May', 'June', 'July', 'Aug', 'Sept',
             'Oct', 'Nov', 'Dec']
-
+f = open("test_file.tex", "w")
 def myfun(y):
     result = []
     for item in y:
@@ -35,15 +35,22 @@ def myfun(y):
             line1.append('}{')
             line1.append(start_month + ' ' + str(int(float(start_day))) + '}' )
             result.append(str.join('', [temp for temp in line1]) + '\n')
+            f.write(str.join('', [temp for temp in line1]) + '\n')
         else:
-            line1.append(string[1]+'Start')
+            line1.append(string[0]+'Start')
+            print(line1)
             line1.append('}{')
             line1.append(start_month + ' ' + str(int(float(start_day))) + '}' )
             result.append(str.join('', [temp for temp in line1]) + '\n')
-            line2.append(string[1]+'End')
+            f.write(str.join('', [temp for temp in line1]) + '\n')
+            print(result)
+            line2.append(string[0]+'End')
+            print(line2)
             line2.append('}{')
             line2.append(end_month + ' ' + str(int(float(end_day))) + '}' )
             result.append(str.join('', [temp for temp in line2]) + '\n')
+            f.write(str.join('', [temp for temp in line2]) + '\n')
+        print(result)
     return result
 
 def myassign(x):
@@ -66,7 +73,7 @@ def myassign(x):
         result_Assign.append(str.join('', [temp for temp in line1]) + '\n')
     return result_Assign
 if __name__ == '__main__':
-    y = [   {"title":"sprintONE", "start":"2019-03-06T23:57:00", "end":"2019-03-06T23:57:00"}, {"title":"project:sprintONE", "start":"2019-03-06T23:57:00", "end":"2019-03-06T23:57:00"},{"title":"project:sprintONE", "start":"2019-04-06T23:57:00", "end":"2019-06-06T23:57:00"},{"title":"project:sprintONE", "start":"2019-03-06T23:57:00", "end":"2019-03-06T23:57:00"}, {"title":"project:sprintONE", "start":"2019-03-06T23:57:00", "end":"2019-03-06T23:57:00"}]
+    y = [   {"title":"sprintONE", "start":"2019-03-06T23:57:00", "end":"2019-04-06T23:57:00"}]
     x = [{"title":"assignment1", "start":"2019-04-06T23:57"}]
     retval = myfun(y)
     ret_Assign = myassign(x)
