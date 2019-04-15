@@ -693,17 +693,41 @@ function openModelForUpdateEvent(event){
         event.start =  events[i].start._i;
         event.end =  events[i].end._i;
         project.push(event);
+      }else if(events[i].tag == 'Assign'){
+        var event = {};
+        event.title = events[i].title;
+        event.start =  events[i].start._i;
+        assignments.push(event);
       }
     }
     $.ajax({
-      url: '/latexevent',
+      url: '/latexproject',
       data: JSON.stringify(project),
       type: 'POST',
       contentType: 'application/json',
       success: function(response) {
         var element = document.createElement('a');
         element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(response));
-        element.setAttribute('download', 'latex.tex');
+        element.setAttribute('download', 'latex_project.tex');
+        element.style.display = 'none';
+        document.body.appendChild(element);
+        element.click();
+        document.body.removeChild(element);
+      },
+      error: function(error) {
+        console.log("latex project",error);
+        $("#failure-alert").show().delay(2000).fadeOut();
+      }
+    });
+    $.ajax({
+      url: '/latexassign',
+      data: JSON.stringify(assignments),
+      type: 'POST',
+      contentType: 'application/json',
+      success: function(response) {
+        var element = document.createElement('a');
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(response));
+        element.setAttribute('download', 'latex_assignment.tex');
         element.style.display = 'none';
         document.body.appendChild(element);
         element.click();

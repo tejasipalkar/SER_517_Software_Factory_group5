@@ -153,18 +153,18 @@ def editAssign():
     result = canvas_calendar.edit_assignment(responseObj['event'], responseObj['course'].split("_")[1])
     return result
 
-@app.route("/editquiz", methods=['POST'])
-def editQuiz():
-    response = request.data
-    responseObj = json.loads(response)
-    result = canvas_calendar.edit_quiz(responseObj, course)
-    return result
-
-@app.route("/latexevent", methods=['POST'])
-def latex():
+@app.route("/latexproject", methods=['POST'])
+def latexProject():
     response = request.data
     responseObj = json.loads(response)
     result = Assign_tex.myfun(responseObj)
+    return result
+
+@app.route("/latexassign", methods=['POST'])
+def latexAssign():
+    response = request.data
+    responseObj = json.loads(response)
+    result = Assign_tex.myassign(responseObj)
     return result
 
 @app.route('/send', methods=['GET','POST'])
