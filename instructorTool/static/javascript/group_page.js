@@ -74,6 +74,7 @@ function postgrouppref(){
   var pref = document.getElementById("sel1").value;
   var avoid = document.getElementById("sel2").value;
   var group_size = document.getElementById("size").value;
+  var input_select = document.getElementById("sel4").value;
   var file = document.getElementById("file").value;
   url ="/group?"+"pref="+pref+"&avoid="+avoid+"&group="+group_size+"&file="+file;
   sendRequestWithCallback(url, null, true, callbackfn);
