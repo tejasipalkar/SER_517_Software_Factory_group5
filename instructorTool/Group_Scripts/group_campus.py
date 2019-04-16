@@ -1,6 +1,8 @@
 import pandas as pd
 import csv
 import numpy
+from flask import session
+from instructorTool.Canvas_Scripts.student_list import Student_List
 
 class OnlineGroup:
 	def __init__(self, team_size, dataframe):
@@ -12,7 +14,7 @@ class OnlineGroup:
 		self.stu_pref = {x:y for x,y in zip(dataframe['ASURITE'],dataframe['Preferences'])}
 		self.stu_avoid = {x:y for x,y in zip(dataframe['ASURITE'],dataframe['Avoidance'])}
 		#self.stu_utc = {x:y for x,y in zip(dataframe['ASURITE'],dataframe['TimeZone'])}
-		self.all_stu = []
+		self.all_stu = {}
 		
 		
 
@@ -33,11 +35,26 @@ class OnlineGroup:
 		# 			self.stu_utc[line[2]] = line[7]
 		# 			self.stu_time_zone[line[2]] = line[8][1:-1].split(', ')
 		# 		count += 1
+		token = session['canvas_token']
+		course_id = session['course_id']
+		st_obj = Student_List(token)
+		self.all_stu = st_obj.get_student_list(course_id)
+		print('All students: ', self.all_stu)
+		idx = len(self.stu_list)
 		for s in self.all_stu:
 			if s not in self.stu_list:
 				self.stu_list.append(s)
-				
-		self.stu_available = set(self.stu_list)
+				self.stu_pref[s] = []
+				self.stu_avoid[s] = []
+				self.stu_time_zone[s] = []
+				#self.stu_utc[s] = []
+				self.dataframe.loc[idx] = [self.all_stu[s],s,'',s+'@asu.edu',[],[],[],0,0,'']
+				idx += 1 
+
+		print("Finalized stu list:", self.stu_list)
+		for i in range(len(self.dataframe)):
+			print(self.dataframe.loc[i])
+
 
 	def generate_cost_matrix(self):
 		
