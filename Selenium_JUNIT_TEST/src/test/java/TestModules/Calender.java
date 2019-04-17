@@ -41,7 +41,7 @@ public class Calender {
 		Actions actions = new Actions(driver);
 		actions.moveToElement(ctn_btn).click().perform();
 	    WebElement token_input=wait.until(ExpectedConditions.elementToBeClickable(By.id("token-textbox")));
-	    token_input.sendKeys("7236~yKpPpbQL0FRRPSp7kl7FYT2e2cPs9cibnQCnLKGlCEuvSU2XnIsjnYqrfeOg1uim");
+	    token_input.sendKeys("########");
 	    driver.findElement(By.id("continue-btn")).click();
 		WebElement view = wait.until(ExpectedConditions.elementToBeClickable(By.className("btn")));
 		view.click();
@@ -51,11 +51,11 @@ public class Calender {
 	}
 	@Test
 	public void CheckButtons() {
-		
-		
-	}
-	@Test
-	public void CalenderEvents() {
+		driver.findElement(By.id("toolbar-button")).click();
+		driver.findElement(By.id("tag_input")).sendKeys("Project");
+		driver.findElement(By.id("event_title")).sendKeys("Test event");
+		driver.findElement(By.id("Start date")).sendKeys("2019-04-26");
+		driver.findElement(By.className("btn")).click();
 	}
 	@After
 	public void tearDown() {
