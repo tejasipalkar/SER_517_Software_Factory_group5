@@ -1,6 +1,9 @@
 
   $(function() {
     $('#submit_slack').bind('click', function(){
+      $(this).html(
+        `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Loading`
+      );
         $.ajax({
             url: '/slack',
             data: $('form').serialize(),
@@ -18,6 +21,9 @@
 
   $(function() {
     $('#submit_taiga').bind('click', function(){
+      $(this).html(
+        `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Loading`
+      );
         $.ajax({
             url: '/taiga',
             data: $('form').serialize(),
@@ -34,7 +40,30 @@
 });
 
 $(function() {
+    $('#submit_github').bind('click', function(){
+      $(this).html(
+        `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Loading`
+      );
+        $.ajax({
+            url: '/github',
+            data: $('form').serialize(),
+            type: 'POST'
+        })
+        .done(function(response) {
+          if(response == "invalid token")
+            alert("Invalid Token");
+          else
+            {$("#githubModal").modal('hide');
+            alert("Github Repositories Created");}
+        });
+    });
+});
+
+$(function() {
     $('#submitgroups').bind('click', function(){
+      $(this).html(
+        `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Loading`
+      );
           var actuallist = new Array();
           var grouplist = new Array();
           $("#table2 tr:not(:first)").each(function () {
@@ -60,6 +89,7 @@ $(function() {
             { alert(response);
               document.getElementById("slack-btn").style.display="block";
               document.getElementById("taiga-btn").style.display="block";
+              document.getElementById("github-btn").style.display="block";
             }
           else
             {alert(response);}
