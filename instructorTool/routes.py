@@ -33,6 +33,11 @@ with open('instructorTool/courseslist.json') as f:
 @app.route("/")
 @app.route("/login")
 def login():
+    logout_user()
+    if 'canvas_token' in session:
+        session.pop('canvas_token', None)
+    if 'course_id' in session:
+        session.pop('course_id', None)
     return render_template('login.html',title ="Login")
 
 @app.route("/home", methods=['POST', 'GET'])
@@ -186,6 +191,8 @@ def send():
 
 @app.route("/logout")
 def logout():
+    session.pop('canvas_token', None)
+    session.pop('course_id', None)
     logout_user()
     return redirect(url_for('login'))
 
@@ -218,6 +225,18 @@ def taiga():
     result = taiga.create_taiga_channels(taiga_username, taiga_password, taiga_desc, course_id)
     if result == 'invalid auth':
         return result
+    return 'done'
+
+@app.route("/github", methods = ['POST'])
+@login_required
+def github():
+    github_token = request.form.get('github_token')
+    canvas_token = session['canvas_token']
+    course_id = session['course_id']
+    # github = STG_Group(canvas_token)
+    # result = slack.create_slack_groups(slack_token, course_id)
+    # if result == "invalid_auth":
+    #     return 'invalid token'
     return 'done'
 
 @app.route("/document")
