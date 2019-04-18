@@ -8,7 +8,7 @@
           <h3>{{course.id}}</h3>
           <h5>{{course.name}}</h5>
       </div>
-      <form action="/send" method="POST">
+      <form action="/send" method="GET">
         <textarea name="course_name" style="display:none">{{course.full_name}}</textarea>
         <button class="card-view-btn btn" type="submit">View Details</button>
       </form>

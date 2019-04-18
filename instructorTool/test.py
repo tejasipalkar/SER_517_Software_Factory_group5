@@ -40,6 +40,10 @@ def add_collaborator():
 
 @app.route("/testcase/unix")
 def test_unix():
-	os.system("pwd")
-	os.system("sh /opt/python/current/app/instructorTool/test_unix.sh")
+	owner = Configuration.query.filter_by(key='repo.owner').first().value
+	token = Configuration.query.filter_by(key='repo.personal.access.token').first().value
+	repo_name = Configuration.query.filter_by(key='repo.name').first().value
+	username = Configuration.query.filter_by(key='repo.owner.username').first().value
+	password = Configuration.query.filter_by(key='repo.owner.password').first().value
+	os.system("sh /home/ec2-user/SER_517_Software_Factory_group5-master/instructorTool/test_unix.sh {0} {1} {2} {3} {4}".format(username, password, owner, name, token))
 	return "success"
