@@ -155,7 +155,14 @@ function createtable(rows,col_names, team_name){
   tbl+='</tr>';
   for( var row=0;row<rows.length;row++){
     var row_id =randomid();
-    tbl +='<tr row_id="'+row_id+'">';
+    /*console.log(row)*/
+    if(rows[row][2] === ""){
+      tbl +='<tr row_id="'+row_id+'" style="color:red;">';  
+    }
+    else{
+      tbl +='<tr row_id="'+row_id+'">';
+    }
+    /*tbl +='<tr row_id="'+row_id+'">';*/
     for(var col =0;col<col_names.length-1;col++){
         tbl +='<td ><div class="row_data" col_name="'+col_names[col]+'">'+rows[row][col]+'</div></td>';
       }
