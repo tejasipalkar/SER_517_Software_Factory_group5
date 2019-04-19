@@ -38,6 +38,8 @@ def login():
         session.pop('canvas_token', None)
     if 'course_id' in session:
         session.pop('course_id', None)
+    if 'tableData' in session:
+        session.pop('tableData', None)
     return render_template('login.html',title ="Login")
 
 @app.route("/home", methods=['POST', 'GET'])
@@ -92,16 +94,26 @@ def group():
 def submitgroups():
     newvalues = request.json['new']
     items = request.json['items']
+    table = request.json['actualTable']
     newDict ={}
     for item in items:
         for value in newvalues:
             if(item['Group'] == value['GroupNumber']):
                 item['Group'] = value['GroupName']
+
+    for tableitem in table:
+        for value in newvalues:
+            if(tableitem['GroupName'] == value['GroupNumber']):
+                tableitem['GroupName'] = value['GroupName']
+
+    session['tableData'] = tableitem
+
     for item in items:
         if item['Group'] not in newDict:
             newDict[item['Group']] = [item['EmailID']]
         else:
             newDict[item['Group']].append(item['EmailID'])
+
     groupObject = Canvas_Group(session['canvas_token'])
     result = groupObject.create_groups(newDict, session['course_id'])
     return flask.jsonify(result)
@@ -193,6 +205,7 @@ def send():
 def logout():
     session.pop('canvas_token', None)
     session.pop('course_id', None)
+    session.pop('tableData', None)
     logout_user()
     return redirect(url_for('login'))
 
