@@ -23,6 +23,7 @@ import traceback
 import sys
 from instructorTool.Group_Scripts.group_online import OnlineGroup
 from instructorTool.Group_Scripts.fetch import FetchInfo
+from instructorTool.Group_Scripts.save_csv import save_csv
 from flask import Flask, session
 
 canvas_calendar = ''
@@ -95,6 +96,9 @@ def submitgroups():
     newvalues = request.json['new']
     items = request.json['items']
     table = request.json['actualTable']
+    # Call save table
+    save_tbl = save_csv(table)
+    save_tbl.save()
     newDict ={}
     for item in items:
         for value in newvalues:
