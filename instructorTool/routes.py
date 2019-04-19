@@ -27,7 +27,6 @@ from instructorTool.Group_Scripts.save_csv import save_csv
 from flask import Flask, session
 
 canvas_calendar = ''
-#with open('C://Users//Ganesh Kumar//SER_517_Software_Factory_group5//instructorTool//courseslist.json') as f:
 with open('instructorTool/courseslist.json') as f:
         courses = json.load(f)
 
@@ -193,7 +192,6 @@ def latexAssign():
 def send():
     course_name = request.args.get('course_name')
     if course_name:
-        course_name = request.form.get('course_name')
         token = session['canvas_token']
         canvas = Course(token)
         course_names=canvas.getcourse()
