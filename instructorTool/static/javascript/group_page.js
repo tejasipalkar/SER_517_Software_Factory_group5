@@ -66,9 +66,12 @@ $(function() {
       );
           var actuallist = new Array();
           var grouplist = new Array();
+          var actualTable = new Array();
           $("#table2 tr:not(:first)").each(function () {
               var tds = $(this).find("td");
               var SStudent = { Group: $(this).find('td:eq(11)').text(), EmailID: $(this).find('td:eq(3)').text()};
+              var tableData = { FullName: $(this).find('td:eq(0)').text(), ASURITE: $(this).find('td:eq(1)').text(), Github: $(this).find('td:eq(2)').text(), EmailID: $(this).find('td:eq(3)').text(), Preferences: $(this).find('td:eq(4)').text(), Avoidance: $(this).find('td:eq(5)').text(), TimeZone: $(this).find('td:eq(6)').text(), TimePreference: $(this).find('td:eq(7)').text(), GithubKnowledge: $(this).find('td:eq(8)').text(), ScrumKnowledge: $(this).find('td:eq(9)').text(), Comments: $(this).find('td:eq(10)').text(), GroupName: $(this).find('td:eq(11)').text()};
+              actualTable.push(tableData);
               actuallist.push(SStudent);
           });
           $("#table1 tr:not(:first)").each(function () {
@@ -76,7 +79,7 @@ $(function() {
               var SStudent1 = { GroupNumber: $(this).find('td:eq(0)').text(), GroupName: $(this).find('td:eq(1) input').val() };
               grouplist.push(SStudent1);
           });
-          var valuetosend = {'items':actuallist, 'new':grouplist};
+          var valuetosend = {'items':actuallist, 'new':grouplist, "actualTable": actualTable};
         $.ajax({
             url: '/submitgroups',
             data: JSON.stringify(valuetosend),
@@ -157,7 +160,7 @@ function createtable(rows,col_names, team_name){
     var row_id =randomid();
     /*console.log(row)*/
     if(rows[row][2] === ""){
-      tbl +='<tr row_id="'+row_id+'" style="color:red;">';  
+      tbl +='<tr row_id="'+row_id+'" style="color:red;">';
     }
     else{
       tbl +='<tr row_id="'+row_id+'">';
