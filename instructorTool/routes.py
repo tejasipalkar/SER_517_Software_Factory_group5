@@ -191,7 +191,8 @@ def latexAssign():
 @app.route('/send', methods=['GET','POST'])
 @login_required
 def send():
-    if request.method== 'POST':
+    course_name = request.args.get('course_name')
+    if course_name:
         course_name = request.form.get('course_name')
         token = session['canvas_token']
         canvas = Course(token)
