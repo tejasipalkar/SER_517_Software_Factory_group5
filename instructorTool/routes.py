@@ -6,6 +6,7 @@ from instructorTool.Canvas_Scripts.course import Course
 from instructorTool.Canvas_Scripts.canvas_calendar import Canvas_Calendar
 from instructorTool.Canvas_Scripts.canvas_group import Canvas_Group
 from instructorTool.Canvas_Scripts.stg_grouping import STG_Group
+from instructorTool.Canvas_Scripts.github import Github
 from instructorTool.LaTex import Assign_tex
 import json
 from instructorTool.models import User, Configuration, courseObj
@@ -27,6 +28,7 @@ from instructorTool.Group_Scripts.save_csv import save_csv
 from flask import Flask, session
 
 canvas_calendar = ''
+
 with open('instructorTool/courseslist.json') as f:
         courses = json.load(f)
 
@@ -247,15 +249,35 @@ def taiga():
 @login_required
 def github():
     github_token = request.form.get('github_token')
+    repo_owner = request.form.get('repo_owner')
     canvas_token = session['canvas_token']
     course_id = session['course_id']
-    # github = STG_Group(canvas_token)
-    # result = slack.create_slack_groups(slack_token, course_id)
+    github = STG_Group(canvas_token)
+    result = github.get_groupsdata(course_id)
+    table = session['table']
+    group_data = {}
+    for tableitem in table:
+        if tableitem['GroupName'] in group_data:
+            group_data[tableitem['GroupName']].append(tableitem['Github'])
+        else:
+            group_data[tableitem['GroupName']] = []
+            group_data[tableitem['GroupName']].append(tableitem['Github'])
+
+    print(group_data)
+    for key in group_data.keys():
+        g = Github(repo_owner, github_token)
+        g.create_github_repo(key)
+        username = Configuration.query.filter_by(key='repo.owner.username').first().value
+        password = Configuration.query.filter_by(key='repo.owner.password').first().value
+        os.system("sh /home/ec2-user/SER_517_Software_Factory_group5-master/instructorTool/test_unix.sh {0} {1} {2} {3}".format(username, password, owner, name))
+        for val in group_data[key]:
+            g.add_collaborator(key, val)
+
+
     # if result == "invalid_auth":
     #     return 'invalid token'
     return 'done'
 
-@app.route("/document")
 @login_required
 def fetch_document(doc_id, pref, avoid, group_size):
     f = FetchInfo(doc_id, pref, avoid, group_size)
