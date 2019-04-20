@@ -44,13 +44,13 @@ $(document).ready(function() {
       if (!confirm("Are you sure about this change?")) {
         revertFunc();
       }
-      var eventType = event.eventType
+      var eventType = event.tag
       if(eventType){
-        if(eventType == 'Event'){
-          editEvents.push(event._id);
-        }else if(eventType == 'Assign'){
+        if(eventType == 'Assign'){
           editAssign.push(event._id);
-        }
+        }else{
+          editEvents.push(event._id);
+        } 
       }
     }
   });
@@ -73,12 +73,8 @@ function openModelForUpdateEvent(event){
   var endDate = "";
   var startTime = "";
   var endTime = "";
-  var eventType = "";
 
   if(event){
-    if(event.eventType){
-      eventType = event.eventType;
-    }
     if(event.tag){
       tag = event.tag;
     }
@@ -93,17 +89,17 @@ function openModelForUpdateEvent(event){
     }
   }
   
-  if(eventType == 'Event'){
+  if(tag == 'Assign'){
+    clearAssignModel();
+    setAssignModelValue(tag,title, startDate, startTime);
+    $('#assign_details_model').modal('show');
+  }else {
     clearModel();
     setModelValue(tag,title, startDate, endDate, startTime, endTime);
     $('#delete_button').show();
     $('#event_details_model').modal('show');
-  }else if(eventType == 'Assign' || eventType == 'Quiz'){
-    clearAssignModel();
-    setAssignModelValue(tag,title, startDate, startTime);
-    $('#assign_details_model').modal('show');
   }
-  
+
   console.log("start", startDate, "end", endDate,
   "start", startTime, "end", endTime)
 }
@@ -580,7 +576,6 @@ function openModelForUpdateEvent(event){
   function canvasEventsToFullCalendar(){
     var events = JSON.parse(eventsJSON);
     for(var i=0 ;i <events.length ;i++ ){
-      events[i].eventType = "Event";
       events[i].start = events[i].start_at;
       events[i].end = events[i].end_at;
       events[i].tag = "";
@@ -604,7 +599,6 @@ function openModelForUpdateEvent(event){
     var events = JSON.parse(assignmentsJSON);
     for(var i=0 ;i <events.length ;i++ ){
       if(events[i].due_at != null){
-        events[i].eventType = "Assign";
         events[i].title = events[i].name;
         events[i].start = events[i].due_at;
         events[i].tag = "Assign";
@@ -624,7 +618,6 @@ function openModelForUpdateEvent(event){
   function canvasQuizToFullCalendar(){
     var events = JSON.parse(quizJSON);
     for(var i=0 ;i <events.length ;i++ ){
-      events[i].eventType = "Quiz";
       events[i].title = events[i].title;
       events[i].start = events[i].due_at;
       events[i].tag = "Quiz";
