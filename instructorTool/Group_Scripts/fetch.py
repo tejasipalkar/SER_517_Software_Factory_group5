@@ -3,6 +3,7 @@ import requests
 import csv
 import pandas as pd
 from instructorTool.Group_Scripts.group_online import OnlineGroup
+import traceback
 
 class FetchInfo:
     def __init__(self,doc_id, pref, avoid, group_size):
@@ -22,16 +23,15 @@ class FetchInfo:
             wf.write(r.text)
             
         count = 0
-        with open(destname, 'r') as rf:
-            rawtext = rf.read().splitlines()
-            myreader = csv.reader(rawtext)
+        with open('dummy.csv') as csvfile:
+            readCSV = csv.reader(csvfile, delimiter=',')
             res = []
             no_of_pref = self.pref
             no_of_avoid = self.avoid
-            for row in myreader:
+            for row in readCSV:
                 print("-----------------------------------------------------------------------")
                 count = count + 1
-                if(count % 2 != 0 and count > 1):
+                if(count > 1):
                     try:
                         temp = []
                         i = 1
@@ -80,9 +80,7 @@ class FetchInfo:
 
             data = pd.DataFrame(res, columns=['Full Name', 'ASURITE', 'GitHub', 'EmailID', 'Preferences', 'Avoidance', 'TimeZone', 'TimePreference', 'GithubKnowledge', 'ScrumKnowledge', 'Comments'])
             #session['response'] = data.to_json(orient='split')
-            print(data)
             print("--------------Done----------------")
-        print("calling G")
         g = OnlineGroup(self.group_size, data)
         res = g.assign_group()
         print(res)

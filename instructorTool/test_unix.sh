@@ -1,4 +1,4 @@
-curl -u "$1:$5" https://api.github.com/user/repos -d "{\"name\":\"$4\",\"private\":\"True\"}"
+#curl -u "$1:$5" https://api.github.com/user/repos -d "{\"name\":\"$4\",\"private\":\"True\"}"
 cd /home/ec2-user/SER_517_Software_Factory_group5-master
 git clone https://github.com/amehlhase316/memoranda.git
 cd memoranda
