@@ -23,10 +23,10 @@ import traceback
 import sys
 from instructorTool.Group_Scripts.group_online import OnlineGroup
 from instructorTool.Group_Scripts.fetch import FetchInfo
+from instructorTool.Group_Scripts.save_csv import save_csv
 from flask import Flask, session
 
 canvas_calendar = ''
-#with open('C://Users//Ganesh Kumar//SER_517_Software_Factory_group5//instructorTool//courseslist.json') as f:
 with open('instructorTool/courseslist.json') as f:
         courses = json.load(f)
 
@@ -38,6 +38,8 @@ def login():
         session.pop('canvas_token', None)
     if 'course_id' in session:
         session.pop('course_id', None)
+    if 'tableData' in session:
+        session.pop('tableData', None)
     return render_template('login.html',title ="Login")
 
 @app.route("/home", methods=['POST', 'GET'])
@@ -92,16 +94,29 @@ def group():
 def submitgroups():
     newvalues = request.json['new']
     items = request.json['items']
+    table = request.json['actualTable']
+    # Call save table
+    save_tbl = save_csv(table)
+    save_tbl.save()
     newDict ={}
     for item in items:
         for value in newvalues:
             if(item['Group'] == value['GroupNumber']):
                 item['Group'] = value['GroupName']
+
+    for tableitem in table:
+        for value in newvalues:
+            if(tableitem['GroupName'] == value['GroupNumber']):
+                tableitem['GroupName'] = value['GroupName']
+
+    session['tableData'] = tableitem
+
     for item in items:
         if item['Group'] not in newDict:
             newDict[item['Group']] = [item['EmailID']]
         else:
             newDict[item['Group']].append(item['EmailID'])
+
     groupObject = Canvas_Group(session['canvas_token'])
     result = groupObject.create_groups(newDict, session['course_id'])
     return flask.jsonify(result)
@@ -175,8 +190,8 @@ def latexAssign():
 @app.route('/send', methods=['GET','POST'])
 @login_required
 def send():
-    if request.method== 'POST':
-        course_name = request.form.get('course_name')
+    course_name = request.args.get('course_name')
+    if course_name:
         token = session['canvas_token']
         canvas = Course(token)
         course_names=canvas.getcourse()
@@ -193,6 +208,7 @@ def send():
 def logout():
     session.pop('canvas_token', None)
     session.pop('course_id', None)
+    session.pop('tableData', None)
     logout_user()
     return redirect(url_for('login'))
 

@@ -66,9 +66,12 @@ $(function() {
       );
           var actuallist = new Array();
           var grouplist = new Array();
+          var actualTable = new Array();
           $("#table2 tr:not(:first)").each(function () {
               var tds = $(this).find("td");
               var SStudent = { Group: $(this).find('td:eq(11)').text(), EmailID: $(this).find('td:eq(3)').text()};
+              var tableData = { FullName: $(this).find('td:eq(0)').text(), ASURITE: $(this).find('td:eq(1)').text(), Github: $(this).find('td:eq(2)').text(), EmailID: $(this).find('td:eq(3)').text(), Preferences: $(this).find('td:eq(4)').text(), Avoidance: $(this).find('td:eq(5)').text(), TimeZone: $(this).find('td:eq(6)').text(), TimePreference: $(this).find('td:eq(7)').text(), GithubKnowledge: $(this).find('td:eq(8)').text(), ScrumKnowledge: $(this).find('td:eq(9)').text(), Comments: $(this).find('td:eq(10)').text(), GroupName: $(this).find('td:eq(11)').text()};
+              actualTable.push(tableData);
               actuallist.push(SStudent);
           });
           $("#table1 tr:not(:first)").each(function () {
@@ -76,7 +79,7 @@ $(function() {
               var SStudent1 = { GroupNumber: $(this).find('td:eq(0)').text(), GroupName: $(this).find('td:eq(1) input').val() };
               grouplist.push(SStudent1);
           });
-          var valuetosend = {'items':actuallist, 'new':grouplist};
+          var valuetosend = {'items':actuallist, 'new':grouplist, "actualTable": actualTable};
         $.ajax({
             url: '/submitgroups',
             data: JSON.stringify(valuetosend),
@@ -95,6 +98,59 @@ $(function() {
             {alert(response);}
         });
     });
+});
+
+$(function() {
+    $('#exportgroups').bind('click', function(){
+          var grouplist = new Array();
+          var actualTable = new Array();
+          $("#table2 tr:not(:first)").each(function () {
+              var tds = $(this).find("td");
+              var tableData = { FullName: $(this).find('td:eq(0)').text(), ASURITE: $(this).find('td:eq(1)').text(), Github: $(this).find('td:eq(2)').text(), EmailID: $(this).find('td:eq(3)').text(), Preferences: $(this).find('td:eq(4)').text(), Avoidance: $(this).find('td:eq(5)').text(), TimeZone: $(this).find('td:eq(6)').text(), TimePreference: $(this).find('td:eq(7)').text(), GithubKnowledge: $(this).find('td:eq(8)').text(), ScrumKnowledge: $(this).find('td:eq(9)').text(), Comments: $(this).find('td:eq(10)').text(), GroupName: $(this).find('td:eq(11)').text()};
+              actualTable.push(tableData);
+          });
+          $("#table1 tr:not(:first)").each(function () {
+              var tds = $(this).find("td");
+              var SStudent1 = { GroupNumber: $(this).find('td:eq(0)').text(), GroupName: $(this).find('td:eq(1) input').val() };
+              grouplist.push(SStudent1);
+          });
+          for(var table in actualTable){
+            for(var value in grouplist){
+              if(actualTable[table]['GroupName'] == grouplist[value]['GroupNumber']){
+                actualTable[table]['GroupName'] = grouplist[value]['GroupName'];
+              }
+            }
+          }
+          console.log(actualTable);
+          let csv;
+          for(let row = 0; row < actualTable.length; row++){
+              let keysAmount = Object.keys(actualTable[row]).length
+              let keysCounter = 0
+
+              if(row === 0){
+
+                for(let key in actualTable[row]){
+                    csv += key + (keysCounter+1 < keysAmount ? ',' : '\r\n' )
+                    keysCounter++
+                    console.log(key);
+                }
+              }else{
+                for(let key in actualTable[row]){
+                  csv += actualTable[row][key] + (keysCounter+1 < keysAmount ? ',' : '\r\n' )
+                  keysCounter++
+                }
+              }
+
+            keysCounter = 0
+          }
+
+        let link = document.createElement('a')
+        link.id = 'download-csv'
+        link.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(csv));
+        link.setAttribute('download', 'GroupData.csv');
+        document.body.appendChild(link)
+        document.querySelector('#download-csv').click()
+      });
 });
 
 var col_names =[]
@@ -157,7 +213,7 @@ function createtable(rows,col_names, team_name){
     var row_id =randomid();
     /*console.log(row)*/
     if(rows[row][2] === ""){
-      tbl +='<tr row_id="'+row_id+'" style="color:red;">';  
+      tbl +='<tr row_id="'+row_id+'" style="color:red;">';
     }
     else{
       tbl +='<tr row_id="'+row_id+'">';
@@ -226,6 +282,7 @@ function createtable(rows,col_names, team_name){
     createtable_map_id(team_map,team_name);
     createtable(rows,col_names, team_name);
     document.getElementById("submitgroups").style.display="block";
+    document.getElementById("exportgroups").style.display="block";
 }
 
 function sendRequestWithCallback(action, params, async, callback) {
