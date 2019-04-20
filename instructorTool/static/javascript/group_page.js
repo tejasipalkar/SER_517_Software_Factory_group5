@@ -121,24 +121,24 @@ $(function() {
               }
             }
           }
-          console.log(actualTable);
-          let csv;
-          for(let row = 0; row < actualTable.length; row++){
-              let keysAmount = Object.keys(actualTable[row]).length
-              let keysCounter = 0
-
-              if(row === 0){
-
-                for(let key in actualTable[row]){
+          let csv = '';
+          let keysAmount = Object.keys(actualTable[0]).length
+          let keysCounter = 0
+          for(let key in actualTable[0]){
                     csv += key + (keysCounter+1 < keysAmount ? ',' : '\r\n' )
                     keysCounter++
-                    console.log(key);
-                }
-              }else{
-                for(let key in actualTable[row]){
+            }
+          for(let row = 0; row < actualTable.length; row++){
+              keysAmount = Object.keys(actualTable[row]).length
+              keysCounter = 0
+              for(let key in actualTable[row]){
+                if(actualTable[row][key].includes(',')){
+                  csv += "\"" + actualTable[row][key] + "\"" + (keysCounter+1 < keysAmount ? ',' : '\r\n' )
+                  }
+                else{
                   csv += actualTable[row][key] + (keysCounter+1 < keysAmount ? ',' : '\r\n' )
-                  keysCounter++
-                }
+                  }
+                keysCounter++
               }
 
             keysCounter = 0
