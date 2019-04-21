@@ -263,7 +263,7 @@ def github():
             group_data[tableitem['GroupName']] = []
             group_data[tableitem['GroupName']].append(tableitem['Github'])
 
-    
+
     new_group_data = {}
     for elements in session['new']:
         new_group_data[elements['GroupName']] = group_data[elements['GroupNumber']]
