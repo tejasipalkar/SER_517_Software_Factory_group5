@@ -21,7 +21,7 @@ import json
 import csv
 import pandas as pd
 import traceback
-import sys
+import sys, os
 from instructorTool.Group_Scripts.group_online import OnlineGroup
 from instructorTool.Group_Scripts.fetch import FetchInfo
 from instructorTool.Group_Scripts.save_csv import save_csv
@@ -269,11 +269,13 @@ def github():
         g.create_github_repo(key)
         username = Configuration.query.filter_by(key='repo.owner.username').first().value
         password = Configuration.query.filter_by(key='repo.owner.password').first().value
-        os.system("sh /home/ec2-user/SER_517_Software_Factory_group5-master/instructorTool/test_unix.sh {0} {1} {2} {3}".format(username, password, owner, name))
+        print("####key####")
+        print(key)
+        os.system("sh /home/ec2-user/newbuild/SER_517_Software_Factory_group5-master/instructorTool/test_unix.sh {0} {1} {2} {3}".format(username, password, repo_owner, key))
         for val in group_data[key]:
-            g.add_collaborator(key, val)
-
-
+            print("####github_IDs####")
+            print(val)
+            #g.add_collaborator(key, val)
     # if result == "invalid_auth":
     #     return 'invalid token'
     return 'done'
