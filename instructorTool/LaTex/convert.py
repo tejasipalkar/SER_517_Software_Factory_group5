@@ -1,73 +1,82 @@
 import json
-from pprint import pprint
-from datetime import datetime
 
-with open('my_json_data.json') as f:
-     data = json.load(f)
+#input_file = open('sample.json')
 
+store_list = []
 
-header = "\\documentclass[10pt]{article}\n\\usepackage{calendar}\n\\usepackage[landscape, a4paper, margin=1cm]{geometry}\n\\usepackage{palatino}\n\\begin{document}\n\\pagestyle{empty}\n\\setlength{\parindent}{0pt}\n\\StartingDayNumber=1\n"
+MONTHS = ['Jan','Feb','March','April', 'May', 'June', 'July', 'Aug', 'Sept',
+            'Oct', 'Nov', 'Dec']
+f = open("test_file.tex", "w")
+def myfun(y):
+    result = []
+    for item in y:
+        #print(item['title'])
+        line1 = []
+        line2 = []
+        line1.append('\\newcommand{\\')
+        line2.append('\\newcommand{\\')
+        string = item['title'].split(':')
+        store_list.append(string[0])
+        start_str = item['start'].split('T')[0]
+        store_list.append(start_str)
+        end_str = item['end'].split('T')[0]
+        store_list.append(end_str)
+        start_str = start_str.split('-')
+        start_day = start_str[2]
+        start_month = start_str[1]
+        start_month = MONTHS[int(float(start_month)) - 1]
+        end_str = end_str.split('-')
+        end_day = end_str[2]
+        end_month = end_str[1]
+        end_month = MONTHS[int(float(end_month))-1]
 
-name = "Events"
+        if start_str == end_str:
+            line1.append(string[0])
+            line1.append('}{')
+            line1.append(start_month + ' ' + str(int(float(start_day))) + '}' )
+            result.append(str.join('', [temp for temp in line1]) + '\n')
+            f.write(str.join('', [temp for temp in line1]) + '\n')
+        else:
+            line1.append(string[0]+'Start')
+            print(line1)
+            line1.append('}{')
+            line1.append(start_month + ' ' + str(int(float(start_day))) + '}' )
+            result.append(str.join('', [temp for temp in line1]) + '\n')
+            f.write(str.join('', [temp for temp in line1]) + '\n')
+            print(result)
+            line2.append(string[0]+'End')
+            print(line2)
+            line2.append('}{')
+            line2.append(end_month + ' ' + str(int(float(end_day))) + '}' )
+            result.append(str.join('', [temp for temp in line2]) + '\n')
+            f.write(str.join('', [temp for temp in line2]) + '\n')
+        print(result)
+    return result
 
-event = "test"
-information = "test information"
-start = 1
-title = "\\begin{center}\n\\textsc{\LARGE " + name + "}\n\\textsc{\large "+ month_day +"}\n\\end{center}"
-
-
-config1 = "\\begin{calendar}{\\textwidth}\n"
-
-end = "\\finishCalendar\n\\end{calendar}\n\\end{document}"
-
-blank_day = "\\BlankDay"
-
-body = ""
-
-tex_file = open("test.tex", "w")
-
-tex_file.write(header + '\n')
-tex_file.write(config1 + '\n')
-
-
-for item in data:
-    keys = item.keys()
-    if "start_at" in keys:
-        date_key = "start_at"
-    else:
-        date_key = "end_at"
-    split_date = str(item[date_key]).split('T')
-    split_date = split_date[0].split('-')
-    year = split_date[0]
-    month = split_date[1]
-    day = split_date[2]
-    title = "\\begin{center}\n\\textsc{\LARGE " + name + "}\n\\textsc{\large "+ month +"}\n\\end{center}"
-    start = datetime(int(year), int(month), 1).weekday() - 1
-    normal_day = "\\day{{{}}}{{\\textbf{{{}}}".format(name,event)
-
-    tex_file.write(normal_day)
-tex_file.write(end + '\n')
-tex_file.close()
-#     i = 0
-#     while i < 30:
-#         i+=1
-#         if i == int(day):
-#             body = body + "\n" + normal_day
-#         else:
-#             body + "\n" + blank_day
-# elif k == "title":
-#     information = v
-# elif k == "context_code":
-#     event = v
-#
-# month_day = month + "/" + year
-# title = "\\begin{center}\n\\textsc{\LARGE " + name + "}\n\\textsc{\large "+ month_day +"}\n\\end{center}"
-# config2 = "\\setcounter{calendardate}{"+str(start)+"}"
-#
-#
-# print(header)
-# print(title)
-# print(config1)
-# print(config2)
-# print(body)
-# print(end)
+def myassign(x):
+    result_Assign = []
+    for item in x:
+        #print(item['title'])
+        line1 = []
+        line1.append('\\newcommand{\\')
+        string = item['title'].split(':')
+        store_list.append(string[0])
+        date = item['start'].split('T')[1]
+        start_str = item['start'].split('T')[0]
+        store_list.append(start_str)
+        start_str = start_str.split('-')
+        start_day = start_str[2]
+        start_month = start_str[1]
+        start_month = MONTHS[int(float(start_month)) - 1]
+        line1.append(string[0])
+        line1.append('}{')
+        line1.append(start_month + ' ' + str(int(float(start_day))) + ' ' + date + '}' )
+        result_Assign.append(str.join('', [temp for temp in line1]) + '\n')
+    return result_Assign
+if __name__ == '__main__':
+    y = [   {"title":"sprintONE", "start":"2019-03-06T23:57:00", "end":"2019-04-06T23:57:00"}]
+    x = [{"title":"assignment1", "start":"2019-04-06T23:57"}]
+    retval = myfun(y)
+    ret_Assign = myassign(x)
+    print(retval)
+    print(ret_Assign)
