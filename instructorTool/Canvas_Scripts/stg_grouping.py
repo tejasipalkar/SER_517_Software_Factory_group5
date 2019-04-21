@@ -35,7 +35,7 @@ class STG_Group:
             for i in range(0, len(members)):
                 nameToID[members[i]['name']] = members[i]['id']
 
-            group_append = ["-instructor", "-general"]
+            group_append = ["-inst", "-gen"]
 
             for key in group_data:
                 name = key

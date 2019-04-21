@@ -1,9 +1,7 @@
 
   $(function() {
     $('#submit_slack').bind('click', function(){
-      $(this).html(
-        `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Loading`
-      );
+      document.getElementById("submit_slack").innerHTML="Loading";
         $.ajax({
             url: '/slack',
             data: $('form').serialize(),
@@ -11,19 +9,20 @@
         })
         .done(function(response) {
           if(response == "invalid token")
-            alert("Invalid Token");
+            {alert("Invalid Token");
+            document.getElementById("submit_slack").innerHTML="Submit";}
           else
-            {$("#slackModal").modal('hide');
-            alert("Slack Groups Created");}
+            {document.getElementById("submit_slack").innerHTML="Submit";
+              $("#slackModal").modal('hide');
+            alert("Slack Groups Created");
+            document.getElementById("slack-btn").disabled=true;}
         });
     });
 });
 
   $(function() {
     $('#submit_taiga').bind('click', function(){
-      $(this).html(
-        `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Loading`
-      );
+      document.getElementById("submit_taiga").innerHTML="Loading";
         $.ajax({
             url: '/taiga',
             data: $('form').serialize(),
@@ -31,19 +30,20 @@
         })
         .done(function(response) {
           if(response == "invalid auth")
-            alert("Invalid Username/Password");
+            {alert("Invalid Username/Password");
+            document.getElementById("submit_taiga").innerHTML="Submit";}
           else
-            {$("#taigaModal").modal('hide');
-            alert("Taiga Channels Created");}
+            { document.getElementById("submit_taiga").innerHTML="Submit";
+              $("#taigaModal").modal('hide');
+            alert("Taiga Channels Created");
+            document.getElementById("taiga-btn").disabled=true;}
         });
     });
 });
 
 $(function() {
     $('#submit_github').bind('click', function(){
-      $(this).html(
-        `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Loading`
-      );
+      document.getElementById("submit_github").innerHTML="Loading";
         $.ajax({
             url: '/github',
             data: $('form').serialize(),
@@ -51,19 +51,20 @@ $(function() {
         })
         .done(function(response) {
           if(response == "invalid token")
-            alert("Invalid Token");
+            {alert("Invalid Token");
+            document.getElementById("submit_github").innerHTML="Submit";}
           else
-            {$("#githubModal").modal('hide');
-            alert("Github Repositories Created");}
+            {document.getElementById("submit_github").innerHTML="Submit";
+              $("#githubModal").modal('hide');
+            alert("Github Repositories Created");
+            document.getElementById("github-btn").disabled=true;}
         });
     });
 });
 
 $(function() {
     $('#submitgroups').bind('click', function(){
-      $(this).html(
-        `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Loading`
-      );
+      document.getElementById("submitgroups").innerHTML="Loading";
           var actuallist = new Array();
           var grouplist = new Array();
           var actualTable = new Array();
@@ -90,12 +91,15 @@ $(function() {
         .done(function(response) {
           if(response == 'Groups Pushed to Canvas')
             { alert(response);
+              document.getElementById("submitgroups").innerHTML="Submit Groups";
+              document.getElementById("submitgroups").disabled=true;
               document.getElementById("slack-btn").style.display="block";
               document.getElementById("taiga-btn").style.display="block";
               document.getElementById("github-btn").style.display="block";
             }
           else
-            {alert(response);}
+            {alert(response);
+              document.getElementById("submitgroups").innerHTML="Submit Groups";}
         });
     });
 });
