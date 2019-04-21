@@ -112,7 +112,7 @@ def submitgroups():
                 tableitem['GroupName'] = value['GroupName']
 
     session['tableData'] = tableitem
-
+    session['new'] = newvalues
     for item in items:
         if item['Group'] not in newDict:
             newDict[item['Group']] = [item['EmailID']]
@@ -263,19 +263,23 @@ def github():
             group_data[tableitem['GroupName']] = []
             group_data[tableitem['GroupName']].append(tableitem['Github'])
 
-    print(group_data)
-    for key in group_data.keys():
+    
+    new_group_data = {}
+    for elements in session['new']:
+        new_group_data[elements['GroupName']] = group_data[elements['GroupNumber']]
+
+    for key in new_group_data.keys():
         g = Github(repo_owner, github_token)
         g.create_github_repo(key)
         username = Configuration.query.filter_by(key='repo.owner.username').first().value
         password = Configuration.query.filter_by(key='repo.owner.password').first().value
         print("####key####")
         print(key)
-        os.system("sh /home/ec2-user/newbuild/SER_517_Software_Factory_group5-master/instructorTool/test_unix.sh {0} {1} {2} {3}".format(username, password, repo_owner, key))
-        for val in group_data[key]:
+        os.system("sh /home/ec2-user/newbuild/SER_517_Software_Factory_group5/instructorTool/test_unix.sh {0} {1} {2} {3}".format(username, password, repo_owner, key))
+        for val in new_group_data[key]:
             print("####github_IDs####")
             print(val)
-            #g.add_collaborator(key, val)
+            g.add_collaborator(key, val)
     # if result == "invalid_auth":
     #     return 'invalid token'
     return 'done'
