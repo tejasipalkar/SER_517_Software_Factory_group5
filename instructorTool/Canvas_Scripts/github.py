@@ -8,7 +8,6 @@ class Github:
         self.api_token = api_token
 
     def create_github_repo(self, repo_name):
-        description = 'Welcome to ' + repo_name
         payload = {'name': repo_name, 'auto_init': 'true', "private": 'true'}
         print(self.repo_owner)
         print(self.api_token)

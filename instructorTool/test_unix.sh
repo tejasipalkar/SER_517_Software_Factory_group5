@@ -6,8 +6,9 @@ rm -rf .git
 cd ..
 git clone https://$1:$2@github.com/$3/$4.git
 cd $4
-cp -r ../memoranda .
+cp -r ../memoranda/* .
 git add .
 git commit -m "Initializing the folder structure"
 git push
 rm -rf ../memoranda
+rm -rf ../$4 
