@@ -2,7 +2,7 @@ from flask import Flask, session
 import requests
 import csv
 import pandas as pd
-from instructorTool.Group_Scripts.group_camous import OnlineGroup
+from instructorTool.Group_Scripts.group_online import OnlineGroup
 
 class FetchInfo:
     def __init__(self,doc_id, pref, avoid, group_size):
@@ -59,6 +59,8 @@ class FetchInfo:
                         i += no_of_avoid
                         # temp.append(row[i])
                         # i += 1
+                        #append empty element for UTC
+                        temp.append('N/A')
                         date_time = []
                         for idx,word in enumerate(row[i].split(',')):
                             if idx%2 == 0:
