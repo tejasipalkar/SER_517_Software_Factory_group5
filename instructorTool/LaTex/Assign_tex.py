@@ -62,6 +62,7 @@ def myassign(x):
         string = item['title'].split(':')
         store_list.append(string[0])
         start_str = item['start'].split('T')[0]
+        date = item['start'].split('T')[1]
         store_list.append(start_str)
         start_str = start_str.split('-')
         start_day = start_str[2]
@@ -69,7 +70,7 @@ def myassign(x):
         start_month = MONTHS[int(float(start_month)) - 1]
         line1.append(string[0])
         line1.append('}{')
-        line1.append(start_month + ' ' + str(int(float(start_day))) + '}' )
+        line1.append(start_month + ' ' + str(int(float(start_day))) + ' , ' + date +' PM' '}' )
         result_Assign.append(str.join('', [temp for temp in line1]) + '\n')
     return result_Assign
 if __name__ == '__main__':
