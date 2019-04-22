@@ -1,5 +1,5 @@
 
-from flask import render_template, url_for, json, flash, redirect, request
+from flask import render_template, url_for, json, flash, redirect, request, jsonify, session
 from instructorTool import app
 from instructorTool.forms import LoginForm
 from instructorTool.Canvas_Scripts.course import Course
@@ -8,29 +8,16 @@ from instructorTool.Canvas_Scripts.canvas_group import Canvas_Group
 from instructorTool.Canvas_Scripts.stg_grouping import STG_Group
 from instructorTool.Canvas_Scripts.github import Github
 from instructorTool.LaTex import Assign_tex
-import json
 from instructorTool.models import User, Configuration, courseObj
 from instructorTool import db, login_manager
-import requests
 from flask_login import login_user, current_user, logout_user, login_required
-from flask import jsonify, session
-import flask
-import jwt
-import base64
-import json
-import csv
-import pandas as pd
-import traceback
-import sys, os
 from instructorTool.Group_Scripts.group_online import OnlineGroup
 from instructorTool.Group_Scripts.fetch import FetchInfo
 from instructorTool.Group_Scripts.save_csv import save_csv
-from flask import Flask, session
+import jwt, requests, base64, csv, traceback, sys, os
+import pandas as pd
 
 canvas_calendar = ''
-
-with open('instructorTool/courseslist.json') as f:
-        courses = json.load(f)
 
 @app.route("/")
 @app.route("/login")
