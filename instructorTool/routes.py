@@ -243,32 +243,33 @@ def github():
     result = github.get_groupsdata(course_id)
     table = session['table']
     group_data = {}
-    for tableitem in table:
-        if tableitem['GroupName'] in group_data:
-            group_data[tableitem['GroupName']].append(tableitem['Github'])
-        else:
-            group_data[tableitem['GroupName']] = []
-            group_data[tableitem['GroupName']].append(tableitem['Github'])
+    try:
+        for tableitem in table:
+            if tableitem['GroupName'] in group_data:
+                group_data[tableitem['GroupName']].append(tableitem['Github'])
+            else:
+                group_data[tableitem['GroupName']] = []
+                group_data[tableitem['GroupName']].append(tableitem['Github'])
 
 
-    new_group_data = {}
-    for elements in session['new']:
-        new_group_data[elements['GroupName']] = group_data[elements['GroupNumber']]
+        new_group_data = {}
+        for elements in session['new']:
+            new_group_data[elements['GroupName']] = group_data[elements['GroupNumber']]
 
-    for key in new_group_data.keys():
-        g = Github(repo_owner, github_token)
-        g.create_github_repo(key)
-        username = Configuration.query.filter_by(key='repo.owner.username').first().value
-        password = Configuration.query.filter_by(key='repo.owner.password').first().value
-        print("####key####")
-        print(key)
-        os.system("sh /home/ec2-user/newbuild/SER_517_Software_Factory_group5/instructorTool/test_unix.sh {0} {1} {2} {3}".format(username, password, repo_owner, key))
-        for val in new_group_data[key]:
-            print("####github_IDs####")
-            print(val)
-            g.add_collaborator(key, val)
-    # if result == "invalid_auth":
-    #     return 'invalid token'
+        for key in new_group_data.keys():
+            g = Github(repo_owner, github_token)
+            g.create_github_repo(key)
+            username = Configuration.query.filter_by(key='repo.owner.username').first().value
+            password = Configuration.query.filter_by(key='repo.owner.password').first().value
+            print("####key####")
+            print(key)
+            os.system("sh /home/ec2-user/newbuild/SER_517_Software_Factory_group5/instructorTool/test_unix.sh {0} {1} {2} {3}".format(username, password, repo_owner, key))
+            for val in new_group_data[key]:
+                print("####github_IDs####")
+                print(val)
+                g.add_collaborator(key, val)
+    except:
+        return 'invalid token' 
     return 'done'
 
 @login_required
