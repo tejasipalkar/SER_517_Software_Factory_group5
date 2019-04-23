@@ -14,7 +14,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 from instructorTool.Group_Scripts.group_online import OnlineGroup
 from instructorTool.Group_Scripts.fetch import FetchInfo
 from instructorTool.Group_Scripts.save_csv import save_csv
-import jwt, requests, base64, csv, traceback, sys, os
+import jwt, requests, base64, csv, traceback, sys, os, flask
 import pandas as pd
 
 canvas_calendar = ''
@@ -100,6 +100,7 @@ def submitgroups():
 
     session['tableData'] = tableitem
     session['new'] = newvalues
+    session['table'] = table
     for item in items:
         if item['Group'] not in newDict:
             newDict[item['Group']] = [item['EmailID']]
@@ -241,9 +242,9 @@ def github():
     course_id = session['course_id']
     github = STG_Group(canvas_token)
     result = github.get_groupsdata(course_id)
-    table = session['table']
     group_data = {}
     try:
+        table = session['table']
         for tableitem in table:
             if tableitem['GroupName'] in group_data:
                 group_data[tableitem['GroupName']].append(tableitem['Github'])
@@ -254,7 +255,7 @@ def github():
 
         new_group_data = {}
         for elements in session['new']:
-            new_group_data[elements['GroupName']] = group_data[elements['GroupNumber']]
+            new_group_data[elements['GroupName']] = group_data[elements['GroupName']]
 
         for key in new_group_data.keys():
             g = Github(repo_owner, github_token)
@@ -269,6 +270,7 @@ def github():
                 print(val)
                 g.add_collaborator(key, val)
     except:
+        traceback.print_exc(file=sys.stdout)
         return 'invalid token' 
     return 'done'
 

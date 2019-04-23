@@ -3,7 +3,7 @@ import requests
 import csv
 import pandas as pd
 from instructorTool.Group_Scripts.group_online import OnlineGroup
-import traceback
+import traceback, sys
 
 class FetchInfo:
     def __init__(self,doc_id, pref, avoid, group_size):
