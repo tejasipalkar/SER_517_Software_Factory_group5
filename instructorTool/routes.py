@@ -18,7 +18,7 @@ import jwt, requests, base64, csv, traceback, sys, os, flask
 import pandas as pd
 
 canvas_calendar = ''
-
+sys.stdout = sys.stderr = open('instructor_log.txt','wt')
 @app.route("/")
 @app.route("/login")
 def login():
