@@ -1,27 +1,21 @@
 {% extends "layout.html" %}
 {% block content %}
-<body style="background-color: #f2f2f2">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script type="text/javascript" src="static\javascript\integrate.js"></script>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="static\javascript\integrate.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-	<div id="container-2">
-		<h2>{{course}}</h2>
-		<div class="row" style="margin-top: 50px; margin-bottom: 50px">
-			<div class="col-sm-4 offset-sm-1">
-				<button class="btn" id="btn-grp" onclick ="window.location.href='{{ url_for('group')}}'">
-					<i class="fa fa-users fa-lg" style="margin-right: 15px"></i>Manage Groups
-				</button>
-			</div>
-			<div class="col-sm-4 offset-sm-2">
-				<button class="btn" id ="btn-cal" onclick ="window.location.href='{{ url_for('cal')}}'">
-					<i class="far fa-calendar-check fa-lg" style="margin-right: 15px"></i>View Calendar
-				</button>
-			</div>
+<div id="container-2">
+	<h2>{{course}}</h2>
+	<div class="row" style="margin-top: 50px">
+		<div class="col-sm-3 offset-sm-2">
+			<button class="btn" id="btn-grp" onclick ="window.location.href='{{ url_for('group')}}'">Manage Groups</button>
+		</div>
+		<div class="col-sm-3 offset-sm-2">
+				<button class="btn" id ="btn-cal" onclick ="window.location.href='{{ url_for('cal')}}'">View Calendar</button>
 		</div>
 	</div>
-</body>
-{% endblock content %}
+</div>
+ {% endblock content %}

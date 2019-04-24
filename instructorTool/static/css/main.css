@@ -355,10 +355,7 @@ input[type=file],select{
 }
 
 #container-2{
-  margin-top: 8%;
-  padding: 40px; 
-  background: #ffffff; 
-  box-shadow: 0 2px 8px 0 rgba(0,0,0,0.06);
+  margin-top: 8%
 }
 #btn-links{
   margin-top: 5%;
@@ -366,7 +363,8 @@ input[type=file],select{
 
 #btn-grp,#btn-cal{
   width: inherit; 
-  padding: 40px;
+  padding-top:25%;
+  padding-bottom: 25%;
   background-color: #63886c; 
   font-size: x-large; 
   color: white
