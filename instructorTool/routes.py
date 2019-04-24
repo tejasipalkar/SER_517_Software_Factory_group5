@@ -259,7 +259,11 @@ def github():
 
         for key in new_group_data.keys():
             g = Github(repo_owner, github_token)
-            g.create_github_repo(key)
+            response = g.create_github_repo(key)
+            result = response.status_code
+            if(result != 201):
+                return 'invalid token'
+
             username = Configuration.query.filter_by(key='repo.owner.username').first().value
             password = Configuration.query.filter_by(key='repo.owner.password').first().value
             print("####key####")
