@@ -26,13 +26,11 @@ $(document).ready(function() {
     eventTextColor: '#ffffff',
     timezone: "local",
     select: function(start, end) {
-      console.log("Select date",end)
       openModelForNewEvent(end._d);
     },
     events: [],
     
     eventClick: function(event, element) {
-      console.log("eventclicked ",event)
       //if end and start are same, end is set to null by default
       if(event.end == null){
         event.end = event.start;
@@ -99,9 +97,6 @@ function openModelForUpdateEvent(event){
     $('#delete_button').show();
     $('#event_details_model').modal('show');
   }
-
-  console.log("start", startDate, "end", endDate,
-  "start", startTime, "end", endTime)
 }
 
   //get all event and put them on the calendar
@@ -153,7 +148,7 @@ function openModelForUpdateEvent(event){
     }
 
     if(errorMessage != "Invalid parameter(s): "){
-      console.log(errorMessage,)
+      console.log(errorMessage)
     }else{
       if(isSameDay){
         endDate = startDate;
@@ -165,7 +160,7 @@ function openModelForUpdateEvent(event){
         endDate = endDate + 'T' + '23:59';
         startDate = startDate + 'T' + '00:01';
       }
-      console.log(title,startDate,endDate)
+      console.log("updates: ",title,startDate,endDate)
       var eventData;
       if(selectedEvent){
         //update event
@@ -219,10 +214,10 @@ function openModelForUpdateEvent(event){
     }
 
     if(errorMessage != "Invalid parameter(s): "){
-      console.log(errorMessage,)
+      console.log(errorMessage)
     }else{
       startDate = startDate + 'T' + startTime;
-      console.log(title,startDate)
+      console.log("updates",title,startDate)
       var eventData;
       if(selectedEvent){
         eventData = selectedEvent;
@@ -254,7 +249,6 @@ function openModelForUpdateEvent(event){
 
   function pushDeleteEvents(){
     if(deleteEvents.length>0){
-      console.log("events to be deleted",deleteEvents);
       $.ajax({
         url: '/deleteevent',
         data: JSON.stringify(deleteEvents),
@@ -279,7 +273,6 @@ function openModelForUpdateEvent(event){
   function pushNewEvents() {
     $('#push-spinner').show();
     var events = []
-    console.log("newEvents",newEvents)
     for(var i = 0; i < newEvents.length; i++){
       var completeEvent = $('#calendar').fullCalendar('clientEvents', newEvents[i])[0];
       if(completeEvent != null){
@@ -303,7 +296,6 @@ function openModelForUpdateEvent(event){
     }
     
     if(events.length>0){
-      console.log("new events to push",events);
       $.ajax({
         url: '/newevent',
         data: JSON.stringify(events),
@@ -323,7 +315,6 @@ function openModelForUpdateEvent(event){
   }
 
   function pushEditEvents(){
-    console.log("editEvents",editEvents)
     var events = []
     for(var i = 0; i < editEvents.length; i++){
       var completeEvent = $('#calendar').fullCalendar('clientEvents', editEvents[i])[0];
@@ -350,7 +341,6 @@ function openModelForUpdateEvent(event){
       }
     }
     if(events.length>0){
-      console.log("edit events to push",events);
       $.ajax({
         url: '/editevent',
         data: JSON.stringify(events),
@@ -370,7 +360,6 @@ function openModelForUpdateEvent(event){
   }
 
   function pushEditAssign(){
-    console.log("editAssign",editAssign)
     var events = []
     for(var i = 0; i < editAssign.length; i++){
       var completeEvent = $('#calendar').fullCalendar('clientEvents', editAssign[i])[0];
@@ -390,7 +379,6 @@ function openModelForUpdateEvent(event){
       var data = {}
       data.event = events;
       data.course = course;
-      console.log("edit assign to push",events);
       $.ajax({
         url: '/editassign',
         data: JSON.stringify(data),
@@ -410,7 +398,6 @@ function openModelForUpdateEvent(event){
   }
 
   function pushEditQuiz(){
-    console.log("editquiz",editQuiz)
     var events = []
     for(var i = 0; i < editQuiz.length; i++){
       var completeEvent = $('#calendar').fullCalendar('clientEvents', editQuiz[i])[0];
@@ -427,7 +414,6 @@ function openModelForUpdateEvent(event){
       }
     }
     if(events.length>0){
-      console.log("edit quiz to push",events);
       $.ajax({
         url: '/editquiz',
         data: JSON.stringify(events),
@@ -591,7 +577,6 @@ function openModelForUpdateEvent(event){
       events[i].start = formatDateCanvasToFullCalendar(events[i].start)
       events[i].end = formatDateCanvasToFullCalendar(events[i].end)
     }
-    console.log(events);
     return events;
   }
 
@@ -709,7 +694,7 @@ function openModelForUpdateEvent(event){
       },
       error: function(error) {
         console.log("latex project",error);
-        $("#failure-alert").show().delay(2000).fadeOut();
+        $("#latex-failure-alert").show().delay(2000).fadeOut();
       }
     });
     $.ajax({
@@ -728,7 +713,7 @@ function openModelForUpdateEvent(event){
       },
       error: function(error) {
         console.log("editQuiz",error);
-        $("#failure-alert").show().delay(2000).fadeOut();
+        $("#latex-failure-alert").show().delay(2000).fadeOut();
       }
     });
   }
