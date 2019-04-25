@@ -271,7 +271,7 @@ def github():
             password = Configuration.query.filter_by(key='repo.owner.password').first().value
             print("####key####")
             print(key)
-            os.system("sh /home/ec2-user/newbuild/SER_517_Software_Factory_group5/instructorTool/test_unix.sh {0} {1} {2} {3}".format(username, password, repo_owner, key))
+            os.system("sh /home/ec2-user/newbuild/SER_517_Software_Factory_group5/instructorTool/test_unix.sh {0} {1} {2} ".format(github_token, repo_owner, key))
             for val in new_group_data[key]:
                 print("####github_IDs####")
                 print(val)
