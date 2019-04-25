@@ -4,7 +4,7 @@ import csv
 import pandas as pd
 from instructorTool.Group_Scripts.group_online import OnlineGroup
 
-class FetchInfo:
+class FetchCampusInfo:
     def __init__(self,doc_id, pref, avoid, group_size):
         self.doc_id = doc_id.split("/")[5]
         self.pref = int(pref)
@@ -31,7 +31,7 @@ class FetchInfo:
             for row in myreader:
                 print("-----------------------------------------------------------------------")
                 count = count + 1
-                if(count % 2 != 0 and count > 1):
+                if(count > 1):
                     try:
                         temp = []
                         i = 1

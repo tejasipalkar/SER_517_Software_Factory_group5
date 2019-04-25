@@ -13,6 +13,7 @@ from instructorTool import db, login_manager
 from flask_login import login_user, current_user, logout_user, login_required
 from instructorTool.Group_Scripts.group_online import OnlineGroup
 from instructorTool.Group_Scripts.fetch import FetchInfo
+from instructorTool.Group_Scripts.fetch_campus import FetchCampusInfo
 from instructorTool.Group_Scripts.save_csv import save_csv
 import jwt, requests, base64, csv, traceback, sys, os, flask
 import pandas as pd
@@ -74,9 +75,11 @@ def group():
     pref = request.args.get('pref')
     avoid = request.args.get('avoid')
     group_size = request.args.get('group')
+    input_select = request.args.get('input_select')
     if doc_url and pref and avoid:
-        return fetch_document(doc_url, pref, avoid, group_size)
-    return render_template('group_page.html',title="Manage Groups", edit_survey=getConfig("testshell.survey.url", "https://docs.google.com/spreadsheets/d/17ac0D1iDql0cnMIU7uxAUBPPaYDTkgNj1m1Pv7VFLWs"))
+        return fetch_document(doc_url, pref, avoid, group_size, input_select)
+    return render_template('group_page.html',title="Manage Groups", response=getConfig("testshell.response.url", "https://docs.google.com/spreadsheets/d/17ac0D1iDql0cnMIU7uxAUBPPaYDTkgNj1m1Pv7VFLWs"),
+     survey=getConfig("testshell.survey.url", "https://docs.google.com/forms/d/1Nt_QoGoZXZ0U3Vblp2V5BLyRLdXV-x853V0LCfxC3TA"))
 
 @app.route("/submitgroups", methods = ['POST'])
 @login_required
@@ -279,8 +282,11 @@ def github():
     return 'done'
 
 @login_required
-def fetch_document(doc_id, pref, avoid, group_size):
-    f = FetchInfo(doc_id, pref, avoid, group_size)
+def fetch_document(doc_id, pref, avoid, group_size, input_select):
+    if input_select == 'Online':
+        f = FetchInfo(doc_id, pref, avoid, group_size)
+    else:
+        f = FetchCampusInfo(doc_id, pref, avoid, group_size)
     res = f.fetch_document()
     session['response'] = res.to_json(orient='split')
     return res.to_json(orient='split')

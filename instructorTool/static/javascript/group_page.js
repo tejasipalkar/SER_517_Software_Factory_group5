@@ -166,7 +166,7 @@ function postgrouppref(){
   var group_size = document.getElementById("size").value;
   var input_select = document.getElementById("sel4").value;
   var file = document.getElementById("file").value;
-  url ="/group?"+"pref="+pref+"&avoid="+avoid+"&group="+group_size+"&file="+file;
+  url ="/group?"+"pref="+pref+"&avoid="+avoid+"&group="+group_size+"&input_select="+input_select+"&file="+file;
   sendRequestWithCallback(url, null, true, callbackfn);
   //document.getElementById("content").value="";
 }
