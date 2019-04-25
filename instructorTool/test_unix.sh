@@ -4,11 +4,11 @@ git clone https://github.com/amehlhase316/memoranda.git
 cd memoranda
 rm -rf .git
 cd ..
-git clone https://$1:$2@github.com/$3/$4.git
-cd $4
+git clone https://$1@github.com/$2/$3.git
+cd $3
 cp -r ../memoranda/* .
 git add .
 git commit -m "Initializing the folder structure"
 git push
 rm -rf ../memoranda
-rm -rf ../$4 
+rm -rf ../$3 
