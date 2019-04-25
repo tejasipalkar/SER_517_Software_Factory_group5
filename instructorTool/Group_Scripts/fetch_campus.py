@@ -31,7 +31,7 @@ class FetchCampusInfo:
             for row in myreader:
                 print("-----------------------------------------------------------------------")
                 count = count + 1
-                if(count % 2 != 0 and count > 1):
+                if(count > 1):
                     try:
                         temp = []
                         i = 1
