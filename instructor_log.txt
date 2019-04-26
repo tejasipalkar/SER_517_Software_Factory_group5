@@ -1,0 +1,347 @@
+/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/sqlalchemy/dialects/sqlite/base.py:1433: SADeprecationWarning: The create_engine.convert_unicode parameter and corresponding dialect-level parameters are deprecated, and will be removed in a future release.  Modern DBAPIs support Python Unicode natively and this parameter is unnecessary.
+  default.DefaultDialect.__init__(self, **kwargs)
+ * Debugger is active!
+ * Debugger PIN: 151-408-231
+/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/flask_sqlalchemy/__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/flask_sqlalchemy/__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+127.0.0.1 - - [25/Apr/2019 19:16:14] "GET /google HTTP/1.1" 302 -
+/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/flask_sqlalchemy/__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/flask_sqlalchemy/__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/flask_sqlalchemy/__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/flask_sqlalchemy/__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/flask_sqlalchemy/__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+127.0.0.1 - - [25/Apr/2019 19:16:40] "GET /oauthcallback?code=4%2FOAECNP-qa9rvIOmXR20gVMmaz7gI8Erkzx0Vg6qhwFp9veFvoi68AtHamacp7_p7P5Qzgb-10_C_pJf5CFwLOhc&scope=email+profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdrive+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile HTTP/1.1" 302 -
+/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/flask_sqlalchemy/__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+127.0.0.1 - - [25/Apr/2019 19:16:40] "GET /token HTTP/1.1" 200 -
+/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/flask_sqlalchemy/__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+127.0.0.1 - - [25/Apr/2019 19:17:19] "POST /home HTTP/1.1" 200 -
+/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/flask_sqlalchemy/__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+127.0.0.1 - - [25/Apr/2019 19:17:21] "GET /send?course_name=SER515-Group5-TestShell HTTP/1.1" 200 -
+127.0.0.1 - - [25/Apr/2019 19:17:21] "GET /static/javascript/integrate.js HTTP/1.1" 200 -
+/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/flask_sqlalchemy/__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/flask_sqlalchemy/__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/flask_sqlalchemy/__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+127.0.0.1 - - [25/Apr/2019 19:17:22] "GET /group HTTP/1.1" 200 -
+127.0.0.1 - - [25/Apr/2019 19:17:22] "GET /static/javascript/group_page.js HTTP/1.1" 200 -
+/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/flask_sqlalchemy/__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+https://docs.google.com/spreadsheets/d/17ac0D1iDql0cnMIU7uxAUBPPaYDTkgNj1m1Pv7VFLWs/edit
+-----------------------------------------------------------------------
+-----------------------------------------------------------------------
+2 ['Ganesh Kumar Subramanian Venkatraman', 'gsubra11', 'svganesh', 'gsubra11@asu.edu', ['zsiddiq2'], ['kbhangal'], 'UTC -3', ['Monday- 6:00 PM - 9:00 PM', ' Tuesday- 9:00 AM - 12:00 PM', ' Tuesday- 3:00 PM - 6:00 PM', ' Thursday- 9:00 AM - 12:00 PM'], '5', '4', 'testing']
+-----------------------------------------------------------------------
+3 ['Zain Siddiqui', 'zsiddiq2', 'zain2511', 'zsiddiq2@asu.edu', ['gsubra11', 'ygoel', 'tpalkar'], ['kbhangal'], 'UTC -6', ['Tuesday- 6:00 AM - 9:00 AM', ' Tuesday- 12:00 PM - 3:00 PM', ' Tuesday- 6:00 PM - 9:00 PM'], '2', '4', 'survey is awesome']
+-----------------------------------------------------------------------
+4 ['Tejasi Palkar', 'tpalkar', 'tejasipalkar', 'tpalkar@asu.edu', ['kbhangal', 'zsiddiq2'], ['ygoel'], 'UTC -6', ['Monday- 12:00 PM - 3:00 PM', ' Monday- after 9pm', ' Thursday- 6:00 PM - 9:00 PM', ' Thursday- after 9pm', ' Sunday- 12:00 PM - 3:00 PM', ' Sunday- 6:00 PM - 9:00 PM'], '4', '5', 'testing']
+-----------------------------------------------------------------------
+5 ['Yathartha Goel', 'ygoel', 'ygoel', 'ygoel@asu.edu', ['zsiddiq2'], [], 'UTC +3', ['Monday- 6:00 AM - 9:00 AM', ' Thursday- 9:00 AM - 12:00 PM', ' Thursday- 12:00 PM - 3:00 PM', ' Thursday- 6:00 PM - 9:00 PM', ' Thursday- after 9pm'], '4', '4', 'zzzz']
+-----------------------------------------------------------------------
+6 ['Karansher Bhangal', 'kbhangal', 'kbhangal', 'kbhangal@asu.edu', ['tpalkar'], [], 'UTC -1', ['Monday- 6:00 AM - 9:00 AM', ' Monday- 9:00 AM - 12:00 PM', ' Monday- 12:00 PM - 3:00 PM', ' Monday- 3:00 PM - 6:00 PM', ' Tuesday- 3:00 PM - 6:00 PM'], '4', '1', "Please!! I don't want xxx to be in my group"]
+--------------Done----------------
+All students:  {'kbhangal': 'Karansher Bhangal', 'ygoel': 'Yathartha Goel', 'tpalkar': 'Tejasi Palkar', 'sparlapa': 'Suman Parlapalli', 'zsiddiq2': 'Zain Siddiqui', 'gsubra11': 'Ganesh Kumar Subramanian Venkatraman'}
+Finalized stu list: ['gsubra11', 'zsiddiq2', 'tpalkar', 'ygoel', 'kbhangal', 'sparlapa']
+Full Name                       Ganesh Kumar Subramanian Venkatraman
+ASURITE                                                     gsubra11
+GitHub                                                      svganesh
+EmailID                                             gsubra11@asu.edu
+Preferences                                               [zsiddiq2]
+Avoidance                                                 [kbhangal]
+TimeZone                                                      UTC -3
+TimePreference     [Monday- 6:00 PM - 9:00 PM,  Tuesday- 9:00 AM ...
+GithubKnowledge                                                    5
+ScrumKnowledge                                                     4
+Comments                                                     testing
+Name: 0, dtype: object
+Full Name                                              Zain Siddiqui
+ASURITE                                                     zsiddiq2
+GitHub                                                      zain2511
+EmailID                                             zsiddiq2@asu.edu
+Preferences                               [gsubra11, ygoel, tpalkar]
+Avoidance                                                 [kbhangal]
+TimeZone                                                      UTC -6
+TimePreference     [Tuesday- 6:00 AM - 9:00 AM,  Tuesday- 12:00 P...
+GithubKnowledge                                                    2
+ScrumKnowledge                                                     4
+Comments                                           survey is awesome
+Name: 1, dtype: object
+Full Name                                              Tejasi Palkar
+ASURITE                                                      tpalkar
+GitHub                                                  tejasipalkar
+EmailID                                              tpalkar@asu.edu
+Preferences                                     [kbhangal, zsiddiq2]
+Avoidance                                                    [ygoel]
+TimeZone                                                      UTC -6
+TimePreference     [Monday- 12:00 PM - 3:00 PM,  Monday- after 9p...
+GithubKnowledge                                                    4
+ScrumKnowledge                                                     5
+Comments                                                     testing
+Name: 2, dtype: object
+Full Name                                             Yathartha Goel
+ASURITE                                                        ygoel
+GitHub                                                         ygoel
+EmailID                                                ygoel@asu.edu
+Preferences                                               [zsiddiq2]
+Avoidance                                                         []
+TimeZone                                                      UTC +3
+TimePreference     [Monday- 6:00 AM - 9:00 AM,  Thursday- 9:00 AM...
+GithubKnowledge                                                    4
+ScrumKnowledge                                                     4
+Comments                                                        zzzz
+Name: 3, dtype: object
+Full Name                                          Karansher Bhangal
+ASURITE                                                     kbhangal
+GitHub                                                      kbhangal
+EmailID                                             kbhangal@asu.edu
+Preferences                                                [tpalkar]
+Avoidance                                                         []
+TimeZone                                                      UTC -1
+TimePreference     [Monday- 6:00 AM - 9:00 AM,  Monday- 9:00 AM -...
+GithubKnowledge                                                    4
+ScrumKnowledge                                                     1
+Comments                 Please!! I don't want xxx to be in my group
+Name: 4, dtype: object
+Full Name          Suman Parlapalli
+ASURITE                    sparlapa
+GitHub                             
+EmailID            sparlapa@asu.edu
+Preferences                      []
+Avoidance                        []
+TimeZone                         []
+TimePreference                   []
+GithubKnowledge                   0
+ScrumKnowledge                    0
+Comments                           
+Name: 5, dtype: object
+[['gsubra11', 'zsiddiq2'], ['tpalkar', 'kbhangal'], ['ygoel'], ['sparlapa']]
+remaining ['sparlapa']
+0  Students were not alloted teams.
+{1: ['gsubra11', 'zsiddiq2'], 2: ['tpalkar', 'kbhangal'], 3: ['ygoel', 'sparlapa']}
+['gsubra11', 'zsiddiq2', 'tpalkar', 'ygoel', 'kbhangal', 'sparlapa']
+[1, 1, 2, 3, 2, 3]
+                              Full Name    ...     Group Name
+0  Ganesh Kumar Subramanian Venkatraman    ...              1
+1                         Zain Siddiqui    ...              1
+2                         Tejasi Palkar    ...              2
+3                        Yathartha Goel    ...              3
+4                     Karansher Bhangal    ...              2
+5                      Suman Parlapalli    ...              3
+
+[6 rows x 12 columns]
+                              Full Name    ...     Group Name
+0  Ganesh Kumar Subramanian Venkatraman    ...              1
+1                         Zain Siddiqui    ...              1
+2                         Tejasi Palkar    ...              2
+3                        Yathartha Goel    ...              3
+4                     Karansher Bhangal    ...              2
+5                      Suman Parlapalli    ...              3
+
+[6 rows x 12 columns]
+127.0.0.1 - - [25/Apr/2019 19:17:33] "GET /group?pref=3&avoid=3&group=2&input_select=Online&file=https://docs.google.com/spreadsheets/d/17ac0D1iDql0cnMIU7uxAUBPPaYDTkgNj1m1Pv7VFLWs/edit HTTP/1.1" 200 -
+/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/flask_sqlalchemy/__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+127.0.0.1 - - [25/Apr/2019 19:25:46] "GET /home HTTP/1.1" 200 -
+/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/flask_sqlalchemy/__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+127.0.0.1 - - [25/Apr/2019 19:25:50] "GET /logout HTTP/1.1" 302 -
+127.0.0.1 - - [25/Apr/2019 19:25:50] "GET /login HTTP/1.1" 200 -
+/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/flask_sqlalchemy/__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/flask_sqlalchemy/__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+127.0.0.1 - - [25/Apr/2019 19:25:52] "GET /google HTTP/1.1" 302 -
+/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/flask_sqlalchemy/__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/flask_sqlalchemy/__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/flask_sqlalchemy/__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/flask_sqlalchemy/__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/flask_sqlalchemy/__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+127.0.0.1 - - [25/Apr/2019 19:25:53] "GET /oauthcallback?code=4/OAFtYVsBCqbBe8jfy3eLHtsTBYfPxQNUbgQ35YoA5dMglrmh8z5ErQLBk2Xlq0kf-k1IjXnj2sUxegy1KaqyyR0&scope=email+profile+https://www.googleapis.com/auth/userinfo.email+https://www.googleapis.com/auth/userinfo.profile+https://www.googleapis.com/auth/drive HTTP/1.1" 302 -
+/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/flask_sqlalchemy/__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+127.0.0.1 - - [25/Apr/2019 19:25:53] "GET /token HTTP/1.1" 200 -
+/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/flask_sqlalchemy/__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+127.0.0.1 - - [25/Apr/2019 19:26:31] "POST /home HTTP/1.1" 200 -
+/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/flask_sqlalchemy/__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+127.0.0.1 - - [25/Apr/2019 19:26:33] "GET /send?course_name=SER515-Group5-TestShell HTTP/1.1" 200 -
+/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/flask_sqlalchemy/__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+127.0.0.1 - - [25/Apr/2019 19:26:41] "GET /cal HTTP/1.1" 200 -
+127.0.0.1 - - [25/Apr/2019 19:26:41] "GET /static/css/calendar.css HTTP/1.1" 200 -
+127.0.0.1 - - [25/Apr/2019 19:26:41] "GET /static/css/fullcalendar.min.css HTTP/1.1" 200 -
+127.0.0.1 - - [25/Apr/2019 19:26:41] "GET /static/javascript/calendar/fullcalendar.min.js HTTP/1.1" 200 -
+127.0.0.1 - - [25/Apr/2019 19:26:41] "GET /static/javascript/calendar/calendar.js HTTP/1.1" 200 -
+127.0.0.1 - - [25/Apr/2019 19:26:41] "GET /static/javascript/imageExport/html2canvas.min.js HTTP/1.1" 200 -
+127.0.0.1 - - [25/Apr/2019 19:26:41] "GET /static/javascript/imageExport/html2canvas.js HTTP/1.1" 200 -
+127.0.0.1 - - [25/Apr/2019 19:26:41] "GET /static/css/fullcalendar.print.min.css HTTP/1.1" 200 -
+['\\newcommand{\\', 'SprintOneStart']
+['\\newcommand{\\SprintOneStart}{April 8}\n']
+['\\newcommand{\\', 'SprintOneEnd']
+['\\newcommand{\\SprintOneStart}{April 8}\n', '\\newcommand{\\SprintOneEnd}{April 12}\n']
+127.0.0.1 - - [25/Apr/2019 19:26:58] "POST /latexproject HTTP/1.1" 200 -
+127.0.0.1 - - [25/Apr/2019 19:26:58] "POST /latexassign HTTP/1.1" 200 -
+/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/flask_sqlalchemy/__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+127.0.0.1 - - [25/Apr/2019 19:30:18] "GET /home HTTP/1.1" 200 -
+/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/flask_sqlalchemy/__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+127.0.0.1 - - [25/Apr/2019 19:30:30] "GET /send?course_name=SER515-Group5-TestShell HTTP/1.1" 200 -
+/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/flask_sqlalchemy/__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/flask_sqlalchemy/__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/flask_sqlalchemy/__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+127.0.0.1 - - [25/Apr/2019 19:30:30] "GET /group HTTP/1.1" 200 -
+/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/flask_sqlalchemy/__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+https://docs.google.com/spreadsheets/d/17ac0D1iDql0cnMIU7uxAUBPPaYDTkgNj1m1Pv7VFLWs/edit
+-----------------------------------------------------------------------
+-----------------------------------------------------------------------
+2 ['Ganesh Kumar Subramanian Venkatraman', 'gsubra11', 'svganesh', 'gsubra11@asu.edu', ['zsiddiq2'], ['kbhangal'], '', [], 'Monday, 6:00 PM - 9:00 PM, Tuesday, 9:00 AM - 12:00 PM, Tuesday, 3:00 PM - 6:00 PM, Thursday, 9:00 AM - 12:00 PM', '5', '4']
+-----------------------------------------------------------------------
+3 ['Zain Siddiqui', 'zsiddiq2', 'zain2511', 'zsiddiq2@asu.edu', ['gsubra11', 'ygoel'], ['tpalkar', 'kbhangal'], '', [], 'Tuesday, 6:00 AM - 9:00 AM, Tuesday, 12:00 PM - 3:00 PM, Tuesday, 6:00 PM - 9:00 PM', '2', '4']
+-----------------------------------------------------------------------
+4 ['Tejasi Palkar', 'tpalkar', 'tejasipalkar', 'tpalkar@asu.edu', ['kbhangal', 'zsiddiq2'], ['ygoel'], '', [], 'Monday, 12:00 PM - 3:00 PM, Monday, after 9pm, Thursday, 6:00 PM - 9:00 PM, Thursday, after 9pm, Sunday, 12:00 PM - 3:00 PM, Sunday, 6:00 PM - 9:00 PM', '4', '5']
+-----------------------------------------------------------------------
+5 ['Yathartha Goel', 'ygoel', 'ygoel', 'ygoel@asu.edu', ['zsiddiq2'], [], '', [], 'Monday, 6:00 AM - 9:00 AM, Thursday, 9:00 AM - 12:00 PM, Thursday, 12:00 PM - 3:00 PM, Thursday, 6:00 PM - 9:00 PM, Thursday, after 9pm', '4', '4']
+-----------------------------------------------------------------------
+6 ['Karansher Bhangal', 'kbhangal', 'kbhangal', 'kbhangal@asu.edu', ['tpalkar'], [], '', [], 'Monday, 6:00 AM - 9:00 AM, Monday, 9:00 AM - 12:00 PM, Monday, 12:00 PM - 3:00 PM, Monday, 3:00 PM - 6:00 PM, Tuesday, 3:00 PM - 6:00 PM', '4', '1']
+--------------Done----------------
+All students:  {'kbhangal': 'Karansher Bhangal', 'ygoel': 'Yathartha Goel', 'tpalkar': 'Tejasi Palkar', 'sparlapa': 'Suman Parlapalli', 'zsiddiq2': 'Zain Siddiqui', 'gsubra11': 'Ganesh Kumar Subramanian Venkatraman'}
+Finalized stu list: ['gsubra11', 'zsiddiq2', 'tpalkar', 'ygoel', 'kbhangal', 'sparlapa']
+Full Name                       Ganesh Kumar Subramanian Venkatraman
+ASURITE                                                     gsubra11
+GitHub                                                      svganesh
+EmailID                                             gsubra11@asu.edu
+Preferences                                               [zsiddiq2]
+Avoidance                                                 [kbhangal]
+TimeZone                                                            
+TimePreference                                                    []
+GithubKnowledge    Monday, 6:00 PM - 9:00 PM, Tuesday, 9:00 AM - ...
+ScrumKnowledge                                                     5
+Comments                                                           4
+Name: 0, dtype: object
+Full Name                                              Zain Siddiqui
+ASURITE                                                     zsiddiq2
+GitHub                                                      zain2511
+EmailID                                             zsiddiq2@asu.edu
+Preferences                                        [gsubra11, ygoel]
+Avoidance                                        [tpalkar, kbhangal]
+TimeZone                                                            
+TimePreference                                                    []
+GithubKnowledge    Tuesday, 6:00 AM - 9:00 AM, Tuesday, 12:00 PM ...
+ScrumKnowledge                                                     2
+Comments                                                           4
+Name: 1, dtype: object
+Full Name                                              Tejasi Palkar
+ASURITE                                                      tpalkar
+GitHub                                                  tejasipalkar
+EmailID                                              tpalkar@asu.edu
+Preferences                                     [kbhangal, zsiddiq2]
+Avoidance                                                    [ygoel]
+TimeZone                                                            
+TimePreference                                                    []
+GithubKnowledge    Monday, 12:00 PM - 3:00 PM, Monday, after 9pm,...
+ScrumKnowledge                                                     4
+Comments                                                           5
+Name: 2, dtype: object
+Full Name                                             Yathartha Goel
+ASURITE                                                        ygoel
+GitHub                                                         ygoel
+EmailID                                                ygoel@asu.edu
+Preferences                                               [zsiddiq2]
+Avoidance                                                         []
+TimeZone                                                            
+TimePreference                                                    []
+GithubKnowledge    Monday, 6:00 AM - 9:00 AM, Thursday, 9:00 AM -...
+ScrumKnowledge                                                     4
+Comments                                                           4
+Name: 3, dtype: object
+Full Name                                          Karansher Bhangal
+ASURITE                                                     kbhangal
+GitHub                                                      kbhangal
+EmailID                                             kbhangal@asu.edu
+Preferences                                                [tpalkar]
+Avoidance                                                         []
+TimeZone                                                            
+TimePreference                                                    []
+GithubKnowledge    Monday, 6:00 AM - 9:00 AM, Monday, 9:00 AM - 1...
+ScrumKnowledge                                                     4
+Comments                                                           1
+Name: 4, dtype: object
+Full Name          Suman Parlapalli
+ASURITE                    sparlapa
+GitHub                             
+EmailID            sparlapa@asu.edu
+Preferences                      []
+Avoidance                        []
+TimeZone                         []
+TimePreference                   []
+GithubKnowledge                   0
+ScrumKnowledge                    0
+Comments                           
+Name: 5, dtype: object
+[['gsubra11', 'zsiddiq2'], ['tpalkar', 'kbhangal'], ['ygoel'], ['sparlapa']]
+remaining ['sparlapa']
+0  Students were not alloted teams.
+{1: ['gsubra11', 'zsiddiq2'], 2: ['tpalkar', 'kbhangal'], 3: ['ygoel', 'sparlapa']}
+['gsubra11', 'zsiddiq2', 'tpalkar', 'ygoel', 'kbhangal', 'sparlapa']
+[1, 1, 2, 3, 2, 3]
+                              Full Name    ...     Group Name
+0  Ganesh Kumar Subramanian Venkatraman    ...              1
+1                         Zain Siddiqui    ...              1
+2                         Tejasi Palkar    ...              2
+3                        Yathartha Goel    ...              3
+4                     Karansher Bhangal    ...              2
+5                      Suman Parlapalli    ...              3
+
+[6 rows x 12 columns]
+                              Full Name    ...     Group Name
+0  Ganesh Kumar Subramanian Venkatraman    ...              1
+1                         Zain Siddiqui    ...              1
+2                         Tejasi Palkar    ...              2
+3                        Yathartha Goel    ...              3
+4                     Karansher Bhangal    ...              2
+5                      Suman Parlapalli    ...              3
+
+[6 rows x 12 columns]
+127.0.0.1 - - [25/Apr/2019 19:31:14] "GET /group?pref=2&avoid=3&group=2&input_select=Online&file=https://docs.google.com/spreadsheets/d/17ac0D1iDql0cnMIU7uxAUBPPaYDTkgNj1m1Pv7VFLWs/edit HTTP/1.1" 200 -
+/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/flask_sqlalchemy/__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/werkzeug/local.py:347: DeprecationWarning: json is deprecated.  Use get_json() instead.
+  return getattr(self._get_current_object(), name)
+/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/werkzeug/local.py:347: DeprecationWarning: json is deprecated.  Use get_json() instead.
+  return getattr(self._get_current_object(), name)
+/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/werkzeug/local.py:347: DeprecationWarning: json is deprecated.  Use get_json() instead.
+  return getattr(self._get_current_object(), name)
+    ASURITE         Avoidance   ...    TimePreference TimeZone
+0  gsubra11          kbhangal   ...                           
+1  zsiddiq2  tpalkar,kbhangal   ...                           
+2   tpalkar             ygoel   ...                           
+3     ygoel                     ...                           
+4  kbhangal                     ...                           
+5  sparlapa                     ...                           
+
+[6 rows x 12 columns]
+/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/werkzeug/local.py:347: DeprecationWarning: Request.is_xhr is deprecated. Given that the X-Requested-With header is not a part of any spec, it is not reliable
+  return getattr(self._get_current_object(), name)
+127.0.0.1 - - [25/Apr/2019 19:31:21] "POST /submitgroups HTTP/1.1" 200 -
