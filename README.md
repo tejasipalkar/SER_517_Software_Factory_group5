@@ -37,6 +37,9 @@ Main Page
 Course Page
 <img src="instructorTool/static/resources/course_page.png">
 
+Groups Page
+<img src="instructorTool/static/resources/groups.png">
+
 Calendar
 <img src="instructorTool/static/resources/calendar.png">
 
