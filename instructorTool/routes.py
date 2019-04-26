@@ -78,8 +78,7 @@ def group():
     input_select = request.args.get('input_select')
     if doc_url and pref and avoid:
         return fetch_document(doc_url, pref, avoid, group_size, input_select)
-    return render_template('group_page.html',title="Manage Groups", response=getConfig("testshell.response.url", "https://docs.google.com/spreadsheets/d/17ac0D1iDql0cnMIU7uxAUBPPaYDTkgNj1m1Pv7VFLWs"),
-     survey=getConfig("testshell.survey.url", "https://docs.google.com/forms/d/1Nt_QoGoZXZ0U3Vblp2V5BLyRLdXV-x853V0LCfxC3TA"))
+    return render_template('group_page.html',title="Manage Groups")
 
 @app.route("/submitgroups", methods = ['POST'])
 @login_required
