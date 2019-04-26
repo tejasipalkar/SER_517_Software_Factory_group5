@@ -3,6 +3,7 @@ import requests
 import csv
 import pandas as pd
 from instructorTool.Group_Scripts.group_online import OnlineGroup
+import os
 
 class FetchCampusInfo:
     def __init__(self,doc_id, pref, avoid, group_size):
@@ -88,6 +89,6 @@ class FetchCampusInfo:
         g = OnlineGroup(self.group_size, data)
         res = g.assign_group()
         print(res)
-
+        os.remove("dummy.csv")
         #return session['response']
         return res
