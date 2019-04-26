@@ -4,6 +4,9 @@
 
 The project is about a web based tool that assists instructors in performing various tedious manual tasks like asking the students to fill out a survey, create groups based on the preferences mentioned by the students and setup GitHub, Taiga, slack for these individual groups. The tool is in-built  with all the above features and some more which reduces manual workload of the instructor and saves time. The instructor using the tool can also use Planning Calendar and export feature to generate the calendar schedule in a latex format.
 
+## Demo Video
+[Youtube Link](https://www.youtube.com/watch?v=1JT21V8TISw)
+
 ## Dependencies
 
 - PyJWT==1.7.1
