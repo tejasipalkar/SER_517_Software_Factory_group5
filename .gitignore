@@ -1,1 +1,3 @@
 *.pyc
+*instructor_log.txt
+*Table_Output.csv
