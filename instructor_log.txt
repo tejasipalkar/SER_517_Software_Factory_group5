@@ -1,0 +1,344 @@
+C:\Users\Zain\AppData\Local\Programs\Python\Python37\lib\site-packages\sqlalchemy\dialects\sqlite\base.py:1433: SADeprecationWarning: The create_engine.convert_unicode parameter and corresponding dialect-level parameters are deprecated, and will be removed in a future release.  Modern DBAPIs support Python Unicode natively and this parameter is unnecessary.
+  default.DefaultDialect.__init__(self, **kwargs)
+ * Debugger is active!
+ * Debugger PIN: 135-327-063
+ * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
+127.0.0.1 - - [25/Apr/2019 19:23:53] "GET / HTTP/1.1" 200 -
+C:\Users\Zain\AppData\Local\Programs\Python\Python37\lib\site-packages\flask_sqlalchemy\__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+C:\Users\Zain\AppData\Local\Programs\Python\Python37\lib\site-packages\flask_sqlalchemy\__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+127.0.0.1 - - [25/Apr/2019 19:23:56] "GET /google HTTP/1.1" 302 -
+C:\Users\Zain\AppData\Local\Programs\Python\Python37\lib\site-packages\flask_sqlalchemy\__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+C:\Users\Zain\AppData\Local\Programs\Python\Python37\lib\site-packages\flask_sqlalchemy\__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+C:\Users\Zain\AppData\Local\Programs\Python\Python37\lib\site-packages\flask_sqlalchemy\__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+C:\Users\Zain\AppData\Local\Programs\Python\Python37\lib\site-packages\flask_sqlalchemy\__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+C:\Users\Zain\AppData\Local\Programs\Python\Python37\lib\site-packages\flask_sqlalchemy\__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+127.0.0.1 - - [25/Apr/2019 19:24:17] "GET /oauthcallback?code=4/OAFmLRS6d_tX4KVCkSal7hbKRKdxTey4nwGSblkXVLRSMdai3yqaQfLaXmbDUiaFMr5ZdtgztYaVKiptShD8c1M&scope=email%20profile%20https://www.googleapis.com/auth/drive%20https://www.googleapis.com/auth/userinfo.email%20https://www.googleapis.com/auth/userinfo.profile HTTP/1.1" 302 -
+C:\Users\Zain\AppData\Local\Programs\Python\Python37\lib\site-packages\flask_sqlalchemy\__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+127.0.0.1 - - [25/Apr/2019 19:24:17] "GET /token HTTP/1.1" 200 -
+C:\Users\Zain\AppData\Local\Programs\Python\Python37\lib\site-packages\flask_sqlalchemy\__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+127.0.0.1 - - [25/Apr/2019 19:24:24] "POST /home HTTP/1.1" 200 -
+C:\Users\Zain\AppData\Local\Programs\Python\Python37\lib\site-packages\flask_sqlalchemy\__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+127.0.0.1 - - [25/Apr/2019 19:25:22] "GET /send?course_name=SER515-Group5-TestShell HTTP/1.1" 200 -
+C:\Users\Zain\AppData\Local\Programs\Python\Python37\lib\site-packages\flask_sqlalchemy\__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+C:\Users\Zain\AppData\Local\Programs\Python\Python37\lib\site-packages\flask_sqlalchemy\__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+C:\Users\Zain\AppData\Local\Programs\Python\Python37\lib\site-packages\flask_sqlalchemy\__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+127.0.0.1 - - [25/Apr/2019 19:25:26] "GET /group HTTP/1.1" 200 -
+C:\Users\Zain\AppData\Local\Programs\Python\Python37\lib\site-packages\flask_sqlalchemy\__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+https://docs.google.com/spreadsheets/d/19O_nKOeijMsOCRM0ycQ5iQXthafZqvllRfWtoO67oDM/edit
+-----------------------------------------------------------------------
+-----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\College_Work\SER517\SER_517_Software_Factory_group5\instructorTool\Group_Scripts\fetch.py", line 38, in fetch_document
+    temp.append(row[i])
+IndexError: list index out of range
+-----------------------------------------------------------------------
+3 ['gsubra11@asu.edu', 'Ganesh', 'gsubra11', 'svganesh', ['zain', 'yatharth'], ['suman'], 'UTC -7', ['Monday- 9:00 AM - 12:00 PM', ' Monday- 3:00 PM - 6:00 PM', ' Monday- 6:00 PM - 9:00 PM'], '3', '3', 'test']
+-----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\College_Work\SER517\SER_517_Software_Factory_group5\instructorTool\Group_Scripts\fetch.py", line 38, in fetch_document
+    temp.append(row[i])
+IndexError: list index out of range
+-----------------------------------------------------------------------
+5 ['zsiddiq2@asu.edu', 'Zain Siddiqui', 'zsiddiq2', 'zain2511', ['gsubra11', 'tpalkar'], ['ygoel'], 'UTC -4', ['Monday- 9:00 AM - 12:00 PM', ' Monday- 12:00 PM - 3:00 PM', ' Monday- 3:00 PM - 6:00 PM', ' Tuesday- 3:00 PM - 6:00 PM', ' Tuesday- 6:00 PM - 9:00 PM', ' Tuesday- after 9pm', ' Thursday- 12:00 PM - 3:00 PM', ' Thursday- 3:00 PM - 6:00 PM', ' Thursday- 6:00 PM - 9:00 PM'], '3', '4', 'I am test bot']
+-----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\College_Work\SER517\SER_517_Software_Factory_group5\instructorTool\Group_Scripts\fetch.py", line 38, in fetch_document
+    temp.append(row[i])
+IndexError: list index out of range
+-----------------------------------------------------------------------
+7 ['tpalkar@asu.edu', 'Tejasi Palkar', 'tpalkar', 'tejasipalkar', ['kbhangal', 'zsiddiq2'], ['ygoel'], 'UTC -6', ['Monday- 12:00 PM - 3:00 PM', ' Monday- after 9pm', ' Thursday- 6:00 PM - 9:00 PM', ' Thursday- after 9pm', ' Sunday- 12:00 PM - 3:00 PM', ' Sunday- 6:00 PM - 9:00 PM'], '4', '5', 'testing']
+-----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\College_Work\SER517\SER_517_Software_Factory_group5\instructorTool\Group_Scripts\fetch.py", line 38, in fetch_document
+    temp.append(row[i])
+IndexError: list index out of range
+-----------------------------------------------------------------------
+9 ['ygoel@asu.edu', 'Yathartha Goel', 'ygoel', 'ygoel', ['zsiddiq2'], [], 'UTC +3', ['Monday- 6:00 AM - 9:00 AM', ' Thursday- 9:00 AM - 12:00 PM', ' Thursday- 12:00 PM - 3:00 PM', ' Thursday- 6:00 PM - 9:00 PM', ' Thursday- after 9pm'], '4', '4', 'zzzz']
+--------------Done----------------
+All students:  {'kbhangal': 'Karansher Bhangal', 'ygoel': 'Yathartha Goel', 'tpalkar': 'Tejasi Palkar', 'sparlapa': 'Suman Parlapalli', 'zsiddiq2': 'Zain Siddiqui', 'gsubra11': 'Ganesh Kumar Subramanian Venkatraman'}
+Finalized stu list: ['gsubra11', 'zsiddiq2', 'tpalkar', 'ygoel', 'kbhangal', 'sparlapa']
+EmailID                                             gsubra11@asu.edu
+Full Name                                                     Ganesh
+ASURITE                                                     gsubra11
+GitHub                                                      svganesh
+Preferences                                         [zain, yatharth]
+Avoidance                                                    [suman]
+TimeZone                                                      UTC -7
+TimePreference     [Monday- 9:00 AM - 12:00 PM,  Monday- 3:00 PM ...
+GithubKnowledge                                                    3
+ScrumKnowledge                                                     3
+Comments                                                        test
+Name: 0, dtype: object
+EmailID                                             zsiddiq2@asu.edu
+Full Name                                              Zain Siddiqui
+ASURITE                                                     zsiddiq2
+GitHub                                                      zain2511
+Preferences                                      [gsubra11, tpalkar]
+Avoidance                                                    [ygoel]
+TimeZone                                                      UTC -4
+TimePreference     [Monday- 9:00 AM - 12:00 PM,  Monday- 12:00 PM...
+GithubKnowledge                                                    3
+ScrumKnowledge                                                     4
+Comments                                               I am test bot
+Name: 1, dtype: object
+EmailID                                              tpalkar@asu.edu
+Full Name                                              Tejasi Palkar
+ASURITE                                                      tpalkar
+GitHub                                                  tejasipalkar
+Preferences                                     [kbhangal, zsiddiq2]
+Avoidance                                                    [ygoel]
+TimeZone                                                      UTC -6
+TimePreference     [Monday- 12:00 PM - 3:00 PM,  Monday- after 9p...
+GithubKnowledge                                                    4
+ScrumKnowledge                                                     5
+Comments                                                     testing
+Name: 2, dtype: object
+EmailID                                                ygoel@asu.edu
+Full Name                                             Yathartha Goel
+ASURITE                                                        ygoel
+GitHub                                                         ygoel
+Preferences                                               [zsiddiq2]
+Avoidance                                                         []
+TimeZone                                                      UTC +3
+TimePreference     [Monday- 6:00 AM - 9:00 AM,  Thursday- 9:00 AM...
+GithubKnowledge                                                    4
+ScrumKnowledge                                                     4
+Comments                                                        zzzz
+Name: 3, dtype: object
+EmailID            Karansher Bhangal
+Full Name                   kbhangal
+ASURITE                             
+GitHub              kbhangal@asu.edu
+Preferences                       []
+Avoidance                         []
+TimeZone                          []
+TimePreference                    []
+GithubKnowledge                    0
+ScrumKnowledge                     0
+Comments                            
+Name: 4, dtype: object
+EmailID            Suman Parlapalli
+Full Name                  sparlapa
+ASURITE                            
+GitHub             sparlapa@asu.edu
+Preferences                      []
+Avoidance                        []
+TimeZone                         []
+TimePreference                   []
+GithubKnowledge                   0
+ScrumKnowledge                    0
+Comments                           
+Name: 5, dtype: object
+zain  Not in the list
+yatharth  Not in the list
+suman  Not in the list
+[['gsubra11', 'zsiddiq2'], ['tpalkar', 'kbhangal'], ['ygoel'], ['sparlapa']]
+remaining ['sparlapa']
+0  Students were not alloted teams.
+{1: ['gsubra11', 'zsiddiq2'], 2: ['tpalkar', 'kbhangal'], 3: ['ygoel', 'sparlapa']}
+['gsubra11', 'zsiddiq2', 'tpalkar', 'ygoel', 'kbhangal', 'sparlapa']
+[1, 1, 2, 3, 2, 3]
+             EmailID       Full Name   ASURITE    ...     ScrumKnowledge       Comments Group Name
+0   gsubra11@asu.edu          Ganesh  gsubra11    ...                  3           test          1
+1   zsiddiq2@asu.edu   Zain Siddiqui  zsiddiq2    ...                  4  I am test bot          1
+2    tpalkar@asu.edu   Tejasi Palkar   tpalkar    ...                  5        testing          2
+3      ygoel@asu.edu  Yathartha Goel     ygoel    ...                  4           zzzz          3
+4  Karansher Bhangal        kbhangal              ...                  0                         2
+5   Suman Parlapalli        sparlapa              ...                  0                         3
+
+[6 rows x 12 columns]
+             EmailID       Full Name   ASURITE    ...     ScrumKnowledge       Comments Group Name
+0   gsubra11@asu.edu          Ganesh  gsubra11    ...                  3           test          1
+1   zsiddiq2@asu.edu   Zain Siddiqui  zsiddiq2    ...                  4  I am test bot          1
+2    tpalkar@asu.edu   Tejasi Palkar   tpalkar    ...                  5        testing          2
+3      ygoel@asu.edu  Yathartha Goel     ygoel    ...                  4           zzzz          3
+4  Karansher Bhangal        kbhangal              ...                  0                         2
+5   Suman Parlapalli        sparlapa              ...                  0                         3
+
+[6 rows x 12 columns]
+127.0.0.1 - - [25/Apr/2019 19:25:42] "GET /group?pref=3&avoid=3&group=2&input_select=Online&file=https://docs.google.com/spreadsheets/d/19O_nKOeijMsOCRM0ycQ5iQXthafZqvllRfWtoO67oDM/edit HTTP/1.1" 200 -
+C:\Users\Zain\AppData\Local\Programs\Python\Python37\lib\site-packages\_pytest\assertion\rewrite.py:6: DeprecationWarning: the imp module is deprecated in favour of importlib; see the module's documentation for alternative uses
+  import imp
+C:\Users\Zain\AppData\Local\Programs\Python\Python37\lib\site-packages\flask_sqlalchemy\__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+          ASURITE Avoidance   ...                                        TimePreference TimeZone
+0          Ganesh     suman   ...     Monday- 9:00 AM - 12:00 PM, Monday- 3:00 PM - ...   UTC -7
+1   Zain Siddiqui     ygoel   ...     Monday- 9:00 AM - 12:00 PM, Monday- 12:00 PM -...   UTC -4
+2   Tejasi Palkar     ygoel   ...     Monday- 12:00 PM - 3:00 PM, Monday- after 9pm,...   UTC -6
+3  Yathartha Goel             ...     Monday- 6:00 AM - 9:00 AM, Thursday- 9:00 AM -...   UTC +3
+4        kbhangal             ...                                                               
+5        sparlapa             ...                                                               
+
+[6 rows x 12 columns]
+127.0.0.1 - - [25/Apr/2019 19:27:15] "POST /submitgroups HTTP/1.1" 200 -
+C:\Users\Zain\AppData\Local\Programs\Python\Python37\lib\site-packages\flask_sqlalchemy\__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+          ASURITE Avoidance   ...                                        TimePreference TimeZone
+0          Ganesh     suman   ...     Monday- 9:00 AM - 12:00 PM, Monday- 3:00 PM - ...   UTC -7
+1   Zain Siddiqui     ygoel   ...     Monday- 9:00 AM - 12:00 PM, Monday- 12:00 PM -...   UTC -4
+2   Tejasi Palkar     ygoel   ...     Monday- 12:00 PM - 3:00 PM, Monday- after 9pm,...   UTC -6
+3  Yathartha Goel             ...     Monday- 6:00 AM - 9:00 AM, Thursday- 9:00 AM -...   UTC +3
+4        kbhangal             ...                                                               
+5        sparlapa             ...                                                               
+
+[6 rows x 12 columns]
+127.0.0.1 - - [25/Apr/2019 19:28:29] "POST /submitgroups HTTP/1.1" 200 -
+C:\Users\Zain\AppData\Local\Programs\Python\Python37\lib\site-packages\flask_sqlalchemy\__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+127.0.0.1 - - [25/Apr/2019 19:31:56] "GET /send?course_name=SER515-Group5-TestShell HTTP/1.1" 200 -
+C:\Users\Zain\AppData\Local\Programs\Python\Python37\lib\site-packages\flask_sqlalchemy\__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+C:\Users\Zain\AppData\Local\Programs\Python\Python37\lib\site-packages\flask_sqlalchemy\__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+C:\Users\Zain\AppData\Local\Programs\Python\Python37\lib\site-packages\flask_sqlalchemy\__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+127.0.0.1 - - [25/Apr/2019 19:31:58] "GET /group HTTP/1.1" 200 -
+C:\Users\Zain\AppData\Local\Programs\Python\Python37\lib\site-packages\flask_sqlalchemy\__init__.py:157: SADeprecationWarning: Use .persist_selectable
+  info = getattr(mapper.mapped_table, 'info', {})
+https://docs.google.com/spreadsheets/d/19O_nKOeijMsOCRM0ycQ5iQXthafZqvllRfWtoO67oDM/edit
+-----------------------------------------------------------------------
+-----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\College_Work\SER517\SER_517_Software_Factory_group5\instructorTool\Group_Scripts\fetch.py", line 38, in fetch_document
+    temp.append(row[i])
+IndexError: list index out of range
+-----------------------------------------------------------------------
+3 ['gsubra11@asu.edu', 'Ganesh', 'gsubra11', 'svganesh', ['zain', 'yatharth'], ['suman'], 'UTC -7', ['Monday- 9:00 AM - 12:00 PM', ' Monday- 3:00 PM - 6:00 PM', ' Monday- 6:00 PM - 9:00 PM'], '3', '3', 'test']
+-----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\College_Work\SER517\SER_517_Software_Factory_group5\instructorTool\Group_Scripts\fetch.py", line 38, in fetch_document
+    temp.append(row[i])
+IndexError: list index out of range
+-----------------------------------------------------------------------
+5 ['zsiddiq2@asu.edu', 'Zain Siddiqui', 'zsiddiq2', 'zain2511', ['gsubra11', 'tpalkar'], ['ygoel'], 'UTC -4', ['Monday- 9:00 AM - 12:00 PM', ' Monday- 12:00 PM - 3:00 PM', ' Monday- 3:00 PM - 6:00 PM', ' Tuesday- 3:00 PM - 6:00 PM', ' Tuesday- 6:00 PM - 9:00 PM', ' Tuesday- after 9pm', ' Thursday- 12:00 PM - 3:00 PM', ' Thursday- 3:00 PM - 6:00 PM', ' Thursday- 6:00 PM - 9:00 PM'], '3', '4', 'I am test bot']
+-----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\College_Work\SER517\SER_517_Software_Factory_group5\instructorTool\Group_Scripts\fetch.py", line 38, in fetch_document
+    temp.append(row[i])
+IndexError: list index out of range
+-----------------------------------------------------------------------
+7 ['tpalkar@asu.edu', 'Tejasi Palkar', 'tpalkar', 'tejasipalkar', ['kbhangal', 'zsiddiq2'], ['ygoel'], 'UTC -6', ['Monday- 12:00 PM - 3:00 PM', ' Monday- after 9pm', ' Thursday- 6:00 PM - 9:00 PM', ' Thursday- after 9pm', ' Sunday- 12:00 PM - 3:00 PM', ' Sunday- 6:00 PM - 9:00 PM'], '4', '5', 'testing']
+-----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\College_Work\SER517\SER_517_Software_Factory_group5\instructorTool\Group_Scripts\fetch.py", line 38, in fetch_document
+    temp.append(row[i])
+IndexError: list index out of range
+-----------------------------------------------------------------------
+9 ['ygoel@asu.edu', 'Yathartha Goel', 'ygoel', 'ygoel', ['zsiddiq2'], [], 'UTC +3', ['Monday- 6:00 AM - 9:00 AM', ' Thursday- 9:00 AM - 12:00 PM', ' Thursday- 12:00 PM - 3:00 PM', ' Thursday- 6:00 PM - 9:00 PM', ' Thursday- after 9pm'], '4', '4', 'zzzz']
+--------------Done----------------
+All students:  {'kbhangal': 'Karansher Bhangal', 'ygoel': 'Yathartha Goel', 'tpalkar': 'Tejasi Palkar', 'sparlapa': 'Suman Parlapalli', 'zsiddiq2': 'Zain Siddiqui', 'gsubra11': 'Ganesh Kumar Subramanian Venkatraman'}
+Finalized stu list: ['gsubra11', 'zsiddiq2', 'tpalkar', 'ygoel', 'kbhangal', 'sparlapa']
+EmailID                                             gsubra11@asu.edu
+Full Name                                                     Ganesh
+ASURITE                                                     gsubra11
+GitHub                                                      svganesh
+Preferences                                         [zain, yatharth]
+Avoidance                                                    [suman]
+TimeZone                                                      UTC -7
+TimePreference     [Monday- 9:00 AM - 12:00 PM,  Monday- 3:00 PM ...
+GithubKnowledge                                                    3
+ScrumKnowledge                                                     3
+Comments                                                        test
+Name: 0, dtype: object
+EmailID                                             zsiddiq2@asu.edu
+Full Name                                              Zain Siddiqui
+ASURITE                                                     zsiddiq2
+GitHub                                                      zain2511
+Preferences                                      [gsubra11, tpalkar]
+Avoidance                                                    [ygoel]
+TimeZone                                                      UTC -4
+TimePreference     [Monday- 9:00 AM - 12:00 PM,  Monday- 12:00 PM...
+GithubKnowledge                                                    3
+ScrumKnowledge                                                     4
+Comments                                               I am test bot
+Name: 1, dtype: object
+EmailID                                              tpalkar@asu.edu
+Full Name                                              Tejasi Palkar
+ASURITE                                                      tpalkar
+GitHub                                                  tejasipalkar
+Preferences                                     [kbhangal, zsiddiq2]
+Avoidance                                                    [ygoel]
+TimeZone                                                      UTC -6
+TimePreference     [Monday- 12:00 PM - 3:00 PM,  Monday- after 9p...
+GithubKnowledge                                                    4
+ScrumKnowledge                                                     5
+Comments                                                     testing
+Name: 2, dtype: object
+EmailID                                                ygoel@asu.edu
+Full Name                                             Yathartha Goel
+ASURITE                                                        ygoel
+GitHub                                                         ygoel
+Preferences                                               [zsiddiq2]
+Avoidance                                                         []
+TimeZone                                                      UTC +3
+TimePreference     [Monday- 6:00 AM - 9:00 AM,  Thursday- 9:00 AM...
+GithubKnowledge                                                    4
+ScrumKnowledge                                                     4
+Comments                                                        zzzz
+Name: 3, dtype: object
+EmailID            Karansher Bhangal
+Full Name                   kbhangal
+ASURITE                             
+GitHub              kbhangal@asu.edu
+Preferences                       []
+Avoidance                         []
+TimeZone                          []
+TimePreference                    []
+GithubKnowledge                    0
+ScrumKnowledge                     0
+Comments                            
+Name: 4, dtype: object
+EmailID            Suman Parlapalli
+Full Name                  sparlapa
+ASURITE                            
+GitHub             sparlapa@asu.edu
+Preferences                      []
+Avoidance                        []
+TimeZone                         []
+TimePreference                   []
+GithubKnowledge                   0
+ScrumKnowledge                    0
+Comments                           
+Name: 5, dtype: object
+zain  Not in the list
+yatharth  Not in the list
+suman  Not in the list
+[['gsubra11', 'zsiddiq2'], ['tpalkar', 'kbhangal'], ['ygoel'], ['sparlapa']]
+remaining ['sparlapa']
+0  Students were not alloted teams.
+{1: ['gsubra11', 'zsiddiq2'], 2: ['tpalkar', 'kbhangal'], 3: ['ygoel', 'sparlapa']}
+['gsubra11', 'zsiddiq2', 'tpalkar', 'ygoel', 'kbhangal', 'sparlapa']
+[1, 1, 2, 3, 2, 3]
+             EmailID       Full Name   ASURITE    ...     ScrumKnowledge       Comments Group Name
+0   gsubra11@asu.edu          Ganesh  gsubra11    ...                  3           test          1
+1   zsiddiq2@asu.edu   Zain Siddiqui  zsiddiq2    ...                  4  I am test bot          1
+2    tpalkar@asu.edu   Tejasi Palkar   tpalkar    ...                  5        testing          2
+3      ygoel@asu.edu  Yathartha Goel     ygoel    ...                  4           zzzz          3
+4  Karansher Bhangal        kbhangal              ...                  0                         2
+5   Suman Parlapalli        sparlapa              ...                  0                         3
+
+[6 rows x 12 columns]
+             EmailID       Full Name   ASURITE    ...     ScrumKnowledge       Comments Group Name
+0   gsubra11@asu.edu          Ganesh  gsubra11    ...                  3           test          1
+1   zsiddiq2@asu.edu   Zain Siddiqui  zsiddiq2    ...                  4  I am test bot          1
+2    tpalkar@asu.edu   Tejasi Palkar   tpalkar    ...                  5        testing          2
+3      ygoel@asu.edu  Yathartha Goel     ygoel    ...                  4           zzzz          3
+4  Karansher Bhangal        kbhangal              ...                  0                         2
+5   Suman Parlapalli        sparlapa              ...                  0                         3
+
+[6 rows x 12 columns]
+127.0.0.1 - - [25/Apr/2019 19:32:17] "GET /group?pref=3&avoid=3&group=2&input_select=Online&file=https://docs.google.com/spreadsheets/d/19O_nKOeijMsOCRM0ycQ5iQXthafZqvllRfWtoO67oDM/edit HTTP/1.1" 200 -
