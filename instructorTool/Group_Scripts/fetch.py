@@ -78,7 +78,7 @@ class FetchInfo:
                     except:
                         traceback.print_exc(file=sys.stdout)
 
-            data = pd.DataFrame(res, columns=['Full Name', 'ASURITE', 'GitHub', 'EmailID', 'Preferences', 'Avoidance', 'TimeZone', 'TimePreference', 'GithubKnowledge', 'ScrumKnowledge', 'Comments'])
+            data = pd.DataFrame(res, columns=['EmailID', 'Full Name', 'ASURITE', 'GitHub', 'Preferences', 'Avoidance', 'TimeZone', 'TimePreference', 'GithubKnowledge', 'ScrumKnowledge', 'Comments'])
             #session['response'] = data.to_json(orient='split')
             print("--------------Done----------------")
         g = OnlineGroup(self.group_size, data)
