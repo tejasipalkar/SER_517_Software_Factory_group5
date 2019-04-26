@@ -170,25 +170,47 @@
     </div>
 
   <div class="modal fade" tabindex="-1" role="dialog" id="delete_confirm_model" >
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Warning</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-              You are about to delete an event
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" onclick="deleteEvent()">Confirm</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-          </div>
-          </div>
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Warning</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            You are about to delete an event
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" onclick="deleteEvent()">Confirm</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        </div>
         </div>
       </div>
     </div>
+  </div>
+
+  <div class="modal fade" tabindex="-1" role="dialog" id="download_model" >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Download Latex file</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-sm-2" style="margin-right:10px"> <button type="button" class="btn btn-primary" onclick="latexProject()">Project</button></div>
+            <div class="col-sm-3"> <button type="button" class="btn btn-primary" onclick="latexAssignment()">Assignment</button></div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 </body>
 {% endblock content %}

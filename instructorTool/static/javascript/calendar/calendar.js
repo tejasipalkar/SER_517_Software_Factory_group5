@@ -661,8 +661,11 @@ function openModelForUpdateEvent(event){
   }
 
   function latexDownload(){
+    $('#download_model').modal('show');
+  }
+
+  function latexProject(){
     var project = [];
-    var assignments = [];
     var events = $('#calendar').fullCalendar('clientEvents');
     for(var i=0; i <events.length; i++){
       if(events[i].tag == 'Project'){
@@ -671,11 +674,6 @@ function openModelForUpdateEvent(event){
         event.start =  events[i].start._i;
         event.end =  events[i].end._i;
         project.push(event);
-      }else if(events[i].tag == 'Assign'){
-        var event = {};
-        event.title = events[i].title;
-        event.start =  events[i].start._i;
-        assignments.push(event);
       }
     }
     $.ajax({
@@ -697,6 +695,19 @@ function openModelForUpdateEvent(event){
         $("#latex-failure-alert").show().delay(2000).fadeOut();
       }
     });
+  }
+
+  function latexAssignment(){
+    var assignments = [];
+    var events = $('#calendar').fullCalendar('clientEvents');
+    for(var i=0; i <events.length; i++){
+      if(events[i].tag == 'Assign'){
+        var event = {};
+        event.title = events[i].title;
+        event.start =  events[i].start._i;
+        assignments.push(event);
+      }
+    }
     $.ajax({
       url: '/latexassign',
       data: JSON.stringify(assignments),
