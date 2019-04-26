@@ -70,8 +70,8 @@ $(function() {
           var actualTable = new Array();
           $("#table2 tr:not(:first)").each(function () {
               var tds = $(this).find("td");
-              var SStudent = { Group: $(this).find('td:eq(11)').text(), EmailID: $(this).find('td:eq(3)').text()};
-              var tableData = { FullName: $(this).find('td:eq(0)').text(), ASURITE: $(this).find('td:eq(1)').text(), Github: $(this).find('td:eq(2)').text(), EmailID: $(this).find('td:eq(3)').text(), Preferences: $(this).find('td:eq(4)').text(), Avoidance: $(this).find('td:eq(5)').text(), TimeZone: $(this).find('td:eq(6)').text(), TimePreference: $(this).find('td:eq(7)').text(), GithubKnowledge: $(this).find('td:eq(8)').text(), ScrumKnowledge: $(this).find('td:eq(9)').text(), Comments: $(this).find('td:eq(10)').text(), GroupName: $(this).find('td:eq(11)').text()};
+              var SStudent = { Group: $(this).find('td:eq(11)').text(), EmailID: $(this).find('td:eq(0)').text()};
+              var tableData = { FullName: $(this).find('td:eq(1)').text(), ASURITE: $(this).find('td:eq(2)').text(), Github: $(this).find('td:eq(3)').text(), EmailID: $(this).find('td:eq(0)').text(), Preferences: $(this).find('td:eq(4)').text(), Avoidance: $(this).find('td:eq(5)').text(), TimeZone: $(this).find('td:eq(6)').text(), TimePreference: $(this).find('td:eq(7)').text(), GithubKnowledge: $(this).find('td:eq(8)').text(), ScrumKnowledge: $(this).find('td:eq(9)').text(), Comments: $(this).find('td:eq(10)').text(), GroupName: $(this).find('td:eq(11)').text()};
               actualTable.push(tableData);
               actuallist.push(SStudent);
           });
@@ -110,7 +110,7 @@ $(function() {
           var actualTable = new Array();
           $("#table2 tr:not(:first)").each(function () {
               var tds = $(this).find("td");
-              var tableData = { FullName: $(this).find('td:eq(0)').text(), ASURITE: $(this).find('td:eq(1)').text(), Github: $(this).find('td:eq(2)').text(), EmailID: $(this).find('td:eq(3)').text(), Preferences: $(this).find('td:eq(4)').text(), Avoidance: $(this).find('td:eq(5)').text(), TimeZone: $(this).find('td:eq(6)').text(), TimePreference: $(this).find('td:eq(7)').text(), GithubKnowledge: $(this).find('td:eq(8)').text(), ScrumKnowledge: $(this).find('td:eq(9)').text(), Comments: $(this).find('td:eq(10)').text(), GroupName: $(this).find('td:eq(11)').text()};
+              var tableData = { FullName: $(this).find('td:eq(1)').text(), ASURITE: $(this).find('td:eq(2)').text(), Github: $(this).find('td:eq(3)').text(), EmailID: $(this).find('td:eq(0)').text(), Preferences: $(this).find('td:eq(4)').text(), Avoidance: $(this).find('td:eq(5)').text(), TimeZone: $(this).find('td:eq(6)').text(), TimePreference: $(this).find('td:eq(7)').text(), GithubKnowledge: $(this).find('td:eq(8)').text(), ScrumKnowledge: $(this).find('td:eq(9)').text(), Comments: $(this).find('td:eq(10)').text(), GroupName: $(this).find('td:eq(11)').text()};
               actualTable.push(tableData);
           });
           $("#table1 tr:not(:first)").each(function () {
@@ -125,14 +125,14 @@ $(function() {
               }
             }
           }
-          let csv = '';
-          let keysAmount = Object.keys(actualTable[0]).length
-          let keysCounter = 0
+          var csv = '';
+          var keysAmount = Object.keys(actualTable[0]).length
+          var keysCounter = 0
           for(let key in actualTable[0]){
                     csv += key + (keysCounter+1 < keysAmount ? ',' : '\r\n' )
                     keysCounter++
             }
-          for(let row = 0; row < actualTable.length; row++){
+          for(var row = 0; row < actualTable.length; row++){
               keysAmount = Object.keys(actualTable[row]).length
               keysCounter = 0
               for(let key in actualTable[row]){
@@ -148,12 +148,14 @@ $(function() {
             keysCounter = 0
           }
 
-        let link = document.createElement('a')
+        var link = document.createElement('a')
         link.id = 'download-csv'
         link.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(csv));
         link.setAttribute('download', 'GroupData.csv');
         document.body.appendChild(link)
         document.querySelector('#download-csv').click()
+        var element = document.getElementById('download-csv');
+        element.parentNode.removeChild(element);
       });
 });
 
