@@ -45,7 +45,7 @@ class OnlineGroup:
 				self.stu_avoid[s] = []
 				self.stu_time_zone[s] = []
 				self.stu_utc[s] = []
-				self.dataframe.loc[idx] = [self.all_stu[s],s,'',s+'@asu.edu',[],[],[],[],0,0,'']
+				self.dataframe.loc[idx] = [s+'@asu.edu', self.all_stu[s], s,'',[],[],[],[],0,0,'']
 				idx += 1 
 
 		

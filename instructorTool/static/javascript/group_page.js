@@ -218,7 +218,7 @@ function createtable(rows,col_names, team_name){
   for( var row=0;row<rows.length;row++){
     var row_id =randomid();
     /*console.log(row)*/
-    if(rows[row][2] === ""){
+    if(rows[row][3] === ""){
       tbl +='<tr row_id="'+row_id+'" style="color:red;">';
     }
     else{
