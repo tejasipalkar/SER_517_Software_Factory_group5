@@ -32,6 +32,24 @@ The project is about a web based tool that assists instructors in performing var
 - Werkzeug==0.14.1
 - WTForms==2.2.1
 
+## Setting up and Running the Tool
+Markup: *For OSX:
+            *Install Python 3.6 or above. (https://www.python.org/downloads/)
+            *Open the Terminal Application and navigate to the folder SER_517_Software_Factory_group5. Now type the following commands:
+                  *./setup.sh
+                  *python application.py/ python3 application.py
+                  *Open the web browser and paste the following link to run the application: http://127.0.0.1:5000
+                  *To terminate the server, just press Ctrl-C on the terminal window.
+         *For Windows:
+            *Install Python 3.6 or above. (https://www.python.org/downloads/)
+            *Make sure Windows Powershell is Installed.
+            *Open the Windows Powershell and navigate to the folder SER_517_Software_Factory_group5. Now type the following commands:
+                  *./setup.sh
+                  *python application.py
+                  *Open the web browser and paste the following link to run the application: http://127.0.0.1:5000
+                  *To terminate the server, just press Ctrl-C on the powershell window.
+
+
 ## Screenshots
 
 Main Page
